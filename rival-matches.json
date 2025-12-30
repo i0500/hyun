@@ -32,17 +32,9 @@
       "scoreA": 6,
       "scoreB": 2,
       "timestamp": 1767092275554
-    },
-    {
-      "title": "라이벌전",
-      "teamA": "전찬수 우수문",
-      "teamB": "김성준 채영수",
-      "scoreA": 4,
-      "scoreB": 6,
-      "timestamp": 1767090637561
     }
   ],
-  "lastUpdated": "2025-12-30T22:12:18.768Z",
+  "lastUpdated": "2025-12-30T22:12:24.380Z",
   "version": "1.0",
-  "totalMatches": 5
+  "totalMatches": 4
 }
