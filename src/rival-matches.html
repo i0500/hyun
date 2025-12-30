@@ -245,8 +245,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 15px;
+            flex-wrap: nowrap;
         }
 
         .team-name {
@@ -256,6 +257,9 @@
             flex: 1;
             text-align: center;
             max-width: 45%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .team-name:first-child {
@@ -269,9 +273,9 @@
         .vs-badge {
             background: #6c757d;
             color: white;
-            padding: 4px 12px;
+            padding: 4px 8px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             flex-shrink: 0;
         }
@@ -809,10 +813,16 @@
             .team-name {
                 font-size: 0.9rem;
                 max-width: 40%;
+                white-space: normal;
+                word-break: break-word;
+            }
+
+            .team-vs {
+                gap: 5px;
             }
 
             .vs-badge {
-                padding: 2px 8px;
+                padding: 2px 6px;
                 font-size: 10px;
             }
         }
