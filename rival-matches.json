@@ -6,6 +6,7 @@
       "teamB": "송민곤 / 채영수",
       "scoreA": 5,
       "scoreB": 5,
+      "matchType": "남복",
       "timestamp": 1767129924248
     },
     {
@@ -25,7 +26,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2025-12-30T22:06:00.581Z",
+  "lastUpdated": "2025-12-30T22:07:30.472Z",
   "version": "1.0",
   "totalMatches": 3
 }
