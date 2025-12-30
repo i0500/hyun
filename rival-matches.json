@@ -15,6 +15,7 @@
       "teamB": "김성준 / 채영수",
       "scoreA": 6,
       "scoreB": 2,
+      "matchType": "남복",
       "timestamp": 1767129659687
     },
     {
@@ -27,7 +28,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2025-12-30T22:13:56.722Z",
+  "lastUpdated": "2025-12-30T22:15:45.438Z",
   "version": "1.0",
   "totalMatches": 3
 }
