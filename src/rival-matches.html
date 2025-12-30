@@ -1506,11 +1506,44 @@
         // 토큰 복호화 함수 (간단한 Base64 디코딩)
         function decryptToken() {
             try {
-                return atob(GITHUB_CONFIG.encryptedToken);
+                if (!GITHUB_CONFIG.encryptedToken) {
+                    console.warn('[토큰복호화] 암호화된 토큰이 없습니다');
+                    return null;
+                }
+                
+                const decrypted = atob(GITHUB_CONFIG.encryptedToken);
+                
+                // 토큰 형식 검증 (GitHub Personal Access Token 형식)
+                if (!decrypted || !decrypted.startsWith('github_pat_') || decrypted.length < 20) {
+                    console.error('[토큰복호화] 유효하지 않은 토큰 형식:', decrypted ? decrypted.substring(0, 20) + '...' : 'empty');
+                    return null;
+                }
+                
+                console.log('[토큰복호화] 성공:', decrypted.substring(0, 20) + '...');
+                return decrypted;
             } catch (e) {
-                console.error('토큰 복호화 실패:', e);
+                console.error('[토큰복호화] Base64 디코딩 실패:', e);
                 return null;
             }
+        }
+
+        // 안전한 헤더 생성 함수
+        function createSafeHeaders(token, additionalHeaders = {}) {
+            if (!token || typeof token !== 'string' || token.trim() === '') {
+                throw new Error('유효하지 않은 토큰: 토큰이 비어있거나 잘못된 형식입니다');
+            }
+            
+            const cleanToken = token.trim();
+            if (!cleanToken.startsWith('github_pat_')) {
+                throw new Error('유효하지 않은 토큰: GitHub Personal Access Token 형식이 아닙니다');
+            }
+            
+            return {
+                'Authorization': `token ${cleanToken}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'HyunClub-RivalMatches/1.0',
+                ...additionalHeaders
+            };
         }
 
         // GitHub Integration
@@ -1549,24 +1582,46 @@
         // GitHub 토큰 유효성 검증 함수
         async function validateGitHubToken(token) {
             try {
-                console.log('[GitHub] 토큰 유효성 검증 중...');
+                console.log('[GitHub검증] 토큰 유효성 검증 시작...');
+                
+                // 토큰 형식 사전 검증
+                if (!token || typeof token !== 'string' || !token.trim()) {
+                    console.error('[GitHub검증] 토큰이 비어있습니다');
+                    return false;
+                }
+                
+                const cleanToken = token.trim();
+                if (!cleanToken.startsWith('github_pat_')) {
+                    console.error('[GitHub검증] GitHub PAT 형식이 아닙니다:', cleanToken.substring(0, 20));
+                    return false;
+                }
+                
+                // 안전한 헤더 생성
+                const headers = createSafeHeaders(cleanToken);
+                
                 const response = await fetch('https://api.github.com/user', {
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
+                    headers: headers
                 });
                 
                 if (response.ok) {
                     const userInfo = await response.json();
-                    console.log('[GitHub] 토큰 유효성 검증 성공:', userInfo.login);
+                    console.log('[GitHub검증] 토큰 검증 성공! 사용자:', userInfo.login);
                     return true;
+                } else if (response.status === 401) {
+                    console.error('[GitHub검증] 토큰이 만료되었거나 잘못됨 (401)');
+                    return false;
+                } else if (response.status === 403) {
+                    console.error('[GitHub검증] 토큰 권한 부족 (403)');
+                    return false;
                 } else {
-                    console.error('[GitHub] 토큰 유효성 검증 실패:', response.status, response.statusText);
+                    console.error('[GitHub검증] 예상치 못한 응답:', response.status, response.statusText);
                     return false;
                 }
             } catch (error) {
-                console.error('[GitHub] 토큰 검증 중 네트워크 오류:', error);
+                console.error('[GitHub검증] 네트워크 또는 헤더 오류:', error);
+                if (error.message.includes('Invalid value')) {
+                    console.error('[GitHub검증] fetch API 헤더 오류 - 토큰에 특수문자가 포함되었을 수 있음');
+                }
                 return false;
             }
         }
@@ -1673,15 +1728,13 @@
                 let sha = null;
                 try {
                     console.log('[GitHub업로드] 기존 파일 SHA 확인 중...');
+                    
+                    // 안전한 헤더 생성
+                    const headers = createSafeHeaders(GITHUB_CONFIG.token);
+                    
                     const getResponse = await fetch(
                         `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.fileName}`,
-                        {
-                            headers: {
-                                'Authorization': `token ${GITHUB_CONFIG.token}`,
-                                'Accept': 'application/vnd.github.v3+json',
-                                'User-Agent': 'HyunClub-RivalMatches/1.0'
-                            }
-                        }
+                        { headers: headers }
                     );
                     if (getResponse.ok) {
                         const data = await getResponse.json();
@@ -1710,16 +1763,17 @@
                 }
 
                 console.log('[GitHub업로드] GitHub API 호출 중...');
+                
+                // 안전한 헤더 생성 (PUT용)
+                const putHeaders = createSafeHeaders(GITHUB_CONFIG.token, {
+                    'Content-Type': 'application/json'
+                });
+                
                 const response = await fetch(
                     `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.fileName}`,
                     {
                         method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${GITHUB_CONFIG.token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json',
-                            'User-Agent': 'HyunClub-RivalMatches/1.0'
-                        },
+                        headers: putHeaders,
                         body: JSON.stringify(updateData)
                     }
                 );
@@ -1737,7 +1791,11 @@
                 console.error('[GitHub업로드] 전체 오류:', error);
                 
                 // 더 구체적인 오류 메시지
-                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                if (error.message.includes('Invalid value')) {
+                    throw new Error('GitHub API 헤더 오류: 토큰에 잘못된 문자가 포함되었습니다');
+                } else if (error.message.includes('유효하지 않은 토큰')) {
+                    throw new Error('토큰 형식 오류: ' + error.message);
+                } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
                     throw new Error('네트워크 연결 오류: 인터넷 연결을 확인해주세요');
                 } else if (error.message.includes('401')) {
                     throw new Error('토큰 권한 오류: 토큰이 만료되었거나 잘못되었습니다');
@@ -1759,15 +1817,13 @@
             
             try {
                 console.log('[GitHub다운로드] GitHub에서 데이터 로드 시작...');
+                
+                // 안전한 헤더 생성
+                const headers = createSafeHeaders(GITHUB_CONFIG.token);
+                
                 const response = await fetch(
                     `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.fileName}`,
-                    {
-                        headers: {
-                            'Authorization': `token ${GITHUB_CONFIG.token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'User-Agent': 'HyunClub-RivalMatches/1.0'
-                        }
-                    }
+                    { headers: headers }
                 );
 
                 if (response.ok) {
