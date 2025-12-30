@@ -3292,7 +3292,7 @@ img[data-temp-chart] {
                     
             <tr class="anchor-row" style="height: 0; line-height: 0;">
                 <td colspan="5" style="padding: 0; height: 0; line-height: 0;">
-                    <div id="expense-anchor-dynamic" style="position: relative; top: -60px;"></div>
+                    <div id="expense-anchor-dynamic" style="position: relative; top: -40px;"></div>
                 </td>
             </tr>
         
@@ -4033,27 +4033,158 @@ img[data-temp-chart] {
         
         // 거래 내역으로 스크롤하는 함수
         function scrollToTransactionSection(type) {
-            console.log('[외부보고서] 스크롤:', type);
+            console.log('[외부보고서] 스크롤 시작:', type);
+
+            // 헤더와 탭 높이 계산
+            const headerElement = document.querySelector('.report-header');
+            const mobileTabsElement = document.querySelector('.mobile-section-tabs');
+            const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+            const tabsHeight = mobileTabsElement ? mobileTabsElement.offsetHeight : 0;
+            const totalOffsetHeight = headerHeight + tabsHeight + 20;
+            
             let targetElement;
             
             if (type === 'income') {
+                // 수입: 기존 income-anchor 사용
                 targetElement = document.getElementById('income-anchor');
-            } else {
-                // 지출: 동적 앵커 먼저 시도, 없으면 기존 앵커
-                targetElement = document.getElementById('expense-anchor-dynamic') || document.getElementById('expense-anchor');
-            }
-            
-            if (!targetElement) {
-                // anchor가 없으면 테이블로 직접 스크롤
-                const transactionSection = document.getElementById('transaction-details');
-                if (transactionSection) {
-                    transactionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // 수입 앵커가 없거나 위치가 0이면 "수입 합계" 텍스트로 찾기
+                if (!targetElement || targetElement.offsetTop === 0) {
+                    console.log('[외부보고서] 수입 앵커 사용 불가, "수입 합계" 텍스트를 찾습니다');
+                    
+                    const incomeElements = Array.from(document.querySelectorAll('*')).filter(el => 
+                        el.textContent && el.textContent.includes('수입 합계') && el.offsetParent !== null
+                    );
+                    
+                    if (incomeElements.length > 0) {
+                        const incomeElement = incomeElements[0];
+                        const boundingRect = incomeElement.getBoundingClientRect();
+                        const scrollY = window.scrollY || window.pageYOffset;
+                        const elementTop = boundingRect.top + scrollY;
+                        const scrollPosition = Math.max(0, elementTop - totalOffsetHeight);
+                        
+                        window.scrollTo({
+                            top: scrollPosition,
+                            behavior: 'smooth'
+                        });
+                        return;
+                    }
                 }
+            } else {
+                // 지출: 동적 앵커 먼저 시도
+                targetElement = document.getElementById('expense-anchor-dynamic');
+                
+                // 동적 앵커가 없거나 위치가 0이면 대체 방법 사용
+                if (!targetElement || targetElement.offsetTop === 0) {
+                    console.log('[외부보고서] 동적 앵커 사용 불가, 지출 합계를 찾습니다');
+                    
+                    // 모바일/데스크톱에 따라 다른 방법 사용
+                    const isMobile = window.innerWidth <= 768;
+                    let foundTarget = null;
+                    
+                    if (isMobile) {
+                        console.log('[외부보고서] 모바일 환경 - 지출 합계 카드 검색');
+                        foundTarget = document.querySelector('.transaction-summary-card.expense-summary') ||
+                                     document.querySelector('.transaction-summary-card:has(.transaction-summary-label)');
+                        
+                        if (!foundTarget) {
+                            const transactionCards = document.getElementById('transactionCards');
+                            if (transactionCards) {
+                                // 지출 관련 요소 찾기
+                                const summaryElements = transactionCards.querySelectorAll('[class*="summary"]');
+                                for (const element of summaryElements) {
+                                    if (element.textContent && element.textContent.includes('지출')) {
+                                        foundTarget = element;
+                                        break;
+                                    }
+                                }
+                                
+                                // 첫 번째 지출 카드 찾기
+                                if (!foundTarget) {
+                                    const expenseCards = transactionCards.querySelectorAll('.transaction-card.expense');
+                                    if (expenseCards.length > 0) {
+                                        foundTarget = expenseCards[0];
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        console.log('[외부보고서] 데스크톱 환경 - 지출 합계 행 검색');
+                        foundTarget = document.querySelector('tr.summary-row.expense-group') ||
+                                     document.querySelector('tr.expense-group');
+                        
+                        if (!foundTarget) {
+                            const expenseRows = Array.from(document.querySelectorAll('tr')).filter(row => {
+                                const cells = row.querySelectorAll('td');
+                                return Array.from(cells).some(cell => 
+                                    cell.textContent && cell.textContent.trim() === '지출'
+                                );
+                            });
+                            if (expenseRows.length > 0) {
+                                foundTarget = expenseRows[0];
+                            }
+                        }
+                    }
+                    
+                    if (foundTarget) {
+                        console.log('[외부보고서] 타겟 요소 발견:', foundTarget);
+                        
+                        const boundingRect = foundTarget.getBoundingClientRect();
+                        const scrollY = window.scrollY || window.pageYOffset;
+                        const elementTop = boundingRect.top + scrollY;
+                        const scrollPosition = Math.max(0, elementTop - totalOffsetHeight);
+                        
+                        window.scrollTo({
+                            top: scrollPosition,
+                            behavior: 'smooth'
+                        });
+                        return;
+                    }
+                    
+                    // 그래도 없으면 기존 앵커 사용
+                    targetElement = document.getElementById('expense-anchor');
+                }
+            }
+
+            if (targetElement) {
+                console.log('[외부보고서] 앵커로 스크롤:', targetElement.id, '앵커 위치:', targetElement.offsetTop);
+                const elementTop = targetElement.offsetTop;
+                
+                if (elementTop === 0) {
+                    const transactionSection = document.getElementById('transaction-details');
+                    if (transactionSection) {
+                        const sectionTop = transactionSection.offsetTop;
+                        const scrollPosition = Math.max(0, sectionTop - totalOffsetHeight + 100);
+                        
+                        window.scrollTo({
+                            top: scrollPosition,
+                            behavior: 'smooth'
+                        });
+                        return;
+                    }
+                }
+                
+                const scrollPosition = Math.max(0, elementTop - totalOffsetHeight);
+                
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'smooth'
+                });
                 return;
             }
             
-            console.log('[외부보고서] 앵커로 스크롤:', targetElement.id);
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // 앵커가 없으면 거래 섹션으로 이동
+            const transactionSection = document.getElementById('transaction-details');
+            if (transactionSection) {
+                console.log('[외부보고서] 거래 섹션으로 직접 이동');
+                const sectionTop = transactionSection.offsetTop;
+                const scrollPosition = Math.max(0, sectionTop - totalOffsetHeight + 50);
+                
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
 
         // DOM 로드 완료 시 초기화
@@ -4161,12 +4292,13 @@ img[data-temp-chart] {
         
         console.log('[외부보고서 영수증] 파일 ID:', fileId);
         
+        // 성공률이 높은 URL 순으로 재정렬 (lh3.googleusercontent가 가장 안정적)
         const imageUrls = [
+            `https://lh3.googleusercontent.com/d/${fileId}=w1000`,
+            `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
             `https://drive.google.com/uc?export=view&id=${fileId}`,
             `https://drive.google.com/uc?id=${fileId}`,
             `https://drive.google.com/uc?export=download&id=${fileId}`,
-            `https://lh3.googleusercontent.com/d/${fileId}=w1000`,
-            `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`,
             `https://docs.google.com/uc?export=download&id=${fileId}`,
             `https://drive.google.com/file/d/${fileId}/preview`
         ];
@@ -4189,7 +4321,7 @@ img[data-temp-chart] {
                 }
                 
                 // 대체 이미지 표시
-                image.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuydtOuvuOyngCDroZzrk5zsl6DsoJXtlaXri6jri6Q8L3RleHQ+Cjx0ZXh0IHg9IjIwMCIgeT0iMTYwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2E4YjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkdvb2dsZSDrk5zrnbzsnbTruYzsl5Ag7ZWZ7J247ZWY7J6Q64Sk7JqUIGV4ZT0ic3NfdGFiIj48L3RleHQ+CjwvdW52Zz4=';
+                image.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTMwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuydtOuvuOyngCDroZzrk5zsl6DsoJXtlaXri6jri6Q8L3RleHQ+Cjx0ZXh0IHg9IjIwMCIgeT0iMTYwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5Y2E4YjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuydtOuvuOyngCDroZzsp4TrtKntlaDsiJgg7JeG7J2M64uI64ukPC90ZXh0Pgo8L3N2Zz4=';
                 image.style.opacity = '1';
                 return;
             }
@@ -4197,19 +4329,29 @@ img[data-temp-chart] {
             const currentUrl = imageUrls[currentUrlIndex];
             console.log(`[외부보고서 영수증] URL 시도 ${currentUrlIndex + 1}/${imageUrls.length}:`, currentUrl);
             
-            image.style.opacity = '0.5';
-            image.src = currentUrl;
+            // 첫 번째 시도에서만 로딩 플레이스홀더 표시
+            if (currentUrlIndex === 0) {
+                image.style.opacity = '0.3';
+                image.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjVmNWY1Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuyYgeyImOymnSDroZzrlqkg7KSRLi4uPC90ZXh0Pgo8L3N2Zz4=';
+            }
             
-            image.onload = function() {
+            // 새로운 이미지 객체로 미리 로드하여 깜빡임 방지
+            const tempImg = new Image();
+            
+            tempImg.onload = function() {
                 console.log('[외부보고서 영수증] 이미지 로드 성공:', currentUrl);
-                this.style.opacity = '1';
+                // 성공시 바로 실제 이미지로 교체
+                image.src = currentUrl;
+                image.style.opacity = '1';
             };
             
-            image.onerror = function() {
+            tempImg.onerror = function() {
                 console.log('[외부보고서 영수증] 이미지 로드 실패:', currentUrl);
                 currentUrlIndex++;
-                setTimeout(tryNextUrl, 100);
+                setTimeout(tryNextUrl, 50); // 빠른 재시도로 딜레이 최소화
             };
+            
+            tempImg.src = currentUrl;
         }
         
         // 모달 강제 표시 (외부보고서용) - 더 강력한 방법
