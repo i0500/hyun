@@ -574,29 +574,55 @@
 
         /* 경기 유형 체크박스 스타일 */
         .match-type-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
             margin-bottom: 20px;
-            justify-content: center;
+            padding: 15px;
+            background: #f8f9fb;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
         }
 
         .match-type-label {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 10px 16px;
-            border-radius: 8px;
-            border: 2px solid #dee2e6;
-            background: white;
-            transition: all 0.3s ease;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
             text-align: center;
-            min-width: 70px;
+            min-width: 80px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .match-type-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
         }
 
         .match-type-label:hover {
             border-color: #2c5f2d;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(44, 95, 45, 0.15);
+        }
+
+        .match-type-label:hover::before {
+            left: 100%;
         }
 
         .match-type-label input[type="radio"] {
@@ -604,14 +630,34 @@
         }
 
         .match-type-label.selected {
-            background: #2c5f2d;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
             border-color: #2c5f2d;
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 95, 45, 0.3);
+        }
+
+        .match-type-label.selected::before {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         .type-label-text {
             font-size: 14px;
             font-weight: 500;
+        }
+
+        /* 모바일에서 경기유형 선택 스타일 */
+        @media (max-width: 768px) {
+            .match-type-group {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .match-type-label {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
         }
 
         /* 경기 유형 인라인 스타일 (타이틀 앞에 표시) */
