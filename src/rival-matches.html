@@ -1034,7 +1034,7 @@
     <div class="container">
         <div class="header">
             <h1>🏆 현클럽 배틀 아레나</h1>
-            <p>치열한 경기의 승부기록과 영광의 순간들을 기록하세요! 🔥</p>
+            <p>치열한 경기의 순간들을 기록하세요! 🔥</p>
         </div>
 
         <!-- 탭 네비게이션 -->
@@ -1491,18 +1491,15 @@
                                 ${specialBadge}
                             </div>
                             <div class="player-stats" style="margin-top: 2px;">
-                                <div class="stat-row" style="display: flex; gap: 12px;">
-                                    <div class="stat-item">
-                                        <span>승리:</span>
-                                        <span>${player.wins}회</span>
+                                <div class="stat-row" style="display: flex; gap: 8px;">
+                                    <div class="stat-badge" style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                                        승리 ${player.wins}회
                                     </div>
-                                    <div class="stat-item">
-                                        <span>무승부:</span>
-                                        <span>${player.totalMatches - player.wins - player.losses}회</span>
+                                    <div class="stat-badge" style="background: #f8f9fa; color: #6c757d; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                                        무승부 ${player.totalMatches - player.wins - player.losses}회
                                     </div>
-                                    <div class="stat-item">
-                                        <span>패배:</span>
-                                        <span>${player.losses}회</span>
+                                    <div class="stat-badge" style="background: #f8d7da; color: #721c24; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                                        패배 ${player.losses}회
                                     </div>
                                 </div>
                                 <div class="stat-row match-types" style="display: flex; gap: 12px;">
