@@ -383,9 +383,9 @@
         }
 
         .rank-number {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            min-width: 40px;
+            min-width: 60px;
             text-align: center;
             color: #2c5f2d;
         }
@@ -734,8 +734,8 @@
             }
 
             .rank-number {
-                font-size: 1.3rem;
-                min-width: 35px;
+                font-size: 1.1rem;
+                min-width: 50px;
             }
 
             .player-name {
@@ -1037,17 +1037,15 @@
                     <div style="display: flex; align-items: center; justify-content: center; gap: 25px;">
                         <span style="display: flex; align-items: center; gap: 5px;">
                             <span style="font-size: 14px; font-weight: bold; color: #28a745;">승리:</span>
-                            <span style="font-size: 16px;">🏆</span>
                             <span style="font-size: 14px; font-weight: bold; color: #28a745;">3점</span>
                         </span>
                         <span style="display: flex; align-items: center; gap: 5px;">
                             <span style="font-size: 14px; font-weight: bold; color: #6c757d;">무승부:</span>
-                            <span style="font-size: 16px;">🤝</span>
                             <span style="font-size: 14px; font-weight: bold; color: #6c757d;">1점</span>
                         </span>
                         <span style="display: flex; align-items: center; gap: 5px;">
                             <span style="font-size: 14px; font-weight: bold; color: #dc3545;">패배:</span>
-                            <span style="font-size: 16px; font-weight: bold; color: #dc3545;">-1점</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #dc3545;">-1점</span>
                         </span>
                     </div>
                     <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #dee2e6; font-size: 13px; color: #6c757d;">
@@ -1352,6 +1350,8 @@
             const rankingHTML = rankings.map((player, index) => {
                 // 공동순위 계산
                 let rank = index + 1;
+                let isSharedRank = false;
+                
                 if (index > 0 && rankings[index - 1].totalPoints === player.totalPoints) {
                     // 이전 플레이어와 같은 점수면 같은 순위 사용
                     let prevIndex = index - 1;
@@ -1359,6 +1359,10 @@
                         prevIndex--;
                     }
                     rank = prevIndex + 2; // 공동순위
+                    isSharedRank = true;
+                } else if (index < rankings.length - 1 && rankings[index + 1].totalPoints === player.totalPoints) {
+                    // 다음 플레이어와 같은 점수면 공동순위
+                    isSharedRank = true;
                 }
                 
                 const winRate = player.totalMatches > 0 ? ((player.wins / player.totalMatches) * 100).toFixed(1) : '0.0';
@@ -1404,7 +1408,7 @@
                     <div class="ranking-item ${rankClass}">
                         <div class="rank-number ${rankClass}">
                             <div style="font-size: 1.2em;">${rankEmoji}</div>
-                            <div>${rank}</div>
+                            <div>${isSharedRank ? `공동${rank}위` : `${rank}위`}</div>
                         </div>
                         <div class="player-info">
                             <div class="player-name">
@@ -1414,15 +1418,15 @@
                             <div class="player-stats">
                                 <div class="stat-row" style="display: flex; gap: 12px; margin-bottom: 4px;">
                                     <div class="stat-item">
-                                        <span>🏆 승리:</span>
+                                        <span>승리:</span>
                                         <span>${player.wins}회</span>
                                     </div>
                                     <div class="stat-item">
-                                        <span>🤝 무승부:</span>
+                                        <span>무승부:</span>
                                         <span>${player.totalMatches - player.wins - player.losses}회</span>
                                     </div>
                                     <div class="stat-item">
-                                        <span>💥 패배:</span>
+                                        <span>패배:</span>
                                         <span>${player.losses}회</span>
                                     </div>
                                 </div>
