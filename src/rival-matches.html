@@ -574,14 +574,14 @@
 
         /* 경기 유형 체크박스 스타일 */
         .match-type-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            display: flex;
             gap: 12px;
             margin-bottom: 20px;
             padding: 15px;
             background: #f8f9fb;
             border-radius: 12px;
             border: 1px solid #e9ecef;
+            justify-content: space-between;
         }
 
         .match-type-label {
@@ -649,14 +649,17 @@
         /* 모바일에서 경기유형 선택 스타일 */
         @media (max-width: 768px) {
             .match-type-group {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                gap: 8px;
                 padding: 12px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
             }
             
             .match-type-label {
-                padding: 10px 12px;
-                font-size: 13px;
+                padding: 8px 12px;
+                font-size: 12px;
+                min-width: 60px;
+                flex-shrink: 0;
             }
         }
 
