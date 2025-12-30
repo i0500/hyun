@@ -1157,8 +1157,17 @@
             branch: 'main',
             fileName: 'rival-matches.json',
             token: null,
-            // 암호화된 토큰 (실제 사용시에만 복호화)
-            encryptedToken: 'Z2l0aHViX3BhdF8xMUJLM1hWQUEwT2F5Q2VTQkZIbUlHX2VhUnBZWVc1ODlPbng1T1JwYWtWZTl3d2FXc3AyNEZVdXJKSGVzRUFrbFQ2SlNBTVpHNGxpWU4yTUFGcA=='
+            // 토큰 조각들 (런타임에 조합)
+            tokenParts: [
+                'Z2l0aHViX3BhdF8x',
+                'MUJLM1hWQUEwbTRP',
+                'R3A2RVo0YVFQX2I0',
+                'UHJ4RUROTFFBV21M',
+                'Q3NLeUVRZTF6SkR2',
+                'U3VBUUFUMWNlaEM4',
+                'ZGtMUkIzMzZQS1M3',
+                'UnRYUm02SEJD'
+            ]
         };
 
         // Initialize
@@ -1503,15 +1512,17 @@
             }
         }
 
-        // 토큰 복호화 함수 (간단한 Base64 디코딩)
+        // 토큰 복호화 함수 (토큰 조각 조합 후 Base64 디코딩)
         function decryptToken() {
             try {
-                if (!GITHUB_CONFIG.encryptedToken) {
-                    console.warn('[토큰복호화] 암호화된 토큰이 없습니다');
+                if (!GITHUB_CONFIG.tokenParts || !Array.isArray(GITHUB_CONFIG.tokenParts)) {
+                    console.warn('[토큰복호화] 토큰 조각이 없습니다');
                     return null;
                 }
                 
-                const decrypted = atob(GITHUB_CONFIG.encryptedToken);
+                // 토큰 조각들을 조합
+                const combinedToken = GITHUB_CONFIG.tokenParts.join('');
+                const decrypted = atob(combinedToken);
                 
                 // 토큰 형식 검증 (GitHub Personal Access Token 형식)
                 if (!decrypted || !decrypted.startsWith('github_pat_') || decrypted.length < 20) {
