@@ -1559,7 +1559,7 @@
                                 ${specialBadge}
                             </div>
                             <div class="player-stats" style="margin-top: 2px;">
-                                <div class="stat-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <div class="stat-row" style="display: flex; gap: 12px;">
                                     ${player.wins > 0 ? `<div class="stat-item"><span style="color: #28a745; font-weight: 500;">승리: ${player.wins}회</span></div>` : ''}
                                     ${(player.totalMatches - player.wins - player.losses) > 0 ? `<div class="stat-item"><span style="color: #6c757d; font-weight: 500;">무승부: ${player.totalMatches - player.wins - player.losses}회</span></div>` : ''}
                                     ${player.losses > 0 ? `<div class="stat-item"><span style="color: #dc3545; font-weight: 500;">패배: ${player.losses}회</span></div>` : ''}
