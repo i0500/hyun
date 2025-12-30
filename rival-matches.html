@@ -1559,15 +1559,15 @@
                                 ${specialBadge}
                             </div>
                             <div class="player-stats" style="margin-top: 2px;">
-                                <div class="stat-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <div class="stat-row" style="display: flex; gap: 12px;">
                                     ${player.wins > 0 ? `<div class="stat-item"><span style="color: #28a745; font-weight: 500;">승리: ${player.wins}회</span></div>` : ''}
                                     ${(player.totalMatches - player.wins - player.losses) > 0 ? `<div class="stat-item"><span style="color: #6c757d; font-weight: 500;">무승부: ${player.totalMatches - player.wins - player.losses}회</span></div>` : ''}
                                     ${player.losses > 0 ? `<div class="stat-item"><span style="color: #dc3545; font-weight: 500;">패배: ${player.losses}회</span></div>` : ''}
                                 </div>
                                 <div class="stat-row match-types" style="display: flex; gap: 12px;">
-                                    ${player.singleMatches > 0 ? `<div class="stat-item"><span>🎾 단식:</span><span>${player.singleMatches}회</span></div>` : ''}
-                                    ${player.menDoubles > 0 ? `<div class="stat-item"><span>👨 남복:</span><span>${player.menDoubles}회</span></div>` : ''}
-                                    ${player.womenDoubles > 0 ? `<div class="stat-item"><span>👩 여복:</span><span>${player.womenDoubles}회</span></div>` : ''}
+                                    ${player.singleMatches > 0 ? `<div class="stat-item"><span>👤 단식:</span><span>${player.singleMatches}회</span></div>` : ''}
+                                    ${player.menDoubles > 0 ? `<div class="stat-item"><span>👥 남복:</span><span>${player.menDoubles}회</span></div>` : ''}
+                                    ${player.womenDoubles > 0 ? `<div class="stat-item"><span>👭 여복:</span><span>${player.womenDoubles}회</span></div>` : ''}
                                     ${player.mixedDoubles > 0 ? `<div class="stat-item"><span>👫 혼복:</span><span>${player.mixedDoubles}회</span></div>` : ''}
                                 </div>
                             </div>
