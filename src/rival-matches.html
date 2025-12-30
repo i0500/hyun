@@ -1522,20 +1522,27 @@
                 token = decryptToken();
                 if (token) {
                     localStorage.setItem('githubToken', token);
-                    console.log('[GitHub] 내장된 토큰으로 자동 설정됨');
+                    console.log('[GitHub상태] 내장된 토큰으로 자동 설정됨');
                 }
             }
             
             const statusDot = document.getElementById('githubStatus');
             const statusText = document.getElementById('statusText');
             
+            if (!statusDot || !statusText) {
+                console.warn('[GitHub상태] 상태 표시 요소를 찾을 수 없음');
+                return;
+            }
+            
             if (token) {
                 GITHUB_CONFIG.token = token;
                 statusDot.classList.add('connected');
-                statusText.textContent = 'GitHub 연결됨';
+                statusText.textContent = '🔗 GitHub 동기화 준비완료';
+                console.log('[GitHub상태] 토큰 설정 완료 - 동기화 준비됨');
             } else {
                 statusDot.classList.remove('connected');
-                statusText.textContent = 'GitHub 토큰 필요';
+                statusText.textContent = '⚠️ GitHub 토큰 필요';
+                console.log('[GitHub상태] 토큰 없음 - 수동 설정 필요');
             }
         }
 
@@ -1565,105 +1572,135 @@
         }
 
         async function syncWithGitHub() {
-            // 토큰이 없으면 자동으로 내장된 토큰 사용 시도
-            if (!GITHUB_CONFIG.token) {
-                const autoToken = decryptToken();
-                if (autoToken) {
-                    GITHUB_CONFIG.token = autoToken;
-                    localStorage.setItem('githubToken', autoToken);
-                    console.log('[GitHub] 자동 토큰 사용');
-                } else {
-                    // 내장 토큰도 실패하면 수동 입력 요청
-                    const token = prompt('GitHub Personal Access Token을 입력하세요.\n\n토큰 생성: GitHub → Settings → Developer settings → Personal access tokens → Generate new token\n필요한 권한: repo');
-                    if (token) {
-                        localStorage.setItem('githubToken', token);
-                        GITHUB_CONFIG.token = token;
-                        checkGitHubConnection();
-                    } else {
-                        return;
-                    }
-                }
-            }
-
-            // 먼저 토큰 유효성 검증
-            const isValid = await validateGitHubToken(GITHUB_CONFIG.token);
-            if (!isValid) {
-                // 토큰이 유효하지 않으면 localStorage에서 제거하고 재시도
-                localStorage.removeItem('githubToken');
-                GITHUB_CONFIG.token = null;
+            try {
+                console.log('[수동동기화] GitHub 동기화 시작');
                 
-                // 내장 토큰으로 재시도
-                const autoToken = decryptToken();
-                if (autoToken) {
-                    const isAutoValid = await validateGitHubToken(autoToken);
-                    if (isAutoValid) {
+                // 1. 토큰 확인 및 설정
+                if (!GITHUB_CONFIG.token) {
+                    const autoToken = decryptToken();
+                    if (autoToken) {
                         GITHUB_CONFIG.token = autoToken;
                         localStorage.setItem('githubToken', autoToken);
-                        console.log('[GitHub] 내장 토큰으로 재설정 성공');
+                        console.log('[수동동기화] 내장 토큰 사용');
                     } else {
-                        alert('GitHub 토큰이 유효하지 않습니다.\n토큰을 다시 생성해주세요.\n\n토큰 생성 방법:\n1. GitHub.com 로그인\n2. Settings → Developer settings\n3. Personal access tokens → Tokens (classic)\n4. Generate new token\n5. repo 권한 체크 후 생성');
+                        alert('❌ GitHub 토큰이 없습니다.\n\n🔧 토큰 생성 방법:\n1. GitHub.com 로그인\n2. Settings → Developer settings\n3. Personal access tokens → Tokens (classic)\n4. Generate new token\n5. repo 권한 체크 후 생성');
+                        return;
+                    }
+                }
+
+                // 2. 토큰 유효성 검증
+                console.log('[수동동기화] 토큰 유효성 검증 중...');
+                const isValid = await validateGitHubToken(GITHUB_CONFIG.token);
+                if (!isValid) {
+                    console.log('[수동동기화] 토큰 무효 - 내장 토큰으로 재시도');
+                    localStorage.removeItem('githubToken');
+                    GITHUB_CONFIG.token = null;
+                    
+                    // 내장 토큰으로 재시도
+                    const autoToken = decryptToken();
+                    if (autoToken) {
+                        const isAutoValid = await validateGitHubToken(autoToken);
+                        if (isAutoValid) {
+                            GITHUB_CONFIG.token = autoToken;
+                            localStorage.setItem('githubToken', autoToken);
+                            console.log('[수동동기화] 내장 토큰으로 재설정 성공');
+                        } else {
+                            alert('❌ GitHub 토큰이 유효하지 않습니다.\n\n🔧 새로운 토큰을 생성해주세요:\n• GitHub → Settings → Developer settings\n• Personal access tokens → Generate new token\n• repo 권한 필수 체크');
+                            checkGitHubConnection();
+                            return;
+                        }
+                    } else {
+                        alert('❌ 사용 가능한 토큰이 없습니다.\n새로운 토큰을 생성해주세요.');
                         checkGitHubConnection();
                         return;
                     }
-                } else {
-                    alert('GitHub 토큰이 유효하지 않습니다. 새로운 토큰을 생성해주세요.');
-                    checkGitHubConnection();
-                    return;
                 }
-            }
-            
-            try {
-                await Promise.all([loadFromGitHub(), syncToGitHub()]);
-                alert('✅ GitHub 동기화가 완료되었습니다!\n\n🌐 다른 사람들이 이 링크로 접속해도 자동으로 동기화됩니다:\nhttps://i0500.github.io/hyun/rival-matches.html');
-                checkGitHubConnection(); // 상태 업데이트
+                
+                // 3. 실제 동기화 수행 (순서대로)
+                console.log('[수동동기화] GitHub에서 데이터 로드 중...');
+                await loadFromGitHub();
+                
+                console.log('[수동동기화] GitHub에 데이터 저장 중...');
+                await syncToGitHub();
+                
+                // 4. 성공 알림
+                console.log('[수동동기화] 동기화 완료');
+                alert('✅ GitHub 동기화가 완료되었습니다!\n\n🌐 실시간 멀티유저 동기화 활성화:\n• 다른 사람들도 이 링크로 접속 가능\n• 모든 경기기록이 자동으로 공유됩니다\n\nhttps://i0500.github.io/hyun/rival-matches.html');
+                
+                // 5. 상태 업데이트
+                checkGitHubConnection();
+                
             } catch (error) {
-                console.error('GitHub 동기화 오류:', error);
-                // 토큰 오류인 경우 토큰 재입력 요청
+                console.error('[수동동기화] 오류:', error);
+                
+                // 상세한 오류 처리
+                if (error.message.includes('401')) {
+                    alert('❌ GitHub 토큰 권한 오류 (401)\n\n🔧 해결방법:\n• 토큰이 만료되었을 수 있습니다\n• 새로운 토큰을 repo 권한으로 생성해주세요');
+                } else if (error.message.includes('403')) {
+                    alert('❌ GitHub 접근 권한 오류 (403)\n\n🔧 해결방법:\n• 토큰에 repo 권한이 없습니다\n• 새로운 토큰을 repo 권한으로 생성해주세요');
+                } else if (error.message.includes('404')) {
+                    alert('❌ 저장소를 찾을 수 없습니다 (404)\n\n🔧 해결방법:\n• 저장소 경로를 확인해주세요\n• 저장소가 public인지 확인해주세요');
+                } else if (error.message.includes('NetworkError') || error.message.includes('fetch')) {
+                    alert('❌ 네트워크 연결 오류\n\n🔧 해결방법:\n• 인터넷 연결을 확인해주세요\n• 잠시 후 다시 시도해주세요');
+                } else {
+                    alert(`❌ GitHub 동기화 중 오류가 발생했습니다:\n\n${error.message}\n\n🔧 문제가 계속되면 페이지를 새로고침 해주세요.`);
+                }
+                
+                // 토큰 관련 오류면 토큰 재설정
                 if (error.message.includes('401') || error.message.includes('403')) {
                     localStorage.removeItem('githubToken');
                     GITHUB_CONFIG.token = null;
-                    alert('GitHub 토큰 권한이 부족합니다.\n새로운 토큰을 repo 권한으로 생성해주세요.');
                     checkGitHubConnection();
-                } else {
-                    alert('GitHub 동기화 중 오류가 발생했습니다:\n' + error.message);
                 }
             }
         }
 
         async function syncToGitHub() {
-            if (!GITHUB_CONFIG.token) return false;
+            if (!GITHUB_CONFIG.token) {
+                throw new Error('GitHub 토큰이 설정되지 않았습니다');
+            }
             
             try {
+                console.log('[GitHub업로드] 데이터 준비 중...');
                 const rivalData = {
                     matches: matches,
                     lastUpdated: new Date().toISOString(),
-                    version: '1.0'
+                    version: '1.0',
+                    totalMatches: matches.length
                 };
 
                 // Get current file SHA (if exists)
                 let sha = null;
                 try {
+                    console.log('[GitHub업로드] 기존 파일 SHA 확인 중...');
                     const getResponse = await fetch(
                         `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.fileName}`,
                         {
                             headers: {
                                 'Authorization': `token ${GITHUB_CONFIG.token}`,
-                                'Accept': 'application/vnd.github.v3+json'
+                                'Accept': 'application/vnd.github.v3+json',
+                                'User-Agent': 'HyunClub-RivalMatches/1.0'
                             }
                         }
                     );
                     if (getResponse.ok) {
                         const data = await getResponse.json();
                         sha = data.sha;
+                        console.log('[GitHub업로드] 기존 파일 발견, SHA:', sha.substring(0, 7));
+                    } else if (getResponse.status === 404) {
+                        console.log('[GitHub업로드] 새 파일 생성');
+                    } else {
+                        console.warn('[GitHub업로드] SHA 확인 실패:', getResponse.status);
                     }
                 } catch (e) {
-                    // File doesn't exist, that's okay
+                    console.log('[GitHub업로드] SHA 확인 실패, 새 파일로 처리:', e.message);
                 }
 
                 // Update or create file
+                console.log('[GitHub업로드] 파일 콘텐츠 인코딩 중...');
                 const content = btoa(unescape(encodeURIComponent(JSON.stringify(rivalData, null, 2))));
                 const updateData = {
-                    message: '경기기록 업데이트: ' + new Date().toLocaleString('ko-KR'),
+                    message: `🎾 현클럽 경기기록 업데이트 (총 ${matches.length}개 경기): ${new Date().toLocaleString('ko-KR')}`,
                     content: content,
                     branch: GITHUB_CONFIG.branch
                 };
@@ -1672,6 +1709,7 @@
                     updateData.sha = sha;
                 }
 
+                console.log('[GitHub업로드] GitHub API 호출 중...');
                 const response = await fetch(
                     `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.fileName}`,
                     {
@@ -1679,34 +1717,55 @@
                         headers: {
                             'Authorization': `token ${GITHUB_CONFIG.token}`,
                             'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'HyunClub-RivalMatches/1.0'
                         },
                         body: JSON.stringify(updateData)
                     }
                 );
 
                 if (response.ok) {
-                    console.log('[GitHub] 경기기록 저장 성공');
+                    const result = await response.json();
+                    console.log('[GitHub업로드] 성공! 새 SHA:', result.content.sha.substring(0, 7));
                     return true;
                 } else {
-                    throw new Error(`GitHub API 오류: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('[GitHub업로드] API 응답 오류:', response.status, errorText);
+                    throw new Error(`GitHub API 오류 (${response.status}): ${response.statusText}`);
                 }
             } catch (error) {
-                console.error('[GitHub] 저장 오류:', error);
+                console.error('[GitHub업로드] 전체 오류:', error);
+                
+                // 더 구체적인 오류 메시지
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    throw new Error('네트워크 연결 오류: 인터넷 연결을 확인해주세요');
+                } else if (error.message.includes('401')) {
+                    throw new Error('토큰 권한 오류: 토큰이 만료되었거나 잘못되었습니다');
+                } else if (error.message.includes('403')) {
+                    throw new Error('접근 권한 오류: repo 권한이 있는 토큰이 필요합니다');
+                } else if (error.message.includes('404')) {
+                    throw new Error('저장소 오류: 저장소를 찾을 수 없거나 접근할 수 없습니다');
+                }
+                
                 throw error;
             }
         }
 
         async function loadFromGitHub() {
-            if (!GITHUB_CONFIG.token) return false;
+            if (!GITHUB_CONFIG.token) {
+                console.log('[GitHub다운로드] 토큰이 없어서 건너뜀');
+                return false;
+            }
             
             try {
+                console.log('[GitHub다운로드] GitHub에서 데이터 로드 시작...');
                 const response = await fetch(
                     `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.fileName}`,
                     {
                         headers: {
                             'Authorization': `token ${GITHUB_CONFIG.token}`,
-                            'Accept': 'application/vnd.github.v3+json'
+                            'Accept': 'application/vnd.github.v3+json',
+                            'User-Agent': 'HyunClub-RivalMatches/1.0'
                         }
                     }
                 );
