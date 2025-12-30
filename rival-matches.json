@@ -7,9 +7,17 @@
       "scoreA": 4,
       "scoreB": 6,
       "timestamp": 1767086262187
+    },
+    {
+      "title": "100-Match Series (2/100)",
+      "teamA": "전찬수 / 우수문",
+      "teamB": "김성준 / 채영수",
+      "scoreA": 6,
+      "scoreB": 2,
+      "timestamp": 1767129659687
     }
   ],
-  "lastUpdated": "2025-12-30T21:05:44.058Z",
+  "lastUpdated": "2025-12-30T21:20:59.688Z",
   "version": "1.0",
-  "totalMatches": 1
+  "totalMatches": 2
 }
