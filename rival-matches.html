@@ -703,15 +703,16 @@
         }
 
         .filter-btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
             border: 1px solid #dee2e6;
             background: white;
             color: #666;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-width: 50px;
         }
 
         .filter-btn:hover {
@@ -723,6 +724,20 @@
             background: #2c5f2d;
             color: white;
             border-color: #2c5f2d;
+        }
+
+        /* 모바일에서 필터 버튼 더 작게 */
+        @media (max-width: 768px) {
+            .filter-container {
+                gap: 6px;
+                padding: 0 15px;
+            }
+            
+            .filter-btn {
+                padding: 5px 10px;
+                font-size: 11px;
+                min-width: 45px;
+            }
         }
 
         /* 페이지네이션 스타일 */
@@ -1414,6 +1429,13 @@
                 });
             });
             
+            // 승점이 0점 이하로 내려가지 않도록 처리
+            Object.keys(playerStats).forEach(player => {
+                if (playerStats[player].totalPoints < 0) {
+                    playerStats[player].totalPoints = 0;
+                }
+            });
+            
             // 승점 순으로 정렬
             const rankings = Object.entries(playerStats)
                 .map(([name, stats]) => ({ name, ...stats }))
@@ -1585,24 +1607,19 @@
         };
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadMatches();
-            
-            // 자동 토큰 설정 및 GitHub 연결
-            initializeGitHub();
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 먼저 GitHub에서 최신 데이터 로드 시도
+            try {
+                await initializeGitHub();
+                // GitHub 연결이 성공하면 자동으로 최신 데이터가 로드됨
+            } catch (error) {
+                console.log('[초기화] GitHub 로드 실패, 로컬 데이터 사용:', error.message);
+                // GitHub 연결 실패시에만 로컬 데이터 사용
+                loadMatches();
+            }
             
             // 경기 유형 선택 이벤트 설정
             setupMatchTypeSelection();
-            
-            // 정기적으로 GitHub 동기화 상태 확인 (30초마다)
-            setInterval(() => {
-                if (GITHUB_CONFIG.token) {
-                    console.log('[자동동기화] GitHub 상태 확인');
-                    loadFromGitHub().catch(error => {
-                        console.log('[자동동기화] 실패:', error.message);
-                    });
-                }
-            }, 30000); // 30초 = 30,000ms
             
             // 페이지 포커스시 즉시 동기화
             window.addEventListener('focus', () => {
@@ -1640,29 +1657,32 @@
                         console.log('[GitHub초기화] 토큰 검증 성공 - 자동 동기화 활성화');
                         checkGitHubConnection();
                         
-                        // 5. 자동 데이터 로드
-                        setTimeout(async () => {
-                            try {
-                                await loadFromGitHub();
-                                console.log('[GitHub초기화] 자동 데이터 로드 완료');
-                            } catch (error) {
-                                console.log('[GitHub초기화] 데이터 로드 실패 (정상):', error.message);
-                            }
-                        }, 1000);
+                        // 5. 즉시 최신 데이터 로드
+                        try {
+                            await loadFromGitHub();
+                            console.log('[GitHub초기화] 최신 데이터 로드 완료');
+                        } catch (error) {
+                            console.log('[GitHub초기화] 데이터 로드 실패, 로컬 데이터 사용:', error.message);
+                            // GitHub 로드 실패시 로컬 데이터 사용
+                            loadMatches();
+                        }
                         
                     } else {
-                        console.warn('[GitHub초기화] 토큰이 유효하지 않음 - 수동 설정 필요');
+                        console.warn('[GitHub초기화] 토큰이 유효하지 않음 - 로컬 데이터 사용');
                         localStorage.removeItem('githubToken');
                         GITHUB_CONFIG.token = null;
                         checkGitHubConnection();
+                        loadMatches();
                     }
                 } else {
-                    console.warn('[GitHub초기화] 사용 가능한 토큰이 없음');
+                    console.warn('[GitHub초기화] 사용 가능한 토큰이 없음 - 로컬 데이터 사용');
                     checkGitHubConnection();
+                    loadMatches();
                 }
             } catch (error) {
-                console.error('[GitHub초기화] 오류:', error);
+                console.error('[GitHub초기화] 오류 - 로컬 데이터 사용:', error);
                 checkGitHubConnection();
+                loadMatches();
             }
         }
 
