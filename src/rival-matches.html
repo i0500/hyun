@@ -866,23 +866,25 @@
         <!-- 개인 승점 탭 -->
         <div id="rankingsContent" class="tab-content">
             <div class="ranking-header">
-                <h3 style="margin-bottom: 15px;">📊 승점 산정 기준</h3>
+                <h3 style="margin-bottom: 15px;">승점 산정 기준</h3>
                 <p style="margin-bottom: 10px;">치열한 경기를 통해 쌓아온 승점은 이렇게 계산됩니다:</p>
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
-                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                        <span style="width: 60px; font-weight: bold; color: #28a745;">승리:</span>
-                        <span style="font-size: 18px; margin-right: 10px;">🏆</span>
-                        <span style="font-weight: bold; color: #28a745;">3점</span>
-                    </div>
-                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                        <span style="width: 60px; font-weight: bold; color: #6c757d;">무승부:</span>
-                        <span style="font-size: 18px; margin-right: 10px;">🤝</span>
-                        <span style="font-weight: bold; color: #6c757d;">1점</span>
-                    </div>
-                    <div style="display: flex; align-items: center;">
-                        <span style="width: 60px; font-weight: bold; color: #dc3545;">패배:</span>
-                        <span style="font-size: 18px; margin-right: 10px;">😢</span>
-                        <span style="font-weight: bold; color: #dc3545;">0점</span>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <span style="font-size: 14px; font-weight: bold; color: #28a745;">승리:</span>
+                            <span style="font-size: 16px;">🏆</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #28a745;">3점</span>
+                        </span>
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <span style="font-size: 14px; font-weight: bold; color: #6c757d;">무승부:</span>
+                            <span style="font-size: 16px;">🤝</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #6c757d;">1점</span>
+                        </span>
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <span style="font-size: 14px; font-weight: bold; color: #dc3545;">패배:</span>
+                            <span style="font-size: 16px;">😢</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #dc3545;">0점</span>
+                        </span>
                     </div>
                     <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #dee2e6; font-size: 13px; color: #6c757d;">
                         <div>• 단식/복식 구분 없이 동일한 점수 적용</div>
@@ -1166,7 +1168,7 @@
                                     <span>${player.wins}회</span>
                                 </div>
                                 <div class="stat-item">
-                                    <span>🧍 단식:</span>
+                                    <span>👤 단식:</span>
                                     <span>${player.singleMatches}회</span>
                                 </div>
                                 <div class="stat-item">
