@@ -562,7 +562,7 @@
         /* Mobile Modal Footer */
         @media (max-width: 768px) {
             .modal-footer {
-                flex-direction: column-reverse;
+                flex-direction: column;
                 align-items: stretch;
             }
             
@@ -575,46 +575,92 @@
         /* 경기 유형 체크박스 스타일 */
         .match-type-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 20px;
-            justify-content: center;
+            padding: 15px;
+            background: #f8f9fb;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            justify-content: space-between;
         }
 
         .match-type-label {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #dee2e6;
-            background: white;
-            transition: all 0.3s ease;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
+            text-align: center;
+            min-width: 80px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .match-type-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
         }
 
         .match-type-label:hover {
             border-color: #2c5f2d;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(44, 95, 45, 0.15);
+        }
+
+        .match-type-label:hover::before {
+            left: 100%;
         }
 
         .match-type-label input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-            accent-color: #2c5f2d;
+            display: none;
         }
 
         .match-type-label.selected {
-            background: #2c5f2d;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
             border-color: #2c5f2d;
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 95, 45, 0.3);
+        }
+
+        .match-type-label.selected::before {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         .type-label-text {
             font-size: 14px;
             font-weight: 500;
+        }
+
+        /* 모바일에서 경기유형 선택 스타일 */
+        @media (max-width: 768px) {
+            .match-type-group {
+                gap: 8px;
+                padding: 12px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            
+            .match-type-label {
+                padding: 8px 12px;
+                font-size: 12px;
+                min-width: 60px;
+                flex-shrink: 0;
+            }
         }
 
         /* 경기 유형 인라인 스타일 (타이틀 앞에 표시) */
@@ -1198,8 +1244,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="hideModal()">취소</button>
                 <button class="btn" onclick="saveMatch()">저장</button>
+                <button class="btn btn-secondary" onclick="hideModal()">취소</button>
                 <button class="btn btn-danger" id="deleteBtn" onclick="deleteMatch()" style="display: none;">삭제</button>
             </div>
         </div>
@@ -1548,15 +1594,25 @@
             // 경기 유형 선택 이벤트 설정
             setupMatchTypeSelection();
             
-            // 정기적으로 GitHub 동기화 상태 확인 (5분마다)
+            // 정기적으로 GitHub 동기화 상태 확인 (30초마다)
             setInterval(() => {
-                if (GITHUB_CONFIG.token && matches.length > 0) {
+                if (GITHUB_CONFIG.token) {
                     console.log('[자동동기화] GitHub 상태 확인');
                     loadFromGitHub().catch(error => {
                         console.log('[자동동기화] 실패:', error.message);
                     });
                 }
-            }, 300000); // 5분 = 300,000ms
+            }, 30000); // 30초 = 30,000ms
+            
+            // 페이지 포커스시 즉시 동기화
+            window.addEventListener('focus', () => {
+                if (GITHUB_CONFIG.token) {
+                    console.log('[포커스동기화] 페이지 활성화 - 즉시 동기화');
+                    loadFromGitHub().catch(error => {
+                        console.log('[포커스동기화] 실패:', error.message);
+                    });
+                }
+            });
         });
 
         // GitHub 초기화 및 자동 설정
