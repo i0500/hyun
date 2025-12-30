@@ -572,6 +572,119 @@
             }
         }
 
+        /* 경기 유형 체크박스 스타일 */
+        .match-type-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .match-type-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .match-type-label:hover {
+            background: #e9ecef;
+        }
+
+        .match-type-label input[type="radio"] {
+            display: none;
+        }
+
+        .match-type-label input[type="radio"]:checked + .type-label-text {
+            color: white;
+            font-weight: 600;
+        }
+
+        .match-type-label input[type="radio"]:checked {
+            background: #2c5f2d;
+        }
+
+        .match-type-label.selected {
+            background: #2c5f2d;
+            color: white;
+        }
+
+        .type-label-text {
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        /* 경기 유형 배지 스타일 (플로팅 라벨) */
+        .match-type-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .match-type-badge.men-doubles {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+
+        .match-type-badge.women-doubles {
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+        }
+
+        .match-type-badge.mixed-doubles {
+            background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+        }
+
+        .match-type-badge.singles {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+
+        /* 필터 버튼 스타일 */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+            padding: 0 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #dee2e6;
+            background: white;
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #2c5f2d;
+            color: #2c5f2d;
+        }
+
+        .filter-btn.active {
+            background: #2c5f2d;
+            color: white;
+            border-color: #2c5f2d;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             body {
@@ -717,19 +830,37 @@
             }
 
             .team-vs {
-                flex-direction: column;
-                gap: 8px;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 8px !important;
                 text-align: center;
+                width: 100% !important;
+                flex-wrap: nowrap !important;
             }
 
             .team-name {
-                font-size: 1rem;
+                font-size: 0.9rem;
+                flex: 1 1 0 !important;
+                min-width: 0 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+            
+            .team-name:first-child {
+                text-align: right !important;
+            }
+            
+            .team-name:last-child {
+                text-align: left !important;
             }
 
             .vs-badge {
-                align-self: center;
+                flex: 0 0 auto !important;
                 font-size: 10px;
-                padding: 2px 8px;
+                padding: 2px 6px;
             }
 
             .score-display {
@@ -886,6 +1017,14 @@
         <!-- 개인 승점 탭 -->
         <div id="rankingsContent" class="tab-content">
             <div class="ranking-header">
+                <!-- 필터 버튼 추가 -->
+                <div class="filter-container">
+                    <button class="filter-btn active" onclick="filterRankings('전체')">🏆 전체</button>
+                    <button class="filter-btn" onclick="filterRankings('남복')">👬 남복</button>
+                    <button class="filter-btn" onclick="filterRankings('여복')">👭 여복</button>
+                    <button class="filter-btn" onclick="filterRankings('혼복')">👫 혼복</button>
+                    <button class="filter-btn" onclick="filterRankings('단식')">🎾 단식</button>
+                </div>
                 <h3 style="margin-bottom: 15px;">승점 산정 기준</h3>
                 <p style="margin-bottom: 10px;">치열한 경기를 통해 쌓아온 승점은 이렇게 계산됩니다:</p>
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
@@ -940,6 +1079,27 @@
                         <input type="text" id="matchTitle" placeholder="예: 2024년 현클럽 챔피언십">
                     </div>
                     <div class="form-group">
+                        <label>경기 유형</label>
+                        <div class="match-type-group">
+                            <label class="match-type-label" id="menDoublesLabel">
+                                <input type="radio" name="matchType" value="남복" id="menDoubles">
+                                <span class="type-label-text">👬 남복</span>
+                            </label>
+                            <label class="match-type-label" id="womenDoublesLabel">
+                                <input type="radio" name="matchType" value="여복" id="womenDoubles">
+                                <span class="type-label-text">👭 여복</span>
+                            </label>
+                            <label class="match-type-label" id="mixedDoublesLabel">
+                                <input type="radio" name="matchType" value="혼복" id="mixedDoubles" checked>
+                                <span class="type-label-text">👫 혼복</span>
+                            </label>
+                            <label class="match-type-label" id="singlesLabel">
+                                <input type="radio" name="matchType" value="단식" id="singles">
+                                <span class="type-label-text">🎾 단식</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>팀 A</label>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" id="teamA1" placeholder="선수1 (예: 김철수)" style="flex: 1;">
@@ -975,7 +1135,26 @@
         // Global variables
         let matches = [];
         let editingIndex = -1;
+        let currentFilter = '전체'; // 현재 필터 상태
         
+        // 경기 유형 선택 처리
+        function setupMatchTypeSelection() {
+            const labels = document.querySelectorAll('.match-type-label');
+            labels.forEach(label => {
+                label.addEventListener('click', function() {
+                    // 모든 라벨에서 selected 클래스 제거
+                    labels.forEach(l => l.classList.remove('selected'));
+                    // 클릭된 라벨에 selected 클래스 추가
+                    this.classList.add('selected');
+                    // 라디오 버튼 선택
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) {
+                        radio.checked = true;
+                    }
+                });
+            });
+        }
+
         // 탭 전환 함수
         function switchTab(tabName) {
             // 탭 버튼 상태 업데이트
@@ -992,12 +1171,29 @@
             }
         }
 
-        // 개인별 승점 계산 및 랭킹 업데이트
+        // 필터링 함수
+        function filterRankings(type) {
+            currentFilter = type;
+            
+            // 필터 버튼 상태 업데이트
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 필터링된 랭킹 업데이트
+            updateRankings();
+        }
+
+        // 개인별 승점 계산 및 랭킹 업데이트 (필터링 포함)
         function updateRankings() {
             const playerStats = {};
             
+            // 필터링된 경기만 선택
+            const filteredMatches = currentFilter === '전체' 
+                ? matches 
+                : matches.filter(match => match.matchType === currentFilter);
+            
             // 각 경기에서 플레이어별 승점 계산
-            matches.forEach(match => {
+            filteredMatches.forEach(match => {
                 const scoreA = parseInt(match.scoreA || 0);
                 const scoreB = parseInt(match.scoreB || 0);
                 
@@ -1014,15 +1210,28 @@
                             totalMatches: 0, 
                             totalPoints: 0,
                             singleMatches: 0,
-                            doubleMatches: 0
+                            doubleMatches: 0,
+                            menDoubles: 0,
+                            womenDoubles: 0,
+                            mixedDoubles: 0
                         };
                     }
                     
                     playerStats[player].totalMatches++;
-                    if (playersA.length === 1) {
+                    
+                    // 경기 유형별 카운트
+                    const matchType = match.matchType || '혼복';
+                    if (matchType === '단식') {
                         playerStats[player].singleMatches++;
                     } else {
                         playerStats[player].doubleMatches++;
+                        if (matchType === '남복') {
+                            playerStats[player].menDoubles++;
+                        } else if (matchType === '여복') {
+                            playerStats[player].womenDoubles++;
+                        } else {
+                            playerStats[player].mixedDoubles++;
+                        }
                     }
                     
                     // 승부 및 승점 계산
@@ -1046,15 +1255,28 @@
                             totalMatches: 0, 
                             totalPoints: 0,
                             singleMatches: 0,
-                            doubleMatches: 0
+                            doubleMatches: 0,
+                            menDoubles: 0,
+                            womenDoubles: 0,
+                            mixedDoubles: 0
                         };
                     }
                     
                     playerStats[player].totalMatches++;
-                    if (playersB.length === 1) {
+                    
+                    // 경기 유형별 카운트
+                    const matchType = match.matchType || '혼복';
+                    if (matchType === '단식') {
                         playerStats[player].singleMatches++;
                     } else {
                         playerStats[player].doubleMatches++;
+                        if (matchType === '남복') {
+                            playerStats[player].menDoubles++;
+                        } else if (matchType === '여복') {
+                            playerStats[player].womenDoubles++;
+                        } else {
+                            playerStats[player].mixedDoubles++;
+                        }
                     }
                     
                     // 승부 및 승점 계산
@@ -1191,8 +1413,16 @@
                                     <span>${player.singleMatches}회</span>
                                 </div>
                                 <div class="stat-item">
-                                    <span>👥 복식:</span>
-                                    <span>${player.doubleMatches}회</span>
+                                    <span>👬 남복:</span>
+                                    <span>${player.menDoubles || 0}회</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>👭 여복:</span>
+                                    <span>${player.womenDoubles || 0}회</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>👫 혼복:</span>
+                                    <span>${player.mixedDoubles || 0}회</span>
                                 </div>
                             </div>
                         </div>
@@ -1227,6 +1457,9 @@
             
             // 자동 토큰 설정 및 GitHub 연결
             initializeGitHub();
+            
+            // 경기 유형 선택 이벤트 설정
+            setupMatchTypeSelection();
             
             // 정기적으로 GitHub 동기화 상태 확인 (5분마다)
             setInterval(() => {
@@ -1424,8 +1657,27 @@
             const matchDate = new Date(match.timestamp || Date.now());
             const dateStr = `${matchDate.getFullYear()}.${(matchDate.getMonth() + 1).toString().padStart(2, '0')}.${matchDate.getDate().toString().padStart(2, '0')}`;
 
+            // 경기 유형 배지
+            const matchType = match.matchType || '혼복';
+            let typeClass = 'mixed-doubles';
+            let typeEmoji = '👫';
+            
+            if (matchType === '남복') {
+                typeClass = 'men-doubles';
+                typeEmoji = '👬';
+            } else if (matchType === '여복') {
+                typeClass = 'women-doubles';
+                typeEmoji = '👭';
+            } else if (matchType === '단식') {
+                typeClass = 'singles';
+                typeEmoji = '🎾';
+            }
+
             return `
-                <div class="match-card">
+                <div class="match-card" style="position: relative;">
+                    <div class="match-type-badge ${typeClass}">
+                        ${typeEmoji} ${matchType}
+                    </div>
                     <div class="match-header">
                         <div class="match-title">${match.title || '경기 기록'}</div>
                         <div class="match-actions mobile-actions">
@@ -1466,7 +1718,16 @@
             document.getElementById('teamA2').value = '';
             document.getElementById('teamB1').value = '';
             document.getElementById('teamB2').value = '';
+            
+            // 경기 유형 기본 선택 (혼복)
+            document.getElementById('mixedDoubles').checked = true;
+            document.querySelectorAll('.match-type-label').forEach(label => label.classList.remove('selected'));
+            document.getElementById('mixedDoublesLabel').classList.add('selected');
+            
             document.getElementById('matchModal').classList.add('show');
+            
+            // 경기 유형 선택 이벤트 설정
+            setTimeout(setupMatchTypeSelection, 100);
         }
 
         // Show edit modal
@@ -1491,7 +1752,29 @@
             document.getElementById('scoreA').value = match.scoreA || 0;
             document.getElementById('scoreB').value = match.scoreB || 0;
             
+            // 경기 유형 선택 복원
+            const matchType = match.matchType || '혼복';
+            document.querySelectorAll('.match-type-label').forEach(label => label.classList.remove('selected'));
+            document.querySelectorAll('input[name="matchType"]').forEach(radio => radio.checked = false);
+            
+            if (matchType === '남복') {
+                document.getElementById('menDoubles').checked = true;
+                document.getElementById('menDoublesLabel').classList.add('selected');
+            } else if (matchType === '여복') {
+                document.getElementById('womenDoubles').checked = true;
+                document.getElementById('womenDoublesLabel').classList.add('selected');
+            } else if (matchType === '단식') {
+                document.getElementById('singles').checked = true;
+                document.getElementById('singlesLabel').classList.add('selected');
+            } else {
+                document.getElementById('mixedDoubles').checked = true;
+                document.getElementById('mixedDoublesLabel').classList.add('selected');
+            }
+            
             document.getElementById('matchModal').classList.add('show');
+            
+            // 경기 유형 선택 이벤트 설정
+            setTimeout(setupMatchTypeSelection, 100);
         }
 
         // Hide modal
@@ -1508,6 +1791,14 @@
             const teamB2 = document.getElementById('teamB2').value.trim();
             const scoreA = parseInt(document.getElementById('scoreA').value);
             const scoreB = parseInt(document.getElementById('scoreB').value);
+            
+            // 경기 유형 가져오기
+            const selectedMatchType = document.querySelector('input[name="matchType"]:checked');
+            if (!selectedMatchType) {
+                alert('경기 유형을 선택해주세요.');
+                return;
+            }
+            const matchType = selectedMatchType.value;
 
             // 팀 이름 조합 (복식일 경우 / 로 구분)
             const teamA = teamA2 ? `${teamA1} / ${teamA2}` : teamA1;
@@ -1529,6 +1820,7 @@
                 teamB: teamB,
                 scoreA: scoreA,
                 scoreB: scoreB,
+                matchType: matchType, // 경기 유형 추가
                 timestamp: editingIndex >= 0 ? matches[editingIndex].timestamp : Date.now()
             };
 
@@ -1579,6 +1871,7 @@
                 '팀B': match.teamB || '',
                 '점수A': match.scoreA || 0,
                 '점수B': match.scoreB || 0,
+                '경기유형': match.matchType || '혼복',
                 '승리팀': match.scoreA > match.scoreB ? match.teamA : match.scoreB > match.scoreA ? match.teamB : '무승부',
                 '등록일시': new Date(match.timestamp || Date.now()).toLocaleString('ko-KR')
             }));
