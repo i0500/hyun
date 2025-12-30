@@ -1159,14 +1159,11 @@
             token: null,
             // 토큰 조각들 (런타임에 조합)
             tokenParts: [
-                'Z2l0aHViX3BhdF8x',
-                'MUJLM1hWQUEwbTRP',
-                'R3A2RVo0YVFQX2I0',
-                'UHJ4RUROTFFBV21M',
-                'Q3NLeUVRZTF6SkR2',
-                'U3VBUUFUMWNlaEM4',
-                'ZGtMUkIzMzZQS1M3',
-                'UnRYUm02SEJD'
+                'Z2hwX1FybzEz',
+                'NjMyOGtuSEJk',
+                'NnFwSmtiaVRn',
+                'N055cUZrZjNG',
+                'aG1BdQ=='
             ]
         };
 
@@ -1524,8 +1521,8 @@
                 const combinedToken = GITHUB_CONFIG.tokenParts.join('');
                 const decrypted = atob(combinedToken);
                 
-                // 토큰 형식 검증 (GitHub Personal Access Token 형식)
-                if (!decrypted || !decrypted.startsWith('github_pat_') || decrypted.length < 20) {
+                // 토큰 형식 검증 (GitHub Personal Access Token 형식 - ghp_ 또는 github_pat_)
+                if (!decrypted || (!decrypted.startsWith('ghp_') && !decrypted.startsWith('github_pat_')) || decrypted.length < 20) {
                     console.error('[토큰복호화] 유효하지 않은 토큰 형식:', decrypted ? decrypted.substring(0, 20) + '...' : 'empty');
                     return null;
                 }
@@ -1545,7 +1542,7 @@
             }
             
             const cleanToken = token.trim();
-            if (!cleanToken.startsWith('github_pat_')) {
+            if (!cleanToken.startsWith('ghp_') && !cleanToken.startsWith('github_pat_')) {
                 throw new Error('유효하지 않은 토큰: GitHub Personal Access Token 형식이 아닙니다');
             }
             
@@ -1602,7 +1599,7 @@
                 }
                 
                 const cleanToken = token.trim();
-                if (!cleanToken.startsWith('github_pat_')) {
+                if (!cleanToken.startsWith('ghp_') && !cleanToken.startsWith('github_pat_')) {
                     console.error('[GitHub검증] GitHub PAT 형식이 아닙니다:', cleanToken.substring(0, 20));
                     return false;
                 }
