@@ -790,10 +790,7 @@
     <div class="container">
         <div class="header">
             <h1>🏆 현클럽 배틀 아레나</h1>
-            <p>치열한 경기의 승부기록과 영광의 순간들을 기록하세요! ⚡</p>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">
-                🌐 실시간 동기화로 모든 멤버가 함께 공유하는 경기 히스토리 🔥
-            </p>
+            <p>치열한 경기의 승부기록과 영광의 순간들을 기록하세요! 🔥</p>
         </div>
 
         <!-- 탭 네비게이션 -->
@@ -833,16 +830,6 @@
                     </svg>
                     엑셀 내보내기
                 </button>
-                <button class="btn btn-success" onclick="syncWithGitHub()">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                    </svg>
-                    GitHub 동기화
-                </button>
-            </div>
-            <div class="status-indicator">
-                <span class="status-dot" id="githubStatus"></span>
-                <span id="statusText">GitHub 연결 안됨</span>
             </div>
         </div>
 
@@ -860,8 +847,29 @@
         <!-- 개인 승점 탭 -->
         <div id="rankingsContent" class="tab-content">
             <div class="ranking-header">
-                <h2>👑 전설의 전사들</h2>
-                <p>치열한 경기를 통해 쌓아온 영광의 승점 랭킹! 누가 진짜 강자일까? 🔥</p>
+                <h3 style="margin-bottom: 15px;">📊 승점 산정 기준</h3>
+                <p style="margin-bottom: 10px;">치열한 경기를 통해 쌓아온 승점은 이렇게 계산됩니다:</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <span style="width: 60px; font-weight: bold; color: #28a745;">승리:</span>
+                        <span style="font-size: 18px; margin-right: 10px;">🏆</span>
+                        <span style="font-weight: bold; color: #28a745;">3점</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <span style="width: 60px; font-weight: bold; color: #6c757d;">무승부:</span>
+                        <span style="font-size: 18px; margin-right: 10px;">🤝</span>
+                        <span style="font-weight: bold; color: #6c757d;">1점</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="width: 60px; font-weight: bold; color: #dc3545;">패배:</span>
+                        <span style="font-size: 18px; margin-right: 10px;">😢</span>
+                        <span style="font-weight: bold; color: #dc3545;">0점</span>
+                    </div>
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #dee2e6; font-size: 13px; color: #6c757d;">
+                        <div>• 단식/복식 구분 없이 동일한 점수 적용</div>
+                        <div>• 팀 경기에서도 개인별로 점수 획득</div>
+                    </div>
+                </div>
             </div>
             <div id="rankingsContainer">
                 <div class="empty-ranking">
@@ -892,12 +900,18 @@
                         <input type="text" id="matchTitle" placeholder="예: 2024년 현클럽 챔피언십">
                     </div>
                     <div class="form-group">
-                        <label for="teamA">팀 A 이름</label>
-                        <input type="text" id="teamA" placeholder="예: 김철수팀" required>
+                        <label>팀 A</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="teamA1" placeholder="선수1 (예: 김철수)" style="flex: 1;">
+                            <input type="text" id="teamA2" placeholder="선수2 (복식)" style="flex: 1;">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="teamB">팀 B 이름</label>
-                        <input type="text" id="teamB" placeholder="예: 박영희팀" required>
+                        <label>팀 B</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="teamB1" placeholder="선수1 (예: 박영희)" style="flex: 1;">
+                            <input type="text" id="teamB2" placeholder="선수2 (복식)" style="flex: 1;">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="scoreA">팀 A 점수</label>
@@ -1084,7 +1098,7 @@
                     rankTitle = '👑 챔피언';
                 } else if (rank === 2) {
                     rankEmoji = '🥈';
-                    rankTitle = '🔥 준우승';
+                    rankTitle = '🔥 2위';
                 } else if (rank === 3) {
                     rankEmoji = '🥉';
                     rankTitle = '⚡ 3위';
@@ -1133,7 +1147,7 @@
                                     <span>${player.wins}회</span>
                                 </div>
                                 <div class="stat-item">
-                                    <span>🎯 단식:</span>
+                                    <span>🧍 단식:</span>
                                     <span>${player.singleMatches}회</span>
                                 </div>
                                 <div class="stat-item">
@@ -1252,13 +1266,36 @@
                     }
                 }
                 
+                // 동기화 상태 표시 업데이트
+                const statusText = document.getElementById('statusText');
+                const statusDot = document.getElementById('githubStatus');
+                if (statusText) {
+                    statusText.textContent = '🔄 동기화 중...';
+                    if (statusDot) {
+                        statusDot.style.background = '#ffc107';
+                    }
+                }
+                
                 // GitHub에 즉시 업로드
                 console.log(`[자동동기화] ${action} - GitHub 업로드 시작`);
                 await syncToGitHub();
                 console.log(`[자동동기화] ${action} - GitHub 업로드 완료`);
                 
-                // 상태 표시 업데이트
-                checkGitHubConnection();
+                // 동기화 완료 표시
+                if (statusText) {
+                    statusText.textContent = '✅ 자동 동기화 완료';
+                    if (statusDot) {
+                        statusDot.style.background = '#28a745';
+                        statusDot.classList.add('connected');
+                    }
+                    
+                    // 3초 후 기본 상태로 복원
+                    setTimeout(() => {
+                        if (statusText) {
+                            statusText.textContent = '🔗 자동 동기화 활성화';
+                        }
+                    }, 3000);
+                }
                 
             } catch (error) {
                 console.error(`[자동동기화] ${action} 실패:`, error);
@@ -1310,9 +1347,16 @@
                     </div>
                 `;
             } else {
+                // 최신 경기가 위로 오도록 정렬 (timestamp 기준 내림차순)
+                const sortedMatches = [...matches].sort((a, b) => b.timestamp - a.timestamp);
+                
                 const html = `
                     <div class="matches-grid">
-                        ${matches.map((match, index) => createMatchCard(match, index)).join('')}
+                        ${sortedMatches.map((match, index) => {
+                            // 원래 배열의 인덱스 찾기 (수정/삭제용)
+                            const originalIndex = matches.findIndex(m => m.timestamp === match.timestamp);
+                            return createMatchCard(match, originalIndex);
+                        }).join('')}
                     </div>
                 `;
                 container.innerHTML = html;
@@ -1328,23 +1372,18 @@
                           match.scoreB > match.scoreA ? match.teamB : '무승부';
             const winnerIcon = match.scoreA > match.scoreB ? '🏆' : 
                               match.scoreB > match.scoreA ? '🏆' : '🤝';
+            
+            // 날짜 포맷 (년월일만)
+            const matchDate = new Date(match.timestamp || Date.now());
+            const dateStr = `${matchDate.getFullYear()}.${(matchDate.getMonth() + 1).toString().padStart(2, '0')}.${matchDate.getDate().toString().padStart(2, '0')}`;
 
             return `
                 <div class="match-card">
                     <div class="match-header">
                         <div class="match-title">${match.title || '경기 기록'}</div>
-                        <div class="match-actions">
-                            <button class="btn btn-secondary btn-small" onclick="editMatch(${index})">
-                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-                                    <path d="M12.854.146a.5.5 0 0 0-.708 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm-9.5 9.5L0 16l6.354-3.354L14.207 4.793 10.5 1.086 2.647 8.939z"/>
-                                </svg>
-                            </button>
-                            <button class="btn btn-danger btn-small" onclick="deleteMatch(${index})">
-                                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                </svg>
-                            </button>
+                        <div class="match-actions mobile-actions">
+                            <span onclick="editMatch(${index})" style="cursor: pointer; font-size: 18px; margin-right: 8px;">✏️</span>
+                            <span onclick="deleteMatch(${index})" style="cursor: pointer; font-size: 18px;">🗑️</span>
                         </div>
                     </div>
                     <div class="match-body">
@@ -1362,7 +1401,7 @@
                             ${winnerIcon} 승리: ${winner}
                         </div>
                         <div style="text-align: center; color: #6c757d; font-size: 12px; margin-top: 10px;">
-                            ${new Date(match.timestamp || Date.now()).toLocaleString('ko-KR')}
+                            ${dateStr}
                         </div>
                     </div>
                 </div>
@@ -1375,6 +1414,11 @@
             document.getElementById('modalTitle').textContent = '경기 기록 추가';
             document.getElementById('deleteBtn').style.display = 'none';
             document.getElementById('matchForm').reset();
+            // 입력 필드 초기화
+            document.getElementById('teamA1').value = '';
+            document.getElementById('teamA2').value = '';
+            document.getElementById('teamB1').value = '';
+            document.getElementById('teamB2').value = '';
             document.getElementById('matchModal').classList.add('show');
         }
 
@@ -1387,8 +1431,16 @@
             document.getElementById('deleteBtn').style.display = 'block';
             
             document.getElementById('matchTitle').value = match.title || '';
-            document.getElementById('teamA').value = match.teamA || '';
-            document.getElementById('teamB').value = match.teamB || '';
+            
+            // 팀 이름을 선수별로 분리
+            const teamAPlayers = (match.teamA || '').split('/').map(p => p.trim());
+            const teamBPlayers = (match.teamB || '').split('/').map(p => p.trim());
+            
+            document.getElementById('teamA1').value = teamAPlayers[0] || '';
+            document.getElementById('teamA2').value = teamAPlayers[1] || '';
+            document.getElementById('teamB1').value = teamBPlayers[0] || '';
+            document.getElementById('teamB2').value = teamBPlayers[1] || '';
+            
             document.getElementById('scoreA').value = match.scoreA || 0;
             document.getElementById('scoreB').value = match.scoreB || 0;
             
@@ -1403,13 +1455,19 @@
         // Save match
         function saveMatch() {
             const title = document.getElementById('matchTitle').value.trim();
-            const teamA = document.getElementById('teamA').value.trim();
-            const teamB = document.getElementById('teamB').value.trim();
+            const teamA1 = document.getElementById('teamA1').value.trim();
+            const teamA2 = document.getElementById('teamA2').value.trim();
+            const teamB1 = document.getElementById('teamB1').value.trim();
+            const teamB2 = document.getElementById('teamB2').value.trim();
             const scoreA = parseInt(document.getElementById('scoreA').value);
             const scoreB = parseInt(document.getElementById('scoreB').value);
 
-            if (!teamA || !teamB) {
-                alert('팀 이름을 모두 입력해주세요.');
+            // 팀 이름 조합 (복식일 경우 / 로 구분)
+            const teamA = teamA2 ? `${teamA1} / ${teamA2}` : teamA1;
+            const teamB = teamB2 ? `${teamB1} / ${teamB2}` : teamB1;
+
+            if (!teamA1 || !teamB1) {
+                alert('각 팀의 첫 번째 선수는 필수입니다.');
                 return;
             }
 
@@ -1578,12 +1636,12 @@
             if (token) {
                 GITHUB_CONFIG.token = token;
                 statusDot.classList.add('connected');
-                statusText.textContent = '🔗 GitHub 동기화 준비완료';
-                console.log('[GitHub상태] 토큰 설정 완료 - 동기화 준비됨');
+                statusText.textContent = '🔗 자동 동기화 활성화';
+                console.log('[GitHub상태] 토큰 설정 완료 - 자동 동기화 활성화');
             } else {
                 statusDot.classList.remove('connected');
-                statusText.textContent = '⚠️ GitHub 토큰 필요';
-                console.log('[GitHub상태] 토큰 없음 - 수동 설정 필요');
+                statusText.textContent = '⚠️ 동기화 설정 중...';
+                console.log('[GitHub상태] 토큰 없음 - 자동 설정 시도');
             }
         }
 
