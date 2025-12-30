@@ -1408,10 +1408,17 @@
 
         // Create match card HTML
         function createMatchCard(match, index) {
-            const winner = match.scoreA > match.scoreB ? match.teamA : 
-                          match.scoreB > match.scoreA ? match.teamB : '무승부';
-            const winnerIcon = match.scoreA > match.scoreB ? '🏆' : 
-                              match.scoreB > match.scoreA ? '🏆' : '🤝';
+            const scoreA = parseInt(match.scoreA);
+            const scoreB = parseInt(match.scoreB);
+            
+            let resultHTML = '';
+            if (scoreA > scoreB) {
+                resultHTML = `🏆 승리: ${match.teamA}`;
+            } else if (scoreB > scoreA) {
+                resultHTML = `🏆 승리: ${match.teamB}`;
+            } else {
+                resultHTML = `🤝 무승부`;
+            }
             
             // 날짜 포맷 (년월일만)
             const matchDate = new Date(match.timestamp || Date.now());
@@ -1438,7 +1445,7 @@
                             <span class="score">${match.scoreB}</span>
                         </div>
                         <div style="text-align: center; color: #6c757d; font-weight: 500;">
-                            ${winnerIcon} 승리: ${winner}
+                            ${resultHTML}
                         </div>
                         <div style="text-align: center; color: #6c757d; font-size: 12px; margin-top: 10px;">
                             ${dateStr}
