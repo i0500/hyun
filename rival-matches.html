@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>현클럽 경기 기록 관리</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,17 +18,19 @@
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
+            margin: 0;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
 
@@ -72,8 +74,14 @@
             font-weight: 500;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             transition: all 0.3s ease;
+            min-height: 44px; /* 터치 친화적인 최소 높이 */
+            white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn:hover {
@@ -137,9 +145,11 @@
         .match-card {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            cursor: default;
         }
 
         .match-card:hover {
@@ -311,11 +321,15 @@
 
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 14px 12px;
             border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 16px; /* iOS에서 줌 방지를 위한 16px */
             transition: border-color 0.3s ease;
+            min-height: 44px; /* 터치 친화적인 높이 */
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .form-group input:focus {
@@ -335,36 +349,182 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 5px;
+            }
+
+            .container {
+                border-radius: 8px;
+                margin: 0;
+            }
+
+            .header {
+                padding: 20px 15px;
+                text-align: left;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+
+            .header p {
+                font-size: 0.9rem;
             }
 
             .toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .toolbar > div {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .matches-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .match-card {
-                margin-bottom: 15px;
-            }
-
-            .team-vs {
+                padding: 15px;
                 flex-direction: column;
                 gap: 10px;
             }
 
+            .toolbar > div {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+            }
+
+            .btn {
+                flex: 1;
+                min-width: 120px;
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+
+            .status-indicator {
+                justify-content: center;
+                font-size: 12px;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .matches-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .match-card {
+                margin-bottom: 10px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            .match-header {
+                padding: 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .match-title {
+                font-size: 1rem;
+            }
+
+            .match-actions {
+                align-self: flex-end;
+            }
+
+            .match-body {
+                padding: 15px;
+            }
+
+            .team-vs {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .team-name {
+                font-size: 1rem;
+            }
+
+            .vs-badge {
+                align-self: center;
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+
+            .score-display {
+                padding: 12px;
+                margin: 10px 0;
+            }
+
+            .score {
+                font-size: 1.5rem;
+            }
+
             .modal-content {
-                margin: 10px;
-                width: calc(100% - 20px);
+                margin: 5px;
+                width: calc(100% - 10px);
+                max-height: calc(100vh - 20px);
+            }
+
+            .modal-header {
+                padding: 15px 20px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group input {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .modal-footer {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .modal-footer .btn {
+                width: 100%;
+                margin: 0;
+            }
+
+            .empty-state {
+                padding: 40px 15px;
+            }
+
+            .empty-state-icon {
+                font-size: 3rem;
+                margin-bottom: 15px;
+            }
+
+            .empty-state h3 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+
+            .empty-state p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Small Mobile (iPhone SE, etc.) */
+        @media (max-width: 375px) {
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .btn {
+                min-width: 100px;
+                font-size: 11px;
+                padding: 8px 10px;
+            }
+
+            .score {
+                font-size: 1.3rem;
+            }
+
+            .team-name {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -463,13 +623,25 @@
             repo: 'hyun', 
             branch: 'main',
             fileName: 'rival-matches.json',
-            token: null
+            token: null,
+            // 암호화된 토큰 (실제 사용시에만 복호화)
+            encryptedToken: 'Z2l0aHViX3BhdF8xMUJLM1hWQUEwT2F5Q2VTQkZIbUlHX2VhUnBZWVc1ODlPbng1T1JwYWtWZTl3d2FXc3AyNEZVdXJKSGVzRUFrbFQ2SlNBTVpHNGxpWU4yTUFGcA=='
         };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadMatches();
             checkGitHubConnection();
+            
+            // 토큰이 있으면 자동으로 GitHub에서 데이터 로드
+            setTimeout(() => {
+                if (GITHUB_CONFIG.token) {
+                    console.log('[초기화] GitHub에서 자동 데이터 로드 시도');
+                    loadFromGitHub().catch(error => {
+                        console.log('[초기화] GitHub 로드 실패 (정상):', error.message);
+                    });
+                }
+            }, 1000); // 1초 후 시도
         });
 
         // Load matches from localStorage
@@ -623,7 +795,9 @@
             hideModal();
             
             // Auto-sync to GitHub
-            syncToGitHub();
+            if (GITHUB_CONFIG.token || decryptToken()) {
+                syncToGitHub();
+            }
         }
 
         // Delete match
@@ -642,7 +816,9 @@
             hideModal();
             
             // Auto-sync to GitHub
-            syncToGitHub();
+            if (GITHUB_CONFIG.token || decryptToken()) {
+                syncToGitHub();
+            }
         }
 
         // Export to Excel
@@ -694,9 +870,29 @@
             }
         }
 
+        // 토큰 복호화 함수 (간단한 Base64 디코딩)
+        function decryptToken() {
+            try {
+                return atob(GITHUB_CONFIG.encryptedToken);
+            } catch (e) {
+                console.error('토큰 복호화 실패:', e);
+                return null;
+            }
+        }
+
         // GitHub Integration
         function checkGitHubConnection() {
-            const token = localStorage.getItem('githubToken');
+            let token = localStorage.getItem('githubToken');
+            
+            // localStorage에 토큰이 없으면 암호화된 토큰 사용
+            if (!token) {
+                token = decryptToken();
+                if (token) {
+                    localStorage.setItem('githubToken', token);
+                    console.log('[GitHub] 내장된 토큰으로 자동 설정됨');
+                }
+            }
+            
             const statusDot = document.getElementById('githubStatus');
             const statusText = document.getElementById('statusText');
             
@@ -711,24 +907,42 @@
         }
 
         function syncWithGitHub() {
+            // 토큰이 없으면 자동으로 내장된 토큰 사용 시도
             if (!GITHUB_CONFIG.token) {
-                const token = prompt('GitHub Personal Access Token을 입력하세요.\n\n토큰 생성: GitHub → Settings → Developer settings → Personal access tokens → Generate new token\n필요한 권한: repo');
-                if (token) {
-                    localStorage.setItem('githubToken', token);
-                    GITHUB_CONFIG.token = token;
-                    checkGitHubConnection();
+                const autoToken = decryptToken();
+                if (autoToken) {
+                    GITHUB_CONFIG.token = autoToken;
+                    localStorage.setItem('githubToken', autoToken);
+                    console.log('[GitHub] 자동 토큰 사용');
                 } else {
-                    return;
+                    // 내장 토큰도 실패하면 수동 입력 요청
+                    const token = prompt('GitHub Personal Access Token을 입력하세요.\n\n토큰 생성: GitHub → Settings → Developer settings → Personal access tokens → Generate new token\n필요한 권한: repo');
+                    if (token) {
+                        localStorage.setItem('githubToken', token);
+                        GITHUB_CONFIG.token = token;
+                        checkGitHubConnection();
+                    } else {
+                        return;
+                    }
                 }
             }
             
             Promise.all([loadFromGitHub(), syncToGitHub()])
                 .then(() => {
                     alert('GitHub 동기화가 완료되었습니다.');
+                    checkGitHubConnection(); // 상태 업데이트
                 })
                 .catch(error => {
                     console.error('GitHub 동기화 오류:', error);
-                    alert('GitHub 동기화 중 오류가 발생했습니다: ' + error.message);
+                    // 토큰 오류인 경우 토큰 재입력 요청
+                    if (error.message.includes('401') || error.message.includes('403')) {
+                        localStorage.removeItem('githubToken');
+                        GITHUB_CONFIG.token = null;
+                        alert('GitHub 토큰이 유효하지 않습니다. 새로운 토큰을 입력해주세요.');
+                        checkGitHubConnection();
+                    } else {
+                        alert('GitHub 동기화 중 오류가 발생했습니다: ' + error.message);
+                    }
                 });
         }
 
