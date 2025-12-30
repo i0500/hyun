@@ -1594,15 +1594,25 @@
             // 경기 유형 선택 이벤트 설정
             setupMatchTypeSelection();
             
-            // 정기적으로 GitHub 동기화 상태 확인 (5분마다)
+            // 정기적으로 GitHub 동기화 상태 확인 (30초마다)
             setInterval(() => {
-                if (GITHUB_CONFIG.token && matches.length > 0) {
+                if (GITHUB_CONFIG.token) {
                     console.log('[자동동기화] GitHub 상태 확인');
                     loadFromGitHub().catch(error => {
                         console.log('[자동동기화] 실패:', error.message);
                     });
                 }
-            }, 300000); // 5분 = 300,000ms
+            }, 30000); // 30초 = 30,000ms
+            
+            // 페이지 포커스시 즉시 동기화
+            window.addEventListener('focus', () => {
+                if (GITHUB_CONFIG.token) {
+                    console.log('[포커스동기화] 페이지 활성화 - 즉시 동기화');
+                    loadFromGitHub().catch(error => {
+                        console.log('[포커스동기화] 실패:', error.message);
+                    });
+                }
+            });
         });
 
         // GitHub 초기화 및 자동 설정
