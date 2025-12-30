@@ -1559,19 +1559,10 @@
                                 ${specialBadge}
                             </div>
                             <div class="player-stats" style="margin-top: 2px;">
-                                <div class="stat-row" style="display: flex; gap: 12px;">
-                                    <div class="stat-item" style="display: flex; align-items: center; gap: 4px;">
-                                        <span style="width: 6px; height: 6px; background-color: #28a745; border-radius: 50%; display: inline-block;"></span>
-                                        <span style="color: #28a745; font-weight: 500;">승리: ${player.wins}회</span>
-                                    </div>
-                                    <div class="stat-item" style="display: flex; align-items: center; gap: 4px;">
-                                        <span style="width: 6px; height: 6px; background-color: #6c757d; border-radius: 50%; display: inline-block;"></span>
-                                        <span style="color: #6c757d; font-weight: 500;">무승부: ${player.totalMatches - player.wins - player.losses}회</span>
-                                    </div>
-                                    <div class="stat-item" style="display: flex; align-items: center; gap: 4px;">
-                                        <span style="width: 6px; height: 6px; background-color: #dc3545; border-radius: 50%; display: inline-block;"></span>
-                                        <span style="color: #dc3545; font-weight: 500;">패배: ${player.losses}회</span>
-                                    </div>
+                                <div class="stat-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                    ${player.wins > 0 ? `<div class="stat-item"><span style="color: #28a745; font-weight: 500;">승리: ${player.wins}회</span></div>` : ''}
+                                    ${(player.totalMatches - player.wins - player.losses) > 0 ? `<div class="stat-item"><span style="color: #6c757d; font-weight: 500;">무승부: ${player.totalMatches - player.wins - player.losses}회</span></div>` : ''}
+                                    ${player.losses > 0 ? `<div class="stat-item"><span style="color: #dc3545; font-weight: 500;">패배: ${player.losses}회</span></div>` : ''}
                                 </div>
                                 <div class="stat-row match-types" style="display: flex; gap: 12px;">
                                     ${player.singleMatches > 0 ? `<div class="stat-item"><span>🎾 단식:</span><span>${player.singleMatches}회</span></div>` : ''}
@@ -1607,24 +1598,19 @@
         };
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadMatches();
-            
-            // 자동 토큰 설정 및 GitHub 연결
-            initializeGitHub();
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 먼저 GitHub에서 최신 데이터 로드 시도
+            try {
+                await initializeGitHub();
+                // GitHub 연결이 성공하면 자동으로 최신 데이터가 로드됨
+            } catch (error) {
+                console.log('[초기화] GitHub 로드 실패, 로컬 데이터 사용:', error.message);
+                // GitHub 연결 실패시에만 로컬 데이터 사용
+                loadMatches();
+            }
             
             // 경기 유형 선택 이벤트 설정
             setupMatchTypeSelection();
-            
-            // 정기적으로 GitHub 동기화 상태 확인 (30초마다)
-            setInterval(() => {
-                if (GITHUB_CONFIG.token) {
-                    console.log('[자동동기화] GitHub 상태 확인');
-                    loadFromGitHub().catch(error => {
-                        console.log('[자동동기화] 실패:', error.message);
-                    });
-                }
-            }, 30000); // 30초 = 30,000ms
             
             // 페이지 포커스시 즉시 동기화
             window.addEventListener('focus', () => {
@@ -1662,29 +1648,32 @@
                         console.log('[GitHub초기화] 토큰 검증 성공 - 자동 동기화 활성화');
                         checkGitHubConnection();
                         
-                        // 5. 자동 데이터 로드
-                        setTimeout(async () => {
-                            try {
-                                await loadFromGitHub();
-                                console.log('[GitHub초기화] 자동 데이터 로드 완료');
-                            } catch (error) {
-                                console.log('[GitHub초기화] 데이터 로드 실패 (정상):', error.message);
-                            }
-                        }, 1000);
+                        // 5. 즉시 최신 데이터 로드
+                        try {
+                            await loadFromGitHub();
+                            console.log('[GitHub초기화] 최신 데이터 로드 완료');
+                        } catch (error) {
+                            console.log('[GitHub초기화] 데이터 로드 실패, 로컬 데이터 사용:', error.message);
+                            // GitHub 로드 실패시 로컬 데이터 사용
+                            loadMatches();
+                        }
                         
                     } else {
-                        console.warn('[GitHub초기화] 토큰이 유효하지 않음 - 수동 설정 필요');
+                        console.warn('[GitHub초기화] 토큰이 유효하지 않음 - 로컬 데이터 사용');
                         localStorage.removeItem('githubToken');
                         GITHUB_CONFIG.token = null;
                         checkGitHubConnection();
+                        loadMatches();
                     }
                 } else {
-                    console.warn('[GitHub초기화] 사용 가능한 토큰이 없음');
+                    console.warn('[GitHub초기화] 사용 가능한 토큰이 없음 - 로컬 데이터 사용');
                     checkGitHubConnection();
+                    loadMatches();
                 }
             } catch (error) {
-                console.error('[GitHub초기화] 오류:', error);
+                console.error('[GitHub초기화] 오류 - 로컬 데이터 사용:', error);
                 checkGitHubConnection();
+                loadMatches();
             }
         }
 
