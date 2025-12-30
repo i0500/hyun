@@ -703,15 +703,16 @@
         }
 
         .filter-btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
             border: 1px solid #dee2e6;
             background: white;
             color: #666;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-width: 50px;
         }
 
         .filter-btn:hover {
@@ -723,6 +724,20 @@
             background: #2c5f2d;
             color: white;
             border-color: #2c5f2d;
+        }
+
+        /* 모바일에서 필터 버튼 더 작게 */
+        @media (max-width: 768px) {
+            .filter-container {
+                gap: 6px;
+                padding: 0 15px;
+            }
+            
+            .filter-btn {
+                padding: 5px 10px;
+                font-size: 11px;
+                min-width: 45px;
+            }
         }
 
         /* 페이지네이션 스타일 */
