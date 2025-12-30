@@ -847,8 +847,29 @@
         <!-- 개인 승점 탭 -->
         <div id="rankingsContent" class="tab-content">
             <div class="ranking-header">
-                <h2>👑 전설의 전사들</h2>
-                <p>치열한 경기를 통해 쌓아온 영광의 승점 랭킹! 누가 진짜 강자일까? 🔥</p>
+                <h3 style="margin-bottom: 15px;">📊 승점 산정 기준</h3>
+                <p style="margin-bottom: 10px;">치열한 경기를 통해 쌓아온 승점은 이렇게 계산됩니다:</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <span style="width: 60px; font-weight: bold; color: #28a745;">승리:</span>
+                        <span style="font-size: 18px; margin-right: 10px;">🏆</span>
+                        <span style="font-weight: bold; color: #28a745;">3점</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <span style="width: 60px; font-weight: bold; color: #6c757d;">무승부:</span>
+                        <span style="font-size: 18px; margin-right: 10px;">🤝</span>
+                        <span style="font-weight: bold; color: #6c757d;">1점</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span style="width: 60px; font-weight: bold; color: #dc3545;">패배:</span>
+                        <span style="font-size: 18px; margin-right: 10px;">😢</span>
+                        <span style="font-weight: bold; color: #dc3545;">0점</span>
+                    </div>
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #dee2e6; font-size: 13px; color: #6c757d;">
+                        <div>• 단식/복식 구분 없이 동일한 점수 적용</div>
+                        <div>• 팀 경기에서도 개인별로 점수 획득</div>
+                    </div>
+                </div>
             </div>
             <div id="rankingsContainer">
                 <div class="empty-ranking">
@@ -1077,7 +1098,7 @@
                     rankTitle = '👑 챔피언';
                 } else if (rank === 2) {
                     rankEmoji = '🥈';
-                    rankTitle = '🔥 준우승';
+                    rankTitle = '🔥 2위';
                 } else if (rank === 3) {
                     rankEmoji = '🥉';
                     rankTitle = '⚡ 3위';
