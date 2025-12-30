@@ -1469,13 +1469,13 @@
                 // 승률에 따른 특별 배지
                 let specialBadge = '';
                 if (winRate >= 80) {
-                    specialBadge = '<span style="color: #ffd700; font-size: 12px;">🔥 무적</span>';
+                    specialBadge = `<span style="color: #ffd700; font-size: 12px;">승률 ${winRate}% 🔥 무적</span>`;
                 } else if (winRate >= 60) {
-                    specialBadge = '<span style="color: #28a745; font-size: 12px;">💪 강자</span>';
+                    specialBadge = `<span style="color: #28a745; font-size: 12px;">승률 ${winRate}% 💪 강자</span>`;
                 } else if (winRate >= 40) {
-                    specialBadge = '<span style="color: #17a2b8; font-size: 12px;">⚖️ 균형</span>';
+                    specialBadge = `<span style="color: #17a2b8; font-size: 12px;">승률 ${winRate}% ⚖️ 균형</span>`;
                 } else {
-                    specialBadge = '<span style="color: #fd7e14; font-size: 12px;">🔥 성장중</span>';
+                    specialBadge = `<span style="color: #fd7e14; font-size: 12px;">승률 ${winRate}% 🔥 성장중</span>`;
                 }
 
                 return `
