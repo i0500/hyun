@@ -617,34 +617,32 @@
             font-weight: 500;
         }
 
-        /* 경기 유형 배지 스타일 (플로팅 라벨) */
-        .match-type-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        /* 경기 유형 인라인 스타일 (타이틀 앞에 표시) */
+        .match-type-inline {
+            display: inline-block;
             background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
             color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
             font-weight: 600;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+            margin-right: 8px;
+            vertical-align: middle;
         }
 
-        .match-type-badge.men-doubles {
+        .match-type-inline.men-doubles {
             background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
         }
 
-        .match-type-badge.women-doubles {
+        .match-type-inline.women-doubles {
             background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
         }
 
-        .match-type-badge.mixed-doubles {
+        .match-type-inline.mixed-doubles {
             background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
         }
 
-        .match-type-badge.singles {
+        .match-type-inline.singles {
             background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
         }
 
@@ -1027,11 +1025,11 @@
             <div class="ranking-header">
                 <!-- 필터 버튼 추가 -->
                 <div class="filter-container">
-                    <button class="filter-btn active" onclick="filterRankings('전체')">🏆 전체</button>
-                    <button class="filter-btn" onclick="filterRankings('남복')">👬 남복</button>
-                    <button class="filter-btn" onclick="filterRankings('여복')">👭 여복</button>
-                    <button class="filter-btn" onclick="filterRankings('혼복')">👫 혼복</button>
-                    <button class="filter-btn" onclick="filterRankings('단식')">🎾 단식</button>
+                    <button class="filter-btn active" onclick="filterRankings('전체')">전체</button>
+                    <button class="filter-btn" onclick="filterRankings('남복')">남복</button>
+                    <button class="filter-btn" onclick="filterRankings('여복')">여복</button>
+                    <button class="filter-btn" onclick="filterRankings('혼복')">혼복</button>
+                    <button class="filter-btn" onclick="filterRankings('단식')">단식</button>
                 </div>
                 <h3 style="margin-bottom: 15px;">승점 산정 기준</h3>
                 <p style="margin-bottom: 10px;">치열한 경기를 통해 쌓아온 승점은 이렇게 계산됩니다:</p>
@@ -1414,33 +1412,25 @@
                                 <span style="font-size: 11px; color: #666; margin-left: 6px;">${rankTitle}</span>
                             </div>
                             <div class="player-stats">
-                                <div class="stat-item">
-                                    <span>승률:</span>
-                                    <span>${winRate}% ${specialBadge}</span>
+                                <div class="stat-row" style="display: flex; gap: 12px; margin-bottom: 4px;">
+                                    <div class="stat-item">
+                                        <span>🏆 승리:</span>
+                                        <span>${player.wins}회</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>🤝 무승부:</span>
+                                        <span>${player.totalMatches - player.wins - player.losses}회</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>💥 패배:</span>
+                                        <span>${player.losses}회</span>
+                                    </div>
                                 </div>
-                                <div class="stat-item">
-                                    <span>🎾 총경기:</span>
-                                    <span>${player.totalMatches}회</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span>🏆 승리:</span>
-                                    <span>${player.wins}회</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span>👤 단식:</span>
-                                    <span>${player.singleMatches}회</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span>👬 남복:</span>
-                                    <span>${player.menDoubles || 0}회</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span>👭 여복:</span>
-                                    <span>${player.womenDoubles || 0}회</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span>👫 혼복:</span>
-                                    <span>${player.mixedDoubles || 0}회</span>
+                                <div class="stat-row match-types" style="display: flex; gap: 12px;">
+                                    ${player.singleMatches > 0 ? `<div class="stat-item"><span>단식:</span><span>${player.singleMatches}회</span></div>` : ''}
+                                    ${player.menDoubles > 0 ? `<div class="stat-item"><span>남복:</span><span>${player.menDoubles}회</span></div>` : ''}
+                                    ${player.womenDoubles > 0 ? `<div class="stat-item"><span>여복:</span><span>${player.womenDoubles}회</span></div>` : ''}
+                                    ${player.mixedDoubles > 0 ? `<div class="stat-item"><span>혼복:</span><span>${player.mixedDoubles}회</span></div>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -1692,13 +1682,13 @@
             }
 
             return `
-                <div class="match-card" style="position: relative;">
-                    <div class="match-type-badge ${typeClass}">
-                        ${typeEmoji} ${matchType}
-                    </div>
+                <div class="match-card">
                     <div class="match-header">
                         <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
-                            <div class="match-title">${match.title || '경기 기록'}</div>
+                            <div class="match-title">
+                                <span class="match-type-inline ${typeClass}">${matchType}</span>
+                                ${match.title || '경기 기록'}
+                            </div>
                             <div class="match-date-mobile" style="color: #6c757d; font-size: 12px; margin-top: 4px; display: none;">
                                 ${dateStr}
                             </div>
