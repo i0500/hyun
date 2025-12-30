@@ -586,39 +586,35 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            background: white;
             transition: all 0.3s ease;
             user-select: none;
         }
 
         .match-type-label:hover {
-            background: #e9ecef;
+            border-color: #2c5f2d;
+            background: #f8f9fa;
         }
 
         .match-type-label input[type="radio"] {
-            display: none;
-        }
-
-        .match-type-label input[type="radio"]:checked + .type-label-text {
-            color: white;
-            font-weight: 600;
-        }
-
-        .match-type-label input[type="radio"]:checked {
-            background: #2c5f2d;
+            margin: 0;
+            width: 16px;
+            height: 16px;
+            accent-color: #2c5f2d;
         }
 
         .match-type-label.selected {
             background: #2c5f2d;
+            border-color: #2c5f2d;
             color: white;
         }
 
         .type-label-text {
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s ease;
         }
 
         /* 경기 유형 배지 스타일 (플로팅 라벨) */
@@ -812,17 +808,20 @@
 
             .match-header {
                 padding: 15px;
-                flex-direction: column;
-                align-items: flex-start;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
                 gap: 10px;
             }
 
             .match-title {
                 font-size: 1rem;
+                flex: 1;
             }
 
             .match-actions {
-                align-self: flex-end;
+                align-self: auto;
+                flex-shrink: 0;
             }
 
             .match-body {
@@ -922,6 +921,15 @@
 
             .empty-state p {
                 font-size: 0.9rem;
+            }
+            
+            /* 모바일에서 날짜 위치 조정 */
+            .match-date-mobile {
+                display: block !important;
+            }
+            
+            .match-date-desktop {
+                display: none !important;
             }
         }
 
@@ -1041,7 +1049,7 @@
                         </span>
                         <span style="display: flex; align-items: center; gap: 5px;">
                             <span style="font-size: 14px; font-weight: bold; color: #dc3545;">패배:</span>
-                            <span style="font-size: 20px; font-weight: bold; color: #dc3545; line-height: 1;">-</span>
+                            <span style="font-size: 16px; font-weight: bold; color: #dc3545;">-1점</span>
                         </span>
                     </div>
                     <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #dee2e6; font-size: 13px; color: #6c757d;">
@@ -1083,19 +1091,19 @@
                         <div class="match-type-group">
                             <label class="match-type-label" id="menDoublesLabel">
                                 <input type="radio" name="matchType" value="남복" id="menDoubles">
-                                <span class="type-label-text">👬 남복</span>
+                                <span class="type-label-text">남복</span>
                             </label>
                             <label class="match-type-label" id="womenDoublesLabel">
                                 <input type="radio" name="matchType" value="여복" id="womenDoubles">
-                                <span class="type-label-text">👭 여복</span>
+                                <span class="type-label-text">여복</span>
                             </label>
-                            <label class="match-type-label" id="mixedDoublesLabel">
+                            <label class="match-type-label selected" id="mixedDoublesLabel">
                                 <input type="radio" name="matchType" value="혼복" id="mixedDoubles" checked>
-                                <span class="type-label-text">👫 혼복</span>
+                                <span class="type-label-text">혼복</span>
                             </label>
                             <label class="match-type-label" id="singlesLabel">
                                 <input type="radio" name="matchType" value="단식" id="singles">
-                                <span class="type-label-text">🎾 단식</span>
+                                <span class="type-label-text">단식</span>
                             </label>
                         </div>
                     </div>
@@ -1240,7 +1248,7 @@
                         playerStats[player].totalPoints += 3; // 승리시 3점
                     } else if (scoreA < scoreB) {
                         playerStats[player].losses++;
-                        playerStats[player].totalPoints += 0; // 패배시 0점
+                        playerStats[player].totalPoints -= 1; // 패배시 -1점
                     } else {
                         playerStats[player].totalPoints += 1; // 무승부시 1점
                     }
@@ -1285,7 +1293,7 @@
                         playerStats[player].totalPoints += 3; // 승리시 3점
                     } else if (scoreB < scoreA) {
                         playerStats[player].losses++;
-                        playerStats[player].totalPoints += 0; // 패배시 0점
+                        playerStats[player].totalPoints -= 1; // 패배시 -1점
                     } else {
                         playerStats[player].totalPoints += 1; // 무승부시 1점
                     }
@@ -1344,7 +1352,17 @@
             }
             
             const rankingHTML = rankings.map((player, index) => {
-                const rank = index + 1;
+                // 공동순위 계산
+                let rank = index + 1;
+                if (index > 0 && rankings[index - 1].totalPoints === player.totalPoints) {
+                    // 이전 플레이어와 같은 점수면 같은 순위 사용
+                    let prevIndex = index - 1;
+                    while (prevIndex >= 0 && rankings[prevIndex].totalPoints === player.totalPoints) {
+                        prevIndex--;
+                    }
+                    rank = prevIndex + 2; // 공동순위
+                }
+                
                 const winRate = player.totalMatches > 0 ? ((player.wins / player.totalMatches) * 100).toFixed(1) : '0.0';
                 
                 let rankClass = '';
@@ -1679,7 +1697,12 @@
                         ${typeEmoji} ${matchType}
                     </div>
                     <div class="match-header">
-                        <div class="match-title">${match.title || '경기 기록'}</div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+                            <div class="match-title">${match.title || '경기 기록'}</div>
+                            <div class="match-date-mobile" style="color: #6c757d; font-size: 12px; margin-top: 4px; display: none;">
+                                ${dateStr}
+                            </div>
+                        </div>
                         <div class="match-actions mobile-actions">
                             <span onclick="editMatch(${index})" style="cursor: pointer; font-size: 14px; margin-right: 6px; opacity: 0.7;">✏️</span>
                             <span onclick="deleteMatch(${index})" style="cursor: pointer; font-size: 14px; opacity: 0.7;">🗑️</span>
@@ -1699,7 +1722,7 @@
                         <div style="text-align: center; color: #6c757d; font-weight: 500;">
                             ${resultHTML}
                         </div>
-                        <div style="text-align: center; color: #6c757d; font-size: 12px; margin-top: 10px;">
+                        <div class="match-date-desktop" style="text-align: center; color: #6c757d; font-size: 12px; margin-top: 10px;">
                             ${dateStr}
                         </div>
                     </div>
