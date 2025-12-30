@@ -16,17 +16,9 @@
       "scoreA": 6,
       "scoreB": 2,
       "timestamp": 1767129659687
-    },
-    {
-      "title": "라이벌전",
-      "teamA": "전찬경, 서명원",
-      "teamB": "송민곤, 채영수",
-      "scoreA": 5,
-      "scoreB": 5,
-      "timestamp": 1767092485961
     }
   ],
-  "lastUpdated": "2025-12-30T22:12:30.918Z",
+  "lastUpdated": "2025-12-30T22:12:37.609Z",
   "version": "1.0",
-  "totalMatches": 3
+  "totalMatches": 2
 }
