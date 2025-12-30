@@ -1414,6 +1414,13 @@
                 });
             });
             
+            // 승점이 0점 이하로 내려가지 않도록 처리
+            Object.keys(playerStats).forEach(player => {
+                if (playerStats[player].totalPoints < 0) {
+                    playerStats[player].totalPoints = 0;
+                }
+            });
+            
             // 승점 순으로 정렬
             const rankings = Object.entries(playerStats)
                 .map(([name, stats]) => ({ name, ...stats }))
