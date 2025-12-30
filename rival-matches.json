@@ -1,6 +1,14 @@
 {
   "matches": [
     {
+      "title": "OB-YB 중국집 내기",
+      "teamA": "전찬경 / 서명원",
+      "teamB": "송민곤 / 채영수",
+      "scoreA": 5,
+      "scoreB": 5,
+      "timestamp": 1767129924248
+    },
+    {
       "title": "100-Match Series (2/100)",
       "teamA": "전찬수 / 우수문",
       "teamB": "김성준 / 채영수",
@@ -15,17 +23,9 @@
       "scoreA": 4,
       "scoreB": 6,
       "timestamp": 1767086262187
-    },
-    {
-      "title": "OB-YB 중국집 내기",
-      "teamA": "전찬경 / 서명원",
-      "teamB": "송민곤 / 채영수",
-      "scoreA": 5,
-      "scoreB": 5,
-      "timestamp": 1767129924248
     }
   ],
-  "lastUpdated": "2025-12-30T21:25:24.249Z",
+  "lastUpdated": "2025-12-30T22:06:00.581Z",
   "version": "1.0",
   "totalMatches": 3
 }
