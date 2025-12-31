@@ -942,6 +942,11 @@ body {
     letter-spacing: 0.3px;
 }
 
+/* 거래내역 테이블 헤더만 중앙 정렬 */
+.transaction-table th.text-center {
+    text-align: center;
+}
+
 .schedule-table td,
 .transaction-table td {
     padding: 0.625rem 0.875rem;
@@ -3039,7 +3044,7 @@ img[data-temp-chart] {
                     <div class="accounting-summary">
                         <div class="accounting-card income" title="클릭하면 수입 세부내역으로 이동합니다" style="cursor: pointer;">
                             <div class="accounting-label">수입 합계</div>
-                            <div class="accounting-value" id="monthIncome">3,135,000원</div>
+                            <div class="accounting-value" id="monthIncome">3,615,000원</div>
                         </div>
                         <div class="accounting-operator">-</div>
                         <div class="accounting-card expense" title="클릭하면 지출 세부내역으로 이동합니다" style="cursor: pointer;">
@@ -3049,7 +3054,7 @@ img[data-temp-chart] {
                         <div class="accounting-operator">=</div>
                         <div class="accounting-card balance">
                             <div class="accounting-label">잔액</div>
-                            <div class="accounting-value" id="monthBalance">1,147,320원</div>
+                            <div class="accounting-value" id="monthBalance">1,627,320원</div>
                         </div>
 
                         <!-- 업무추진비 서브 섹션 -->
@@ -3081,7 +3086,7 @@ img[data-temp-chart] {
                     <div class="accounting-summary">
                         <div class="accounting-card income" title="클릭하면 수입 세부내역으로 이동합니다" style="cursor: pointer;">
                             <div class="accounting-label">누적 수입</div>
-                            <div class="accounting-value" id="yearIncome">11,433,497원</div>
+                            <div class="accounting-value" id="yearIncome">11,913,497원</div>
                         </div>
                         <div class="accounting-operator">-</div>
                         <div class="accounting-card expense" title="클릭하면 지출 세부내역으로 이동합니다" style="cursor: pointer;">
@@ -3091,7 +3096,7 @@ img[data-temp-chart] {
                         <div class="accounting-operator">=</div>
                         <div class="accounting-card balance">
                             <div class="accounting-label">누적 잔액</div>
-                            <div class="accounting-value" id="yearBalance">9,445,817원</div>
+                            <div class="accounting-value" id="yearBalance">9,925,817원</div>
                         </div>
                     </div>
 
@@ -3100,12 +3105,12 @@ img[data-temp-chart] {
                     <div class="bank-difference">
                         <div class="bank-info">
                             <div class="bank-label">통장 잔액</div>
-                            <div class="bank-value" id="bankBalance">9,447,334원</div>
+                            <div class="bank-value" id="bankBalance">9,927,334원</div>
                         </div>
                         <div class="bank-operator">-</div>
                         <div class="bank-info">
                             <div class="bank-label">장부 잔액</div>
-                            <div class="bank-value" id="yearBalance2">9,445,817원</div>
+                            <div class="bank-value" id="yearBalance2">9,925,817원</div>
                         </div>
                         <div class="bank-operator">=</div>
                         <div class="bank-info difference">
@@ -3127,7 +3132,7 @@ img[data-temp-chart] {
                                 <div class="mobile-summary-cards">
                                     <div class="mobile-card income" title="클릭하면 수입 세부내역으로 이동합니다" style="cursor: pointer;">
                                         <div class="card-label">수입</div>
-                                        <div class="card-value" id="mobile-monthIncome">313.5</div>
+                                        <div class="card-value" id="mobile-monthIncome">361.5</div>
                                         <div class="card-unit">만원</div>
                                     </div>
                                     <div class="mobile-card expense" title="클릭하면 지출 세부내역으로 이동합니다" style="cursor: pointer;">
@@ -3137,7 +3142,7 @@ img[data-temp-chart] {
                                     </div>
                                     <div class="mobile-card balance">
                                         <div class="card-label">잔액</div>
-                                        <div class="card-value" id="mobile-monthBalance">114.8</div>
+                                        <div class="card-value" id="mobile-monthBalance">162.8</div>
                                         <div class="card-unit">만원</div>
                                     </div>
                                 </div>
@@ -3171,7 +3176,7 @@ img[data-temp-chart] {
                                 <div class="mobile-summary-cards">
                                     <div class="mobile-card income">
                                         <div class="card-label">수입</div>
-                                        <div class="card-value" id="mobile-yearIncome">1,143.3</div>
+                                        <div class="card-value" id="mobile-yearIncome">1,191.3</div>
                                         <div class="card-unit">만원</div>
                                     </div>
                                     <div class="mobile-card expense">
@@ -3181,7 +3186,7 @@ img[data-temp-chart] {
                                     </div>
                                     <div class="mobile-card balance">
                                         <div class="card-label">잔액</div>
-                                        <div class="card-value" id="mobile-yearBalance">944.6</div>
+                                        <div class="card-value" id="mobile-yearBalance">992.6</div>
                                         <div class="card-unit">만원</div>
                                     </div>
                                 </div>
@@ -3193,12 +3198,12 @@ img[data-temp-chart] {
                                 <div class="mobile-summary-cards">
                                     <div class="mobile-card bank">
                                         <div class="card-label">통장</div>
-                                        <div class="card-value" id="mobile-bankBalance">944.7</div>
+                                        <div class="card-value" id="mobile-bankBalance">992.7</div>
                                         <div class="card-unit">만원</div>
                                     </div>
                                     <div class="mobile-card book">
                                         <div class="card-label">장부</div>
-                                        <div class="card-value" id="mobile-yearBalance2">944.6</div>
+                                        <div class="card-value" id="mobile-yearBalance2">992.6</div>
                                         <div class="card-unit">만원</div>
                                     </div>
                                     <div class="mobile-card difference">
@@ -3229,88 +3234,77 @@ img[data-temp-chart] {
                         <table class="transaction-table">
                             <thead>
                                 <tr>
-                                    <th width="80">구분</th>
-                                    <th width="120">항목</th>
-                                    <th width="100">일자</th>
-                                    <th>적요</th>
-                                    <th width="140" class="text-right">금액</th>
+                                    <th width="100" class="text-center">구분</th>
+                                    <th width="150" class="text-center">항목</th>
+                                    <th class="text-center">적요</th>
+                                    <th width="150" class="text-center">금액</th>
                                 </tr>
                             </thead>
                             <tbody id="transactionTableBody">
             <tr class="summary-row income-group">
                 <td rowspan="11" class="group-cell type-cell">수입</td>
                 <td class="summary-cell">합계</td>
-                <td colspan="2" class="text-center">-</td>
-                <td class="text-right income-total">3,135,000원</td>
+                <td class="text-center">-</td>
+                <td class="text-right income-total">3,615,000원</td>
             </tr>
         
                         <tr class="group-row income-group">
                             <td rowspan="1" class="group-cell category-cell">회비</td>
-                            <td>12월 4일</td>
                             <td>납부대상: 일반 34명, 가족 4명(사전납부 9명은 11월 인수잔고 포함으로 제외)</td>
                             <td class="text-right income-value">1,460,000원</td>
                         </tr>
                     
                         <tr class="group-row income-group">
                             <td rowspan="1" class="group-cell category-cell">찬조</td>
-                            <td>12월 2일</td>
                             <td>김경태 전회장님 찬조</td>
                             <td class="text-right income-value">20,000원</td>
                         </tr>
                     
                         <tr class="group-row income-group">
                             <td rowspan="1" class="group-cell category-cell">월게스트</td>
-                            <td>12월 12일</td>
                             <td>납부대상: 2명(박진관 게스트는 월중 등록으로 50%납부, 사전납부 1명은 11월 인수잔고 포함으로 제외 )</td>
                             <td class="text-right income-value">75,000원</td>
                         </tr>
                     
                         <tr class="group-row income-group">
                             <td rowspan="1" class="group-cell category-cell">입회비</td>
-                            <td>12월 24일</td>
                             <td>신규 회원 가입비</td>
                             <td class="text-right income-value">200,000원</td>
                         </tr>
                     
                         <tr class="group-row income-group">
                             <td rowspan="6" class="group-cell category-cell">회비선납</td>
-                            <td>12월 2일</td>
                             <td>26년1월~11월 회비 선납 (2명)</td>
                             <td class="text-right income-value">880,000원</td>
                         </tr>
                     
                         <tr class="detail-row income-group">
-                            <td>12월 4일</td>
-                            <td>26년1월 회비 선납 (1명)</td>
-                            <td class="text-right income-value">40,000원</td>
+                            <td>26년1월 회비 선납 (2명)</td>
+                            <td class="text-right income-value">80,000원</td>
                         </tr>
                     
                         <tr class="detail-row income-group">
-                            <td>12월 5일</td>
                             <td>26년1월~2월 가족회비 선납 (2명) </td>
                             <td class="text-right income-value">140,000원</td>
                         </tr>
                     
                         <tr class="detail-row income-group">
-                            <td>12월 5일</td>
                             <td>26년1월~5월 회비 선납 (1명)</td>
                             <td class="text-right income-value">200,000원</td>
                         </tr>
                     
                         <tr class="detail-row income-group">
-                            <td>12월 10일</td>
                             <td>26년1월~2월 회비 선납 (1명) </td>
                             <td class="text-right income-value">80,000원</td>
                         </tr>
                     
                         <tr class="detail-row income-group">
-                            <td>12월 24일</td>
-                            <td>26년1월 회비 선납 (1명)</td>
-                            <td class="text-right income-value">40,000원</td>
+                            <td>26년1월~12월 회비 선납 (1명)</td>
+                            <td class="text-right income-value">480,000원</td>
                         </tr>
                     
             <tr class="anchor-row" style="height: 0; line-height: 0;">
-                <td colspan="5" style="padding: 0; height: 0; line-height: 0;">
+                <td colspan="4" style="padding: 0; height: 0; line-height: 0;">
                     <div id="expense-anchor-dynamic" style="position: relative; top: -40px;"></div>
                 </td>
             </tr>
@@ -3318,57 +3312,49 @@ img[data-temp-chart] {
             <tr class="summary-row expense-group">
                 <td rowspan="9" class="group-cell type-cell">지출</td>
                 <td class="summary-cell">합계</td>
-                <td colspan="2" class="text-center">-</td>
+                <td class="text-center">-</td>
                 <td class="text-right expense-total">1,987,680원</td>
             </tr>
         
                         <tr class="group-row expense-group">
                             <td rowspan="2" class="group-cell category-cell">코트비</td>
-                            <td>12월 16일</td>
                             <td>26년 1월 코트비 결제 (759,660+영배분 111,210+한타배분 60,060)</td>
                             <td class="text-right expense-value">930,930원</td>
                         </tr>
                     
                         <tr class="detail-row expense-group">
-                            <td>12월 29일</td>
                             <td>25년 7~12월 어머니회 코트비 배분금 정산</td>
                             <td class="text-right expense-value">41,250원</td>
                         </tr>
                     
                         <tr class="group-row expense-group">
                             <td rowspan="3" class="group-cell category-cell">캔볼구매</td>
-                            <td>12월 10일</td>
                             <td>김원국 회원 관리 캔볼 소진. 윌슨 36캔 주문 <a href="javascript:void(0)" class="receipt-btn" onclick="showReceipt('https://drive.google.com/file/d/1QSZc_yZStwk1QQE10UHg3G_6Za1TisGK/view?usp=drive_link')" title="영수증 보기">영수증</a></td>
                             <td class="text-right expense-value">149,000원</td>
                         </tr>
                     
                         <tr class="detail-row expense-group">
-                            <td>12월 12일</td>
                             <td>우수문 부회장님 관리 캔볼 소진. 윌슨 36캔 주문 <a href="javascript:void(0)" class="receipt-btn" onclick="showReceipt('https://drive.google.com/file/d/1x6omYkaxZYgH_S8_1bzzoGZQCQQckQJy/view?usp=drive_link')" title="영수증 보기">영수증</a></td>
                             <td class="text-right expense-value">149,000원</td>
                         </tr>
                     
                         <tr class="detail-row expense-group">
-                            <td>12월 24일</td>
                             <td>윌슨 캔볼 36캔 할인 4박스 선구매 (박스당 130,000원) <a href="javascript:void(0)" class="receipt-btn" onclick="showReceipt('https://drive.google.com/file/d/1H4xVwUzeip_v60Fvr_jt0OTnPuCuPoos/view?usp=drive_link')" title="영수증 보기">영수증</a></td>
                             <td class="text-right expense-value">520,000원</td>
                         </tr>
                     
                         <tr class="group-row expense-group">
                             <td rowspan="3" class="group-cell category-cell">업추비</td>
-                            <td>12월 5일</td>
                             <td>코트 제설작업 참석인원 콩나물국밥 식당 식사제공 (4명) <a href="javascript:void(0)" class="receipt-btn" onclick="showReceipt('https://drive.google.com/file/d/1H-YBZ-CGUQvePIBjpADL_gi6CpoPhhzy/view?usp=drive_link')" title="영수증 보기">영수증</a></td>
                             <td class="text-right expense-value">37,500원</td>
                         </tr>
                     
                         <tr class="detail-row expense-group">
-                            <td>12월 12일</td>
                             <td>원로 간담회 산골오리 식당 (13명) 285천원. 10만원 업추비 사용 (185천원 회장님 결제) <a href="javascript:void(0)" class="receipt-btn" onclick="showReceipt('https://drive.google.com/file/d/14JQvlCLte_WescjfvI_R5kGO7BMxTqCe/view?usp=drive_link')" title="영수증 보기">영수증</a></td>
                             <td class="text-right expense-value">100,000원</td>
                         </tr>
                     
                         <tr class="detail-row expense-group">
-                            <td>12월 30일</td>
                             <td>26년 운영관련 임원회의 (참석 임원5명). 식비 199천원. 6만원 업추비 사용 (136천원 회장님/부회장님 결제) <a href="javascript:void(0)" class="receipt-btn" onclick="showReceipt('https://drive.google.com/file/d/1G-kYIfCkbudV8H4SSqCoH9oHWUOUXrN4/view?usp=drive_link')" title="영수증 보기">영수증</a></td>
                             <td class="text-right expense-value">60,000원</td>
                         </tr>
@@ -3379,7 +3365,7 @@ img[data-temp-chart] {
             <div class="transaction-summary-card income-summary">
                 <div class="transaction-summary-row">
                     <span class="transaction-summary-label">수입 합계</span>
-                    <span class="transaction-summary-value income">3,135,000원</span>
+                    <span class="transaction-summary-value income">3,615,000원</span>
                 </div>
             </div>
         
@@ -3392,10 +3378,6 @@ img[data-temp-chart] {
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비</span>
-                            </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 4일</span>
                             </div>
                             
                                 <div class="transaction-card-row">
@@ -3417,10 +3399,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">찬조</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 2일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3440,10 +3418,6 @@ img[data-temp-chart] {
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">월게스트</span>
-                            </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 12일</span>
                             </div>
                             
                                 <div class="transaction-card-row">
@@ -3465,10 +3439,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">입회비</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 24일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3489,10 +3459,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비선납</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 2일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3506,21 +3472,17 @@ img[data-temp-chart] {
                     <div class="transaction-card income">
                         <div class="transaction-card-header">
                             <span class="transaction-card-type income">수입</span>
-                            <span class="transaction-card-amount income">40,000원</span>
+                            <span class="transaction-card-amount income">80,000원</span>
                         </div>
                         <div class="transaction-card-body">
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비선납</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 4일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
-                                    <span class="transaction-card-value">26년1월 회비 선납 (1명)</span>
+                                    <span class="transaction-card-value">26년1월 회비 선납 (2명)</span>
                                 </div>
                             
                             
@@ -3536,10 +3498,6 @@ img[data-temp-chart] {
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비선납</span>
-                            </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 5일</span>
                             </div>
                             
                                 <div class="transaction-card-row">
@@ -3561,10 +3519,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비선납</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 5일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3585,10 +3539,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비선납</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 10일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3602,21 +3552,17 @@ img[data-temp-chart] {
                     <div class="transaction-card income">
                         <div class="transaction-card-header">
                             <span class="transaction-card-type income">수입</span>
-                            <span class="transaction-card-amount income">40,000원</span>
+                            <span class="transaction-card-amount income">480,000원</span>
                         </div>
                         <div class="transaction-card-body">
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">회비선납</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 24일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
-                                    <span class="transaction-card-value">26년1월 회비 선납 (1명)</span>
+                                    <span class="transaction-card-value">26년1월~12월 회비 선납 (1명)</span>
                                 </div>
                             
                             
@@ -3640,10 +3586,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">코트비</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 16일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3664,10 +3606,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">코트비</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 29일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3687,10 +3625,6 @@ img[data-temp-chart] {
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">캔볼구매</span>
-                            </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 10일</span>
                             </div>
                             
                                 <div class="transaction-card-row">
@@ -3716,10 +3650,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">캔볼구매</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 12일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3743,10 +3673,6 @@ img[data-temp-chart] {
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">캔볼구매</span>
-                            </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 24일</span>
                             </div>
                             
                                 <div class="transaction-card-row">
@@ -3772,10 +3698,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">업추비</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 5일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3800,10 +3722,6 @@ img[data-temp-chart] {
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">업추비</span>
                             </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 12일</span>
-                            </div>
                             
                                 <div class="transaction-card-row">
                                     <span class="transaction-card-label">적요:</span>
@@ -3827,10 +3745,6 @@ img[data-temp-chart] {
                             <div class="transaction-card-row">
                                 <span class="transaction-card-label">항목:</span>
                                 <span class="transaction-card-value">업추비</span>
-                            </div>
-                            <div class="transaction-card-row">
-                                <span class="transaction-card-label">일자:</span>
-                                <span class="transaction-card-value">12월 30일</span>
                             </div>
                             
                                 <div class="transaction-card-row">
