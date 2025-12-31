@@ -1,6 +1,15 @@
 {
   "matches": [
     {
+      "title": "OB -YB 몸풀기",
+      "teamA": "조영식 / 이재호",
+      "teamB": "김성준 / 채영수",
+      "scoreA": 6,
+      "scoreB": 2,
+      "matchType": "남복",
+      "timestamp": 1767146621951
+    },
+    {
       "title": "OB-YB 중국집 내기",
       "teamA": "전찬경 / 서명원",
       "teamB": "송민곤 / 채영수",
@@ -19,25 +28,16 @@
       "timestamp": 1767129659687
     },
     {
-      "title": "100-Match Series (1/100)",
+      "title": "100-Match (1/100)",
       "teamA": "전찬수 / 우수문",
       "teamB": "김성준 / 채영수",
       "scoreA": 4,
       "scoreB": 6,
       "matchType": "남복",
       "timestamp": 1767086262187
-    },
-    {
-      "title": "OB -YB 몸풀기",
-      "teamA": "조영식 / 이재호",
-      "teamB": "김성준 / 채영수",
-      "scoreA": 6,
-      "scoreB": 2,
-      "matchType": "남복",
-      "timestamp": 1767146621951
     }
   ],
-  "lastUpdated": "2025-12-31T02:03:41.955Z",
+  "lastUpdated": "2025-12-31T02:09:13.935Z",
   "version": "1.0",
   "totalMatches": 4
 }
