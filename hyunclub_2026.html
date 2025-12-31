@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>현클럽 2026년도 운영안</title>
+    
+    <!-- Open Graph / 밴드 임베드용 -->
+    <meta property="og:title" content="현클럽 2026년도 운영안">
+    <meta property="og:description" content="예산안 · 월례대회 · 회원 준수사항">
+    <meta property="og:type" content="article">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #111;
+            line-height: 1.7;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 520px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        /* Header */
+        .header {
+            background: #1a2e4a;
+            padding: 44px 32px;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        /* Section */
+        .section {
+            padding: 36px 28px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .section-num {
+            width: 32px;
+            height: 32px;
+            background: #1a2e4a;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        /* Budget Summary */
+        .budget-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .budget-card {
+            border-radius: 14px;
+            padding: 22px 14px;
+            text-align: center;
+        }
+
+        .budget-card.income {
+            background: #e7f7ee;
+        }
+
+        .budget-card.expense {
+            background: #fce8e8;
+        }
+
+        .budget-card.balance {
+            background: #e8f1fc;
+        }
+
+        .budget-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .budget-value {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .budget-card.income .budget-value { color: #1b8a4a; }
+        .budget-card.expense .budget-value { color: #c42b2b; }
+        .budget-card.balance .budget-value { color: #1a5bb5; }
+
+        .budget-unit {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        /* Budget Detail */
+        .budget-group {
+            margin-bottom: 28px;
+        }
+
+        .budget-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .budget-group-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a2e4a;
+            padding: 12px 16px;
+            background: #f4f6f9;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+
+        .budget-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .budget-row:last-child {
+            border-bottom: none;
+        }
+
+        .budget-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .budget-amount {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .budget-percent {
+            font-size: 13px;
+            font-weight: 500;
+            color: #888;
+            margin-left: 6px;
+        }
+
+        /* Note */
+        .note {
+            background: #fff9e6;
+            border: 2px solid #ffe066;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 24px;
+        }
+
+        .note-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #8a6d00;
+            margin-bottom: 10px;
+        }
+
+        .note p {
+            font-size: 14px;
+            font-weight: 500;
+            color: #5c4a00;
+            margin-bottom: 6px;
+        }
+
+        .note p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Schedule */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .schedule-card {
+            background: #f8f9fa;
+            border-radius: 14px;
+            padding: 22px 18px;
+            text-align: center;
+            border: 1px solid #e8e8e8;
+        }
+
+        .schedule-q {
+            font-size: 13px;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .schedule-day {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .schedule-card:nth-child(odd) .schedule-day {
+            color: #1a5bb5;
+        }
+
+        .schedule-card:nth-child(even) .schedule-day {
+            color: #c42b2b;
+        }
+
+        .schedule-gift {
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+            padding-top: 14px;
+            border-top: 1px dashed #ddd;
+        }
+
+        /* Rules */
+        .rule {
+            display: flex;
+            gap: 18px;
+            padding: 22px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rule:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .rule-num {
+            width: 36px;
+            height: 36px;
+            background: #f4f6f9;
+            color: #1a2e4a;
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .rule-content {
+            flex: 1;
+            padding-top: 4px;
+        }
+
+        .rule-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 6px;
+        }
+
+        .rule-desc {
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="header-title">현클럽 2026년도 운영안</h1>
+        </header>
+
+        <!-- 예산 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-num">01</span>
+                <h2 class="section-title">예산안</h2>
+            </div>
+
+            <div class="budget-summary">
+                <div class="budget-card income">
+                    <p class="budget-label">예상 수입</p>
+                    <p class="budget-value">2,432</p>
+                    <p class="budget-unit">만원</p>
+                </div>
+                <div class="budget-card expense">
+                    <p class="budget-label">예상 지출</p>
+                    <p class="budget-value">2,351</p>
+                    <p class="budget-unit">만원</p>
+                </div>
+                <div class="budget-card balance">
+                    <p class="budget-label">예상 잔액</p>
+                    <p class="budget-value">+81</p>
+                    <p class="budget-unit">만원</p>
+                </div>
+            </div>
+
+            <div class="budget-group">
+                <div class="budget-group-title">예상 수입</div>
+                <div class="budget-row">
+                    <span class="budget-name">회비 (48명)</span>
+                    <span class="budget-amount">2,352만원</span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">예상 신규 가입 (4명)</span>
+                    <span class="budget-amount">80만원</span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">찬조 금액</span>
+                    <span class="budget-amount">미정</span>
+                </div>
+            </div>
+
+            <div class="budget-group">
+                <div class="budget-group-title">예상 지출</div>
+                <div class="budget-row">
+                    <span class="budget-name">코트비</span>
+                    <span class="budget-amount">1,091만원<span class="budget-percent">(46%)</span></span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">월례회 · 대회</span>
+                    <span class="budget-amount">783만원<span class="budget-percent">(33%)</span></span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">업무추진비</span>
+                    <span class="budget-amount">240만원<span class="budget-percent">(10%)</span></span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">테니스공</span>
+                    <span class="budget-amount">148만원<span class="budget-percent">(6%)</span></span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">경조사비</span>
+                    <span class="budget-amount">60만원<span class="budget-percent">(3%)</span></span>
+                </div>
+                <div class="budget-row">
+                    <span class="budget-name">전 임원 감사비</span>
+                    <span class="budget-amount">30만원<span class="budget-percent">(1%)</span></span>
+                </div>
+            </div>
+
+            <div class="note">
+                <p class="note-title">참고사항</p>
+                <p>• 수변공원 코트 이용으로 전년 대비 165만원 절감</p>
+                <p>• 사물함 · 음료 · 종이컵 비용 제외</p>
+            </div>
+        </section>
+
+        <!-- 월례대회 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-num">02</span>
+                <h2 class="section-title">월례대회</h2>
+            </div>
+
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <p class="schedule-q">1분기</p>
+                    <p class="schedule-day">토요일</p>
+                    <p class="schedule-gift">사은품 미정</p>
+                </div>
+                <div class="schedule-card">
+                    <p class="schedule-q">2분기</p>
+                    <p class="schedule-day">일요일</p>
+                    <p class="schedule-gift">그립 제공</p>
+                </div>
+                <div class="schedule-card">
+                    <p class="schedule-q">3분기</p>
+                    <p class="schedule-day">토요일</p>
+                    <p class="schedule-gift">사은품 미정</p>
+                </div>
+                <div class="schedule-card">
+                    <p class="schedule-q">4분기</p>
+                    <p class="schedule-day">일요일</p>
+                    <p class="schedule-gift">그립 제공</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 준수사항 -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-num">03</span>
+                <h2 class="section-title">회원 준수사항</h2>
+            </div>
+
+            <div class="rule">
+                <span class="rule-num">1</span>
+                <div class="rule-content">
+                    <p class="rule-title">코트 입·퇴장 시 인사</p>
+                    <p class="rule-desc">회원들과 반갑게 인사해주세요</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-num">2</span>
+                <div class="rule-content">
+                    <p class="rule-title">대진보드 확인 및 순서 준수</p>
+                    <p class="rule-desc">게임 참석 전 반드시 체크</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-num">3</span>
+                <div class="rule-content">
+                    <p class="rule-title">셀프저지 매너</p>
+                    <p class="rule-desc">• 자기 코트로 온 공은 본인이 판정<br>• 애매한 공은 상대에게 유리하게<br>• 스코어는 서버가 크게 콜<br>• 파트너 간 의견 불일치 시 상대에게 포인트<br>• 갤러리 판정 개입 금지<br>• 판정 시비 시 합의점까지 돌아가 재시작</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-num">4</span>
+                <div class="rule-content">
+                    <p class="rule-title">흡연 장소 준수</p>
+                    <p class="rule-desc">3·4번 코트 사이 흡연 자제<br>고가 아래 공터 이용, 꽁초는 쓰레기통에</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-num">5</span>
+                <div class="rule-content">
+                    <p class="rule-title">자전거 거치대 이용</p>
+                    <p class="rule-desc">자전거는 지정된 거치대에 주차</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
