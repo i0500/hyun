@@ -1,13 +1,22 @@
 {
   "matches": [
     {
-      "title": "새해 친선",
-      "teamA": "우수문 / 조영식",
+      "title": "2026. 1. 1. 목",
+      "teamA": "김성은 / 송민곤",
+      "teamB": "박성민 / 성기수",
+      "scoreA": 1,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1767234593321
+    },
+    {
+      "title": "2026.1. 1.목",
+      "teamA": "조영식 / 우수문",
       "teamB": "박대우 / 채영수",
       "scoreA": 5,
       "scoreB": 5,
       "matchType": "남복",
-      "timestamp": 1767234344199
+      "timestamp": 1767234522432
     },
     {
       "title": "2026 경기",
@@ -80,27 +89,9 @@
       "scoreB": 6,
       "matchType": "남복",
       "timestamp": 1767086262187
-    },
-    {
-      "title": "2026.1. 1.목",
-      "teamA": "조영식 / 우수문",
-      "teamB": "박대우 / 채영수",
-      "scoreA": 5,
-      "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767234522432
-    },
-    {
-      "title": "2026. 1. 1. 목",
-      "teamA": "김성은 / 송민곤",
-      "teamB": "박성민 / 성기수",
-      "scoreA": 1,
-      "scoreB": 6,
-      "matchType": "남복",
-      "timestamp": 1767234593321
     }
   ],
-  "lastUpdated": "2026-01-01T02:29:53.329Z",
+  "lastUpdated": "2026-01-01T02:34:39.611Z",
   "version": "1.0",
-  "totalMatches": 11
+  "totalMatches": 10
 }
