@@ -35,9 +35,18 @@
       "scoreB": 6,
       "matchType": "남복",
       "timestamp": 1767086262187
+    },
+    {
+      "title": "2026년 첫 공식 경기",
+      "teamA": "우수문 / 김성준",
+      "teamB": "양승일 / 박대우",
+      "scoreA": 6,
+      "scoreB": 1,
+      "matchType": "남복",
+      "timestamp": 1767226040720
     }
   ],
-  "lastUpdated": "2025-12-31T02:11:22.496Z",
+  "lastUpdated": "2026-01-01T00:07:20.726Z",
   "version": "1.0",
-  "totalMatches": 4
+  "totalMatches": 5
 }
