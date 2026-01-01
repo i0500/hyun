@@ -511,8 +511,9 @@
 
         .ranking-list {
             display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -1005,6 +1006,8 @@
             .ranking-list {
                 padding: 0 15px;
                 gap: 10px;
+                grid-template-columns: 1fr;
+                max-width: 600px;
             }
 
             .ranking-item {
@@ -3215,16 +3218,13 @@
                                 </div>
                                 <div style="font-size: 13px; color: #374151; line-height: 1.6;">
                                     ${playerStats.advancedStats.bestWinRatePartner ? 
-                                        `<div style="margin-bottom: 6px;">• 🏆 최고 승률 파트너: <strong style="color: #059669;">${playerStats.advancedStats.bestWinRatePartner.name}</strong> (${playerStats.advancedStats.bestWinRatePartner.games}경기, 승률 ${playerStats.advancedStats.bestWinRatePartner.winRate}%)</div>` : ''
+                                        `<div style="margin-bottom: 6px;">• 🏆 최고 승률 파트너: <strong>${playerStats.advancedStats.bestWinRatePartner.name}</strong> (${playerStats.advancedStats.bestWinRatePartner.games}경기, 승률 ${playerStats.advancedStats.bestWinRatePartner.winRate}%)</div>` : ''
                                     }
                                     ${playerStats.advancedStats.mostGamesPartner ? 
-                                        `<div style="margin-bottom: 6px;">• 👥 최다 동반 파트너: <strong style="color: #2563eb;">${playerStats.advancedStats.mostGamesPartner.name}</strong> (${playerStats.advancedStats.mostGamesPartner.games}경기, 승률 ${playerStats.advancedStats.mostGamesPartner.winRate}%)</div>` : ''
+                                        `<div style="margin-bottom: 6px;">• 👥 최다 동반 파트너: <strong>${playerStats.advancedStats.mostGamesPartner.name}</strong> (${playerStats.advancedStats.mostGamesPartner.games}경기, 승률 ${playerStats.advancedStats.mostGamesPartner.winRate}%)</div>` : ''
                                     }
                                     ${playerStats.advancedStats.chemistryNeededPartner ? 
-                                        `<div style="margin-bottom: 6px;">• 💪 케미가 필요한 파트너: <strong style="color: #ea580c;">${playerStats.advancedStats.chemistryNeededPartner.name}</strong> (${playerStats.advancedStats.chemistryNeededPartner.games}경기, 승률 ${playerStats.advancedStats.chemistryNeededPartner.winRate}%)</div>` : ''
-                                    }
-                                    ${playerStats.advancedStats.luckiestPartner ? 
-                                        `<div style="margin-bottom: 6px;">• 🍀 행운의 파트너: <strong style="color: #7c3aed;">${playerStats.advancedStats.luckiestPartner.name}</strong> (무승부 ${playerStats.advancedStats.luckiestPartner.drawRate}%, ${playerStats.advancedStats.luckiestPartner.games}경기)</div>` : ''
+                                        `<div style="margin-bottom: 6px;">• 💪 케미가 필요한 파트너: <strong>${playerStats.advancedStats.chemistryNeededPartner.name}</strong> (${playerStats.advancedStats.chemistryNeededPartner.games}경기, 승률 ${playerStats.advancedStats.chemistryNeededPartner.winRate}%)</div>` : ''
                                     }
                                     ${!playerStats.advancedStats.bestWinRatePartner && !playerStats.advancedStats.mostGamesPartner ? '<div style="color: #6b7280; font-style: italic;">• 파트너 데이터 부족 (복식 경기 더 필요)</div>' : ''}
                                 </div>
@@ -4435,7 +4435,6 @@
             const partnerAnalysis = {};
             let bestWinRatePartner = null;
             let mostGamesPartner = null;
-            let luckiestPartner = null;
             let chemistryNeededPartner = null;
             
             playerMatches.forEach(match => {
@@ -4508,10 +4507,6 @@
                 mostGamesPartner = partnerList
                     .sort((a, b) => b.games - a.games)[0];
                 
-                // 운이 좋은 파트너 (무승부가 많은)
-                luckiestPartner = partnerList
-                    .filter(p => p.games >= 3)
-                    .sort((a, b) => (b.draws / b.games) - (a.draws / a.games))[0];
                 
                 // 케미가 필요한 파트너 (승률이 낮은, 3경기 이상)
                 chemistryNeededPartner = partnerList
@@ -4577,11 +4572,6 @@
                     name: mostGamesPartner.name,
                     games: mostGamesPartner.games,
                     winRate: mostGamesPartner.winRate.toFixed(1)
-                } : null,
-                luckiestPartner: luckiestPartner ? {
-                    name: luckiestPartner.name,
-                    drawRate: ((luckiestPartner.draws / luckiestPartner.games) * 100).toFixed(1),
-                    games: luckiestPartner.games
                 } : null,
                 chemistryNeededPartner: chemistryNeededPartner ? {
                     name: chemistryNeededPartner.name,
