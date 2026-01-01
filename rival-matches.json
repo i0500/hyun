@@ -1,6 +1,15 @@
 {
   "matches": [
     {
+      "title": "2026 경기",
+      "teamA": "조영식 / 박대우",
+      "teamB": "박성민 / 채영수",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1767230790553
+    },
+    {
       "title": "2026 현클럽 복식경기(개인)",
       "teamA": "양승일 / 박대우",
       "teamB": "박성민 / 채영수",
@@ -64,16 +73,16 @@
       "timestamp": 1767086262187
     },
     {
-      "title": "2026 경기",
-      "teamA": "조영식 / 박대우",
-      "teamB": "박성민 / 채영수",
-      "scoreA": 6,
-      "scoreB": 4,
+      "title": "새해 친선",
+      "teamA": "우수문 / 조영식",
+      "teamB": "박대우 / 채영수",
+      "scoreA": 5,
+      "scoreB": 5,
       "matchType": "남복",
-      "timestamp": 1767230790553
+      "timestamp": 1767234344199
     }
   ],
-  "lastUpdated": "2026-01-01T01:26:30.559Z",
+  "lastUpdated": "2026-01-01T02:25:44.205Z",
   "version": "1.0",
-  "totalMatches": 8
+  "totalMatches": 9
 }
