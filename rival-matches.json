@@ -2,6 +2,15 @@
   "matches": [
     {
       "title": "2026 현클럽 복식경기(개인)",
+      "teamA": "양승일 / 박대우",
+      "teamB": "박성민 / 채영수",
+      "scoreA": 6,
+      "scoreB": 2,
+      "matchType": "남복",
+      "timestamp": 1767230171684
+    },
+    {
+      "title": "2026 현클럽 복식경기(개인)",
       "teamA": "우수문 / 양승일",
       "teamB": "김성은 / 박성민",
       "scoreA": 6,
@@ -55,16 +64,16 @@
       "timestamp": 1767086262187
     },
     {
-      "title": "2026 현클럽 복식경기(개인)",
-      "teamA": "양승일 / 박대우",
+      "title": "2026 경기",
+      "teamA": "조영식 / 박대우",
       "teamB": "박성민 / 채영수",
       "scoreA": 6,
-      "scoreB": 2,
+      "scoreB": 4,
       "matchType": "남복",
-      "timestamp": 1767230171684
+      "timestamp": 1767230790553
     }
   ],
-  "lastUpdated": "2026-01-01T01:16:40.932Z",
+  "lastUpdated": "2026-01-01T01:26:30.559Z",
   "version": "1.0",
-  "totalMatches": 7
+  "totalMatches": 8
 }
