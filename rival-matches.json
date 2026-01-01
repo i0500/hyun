@@ -89,9 +89,18 @@
       "scoreB": 5,
       "matchType": "남복",
       "timestamp": 1767234522432
+    },
+    {
+      "title": "2026. 1. 1. 목",
+      "teamA": "김성은 / 송민곤",
+      "teamB": "박성민 / 성기수",
+      "scoreA": 1,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1767234593321
     }
   ],
-  "lastUpdated": "2026-01-01T02:28:42.443Z",
+  "lastUpdated": "2026-01-01T02:29:53.329Z",
   "version": "1.0",
-  "totalMatches": 10
+  "totalMatches": 11
 }
