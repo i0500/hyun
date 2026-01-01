@@ -55,16 +55,16 @@
       "timestamp": 1767086262187
     },
     {
-      "title": "2026 현클럽 복식ㄱᆢ",
+      "title": "2026 현클럽 복식경기(개인)",
       "teamA": "양승일 / 박대우",
       "teamB": "박성민 / 채영수",
       "scoreA": 6,
       "scoreB": 2,
-      "matchType": "단식",
+      "matchType": "남복",
       "timestamp": 1767230171684
     }
   ],
-  "lastUpdated": "2026-01-01T01:16:11.687Z",
+  "lastUpdated": "2026-01-01T01:16:40.932Z",
   "version": "1.0",
   "totalMatches": 7
 }
