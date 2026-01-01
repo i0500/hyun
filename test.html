@@ -1165,6 +1165,40 @@
             .modal-content[style*="grid"] {
                 display: block !important;
             }
+            
+            .modal-content {
+                overflow-x: hidden !important;
+                width: calc(100vw - 8px) !important;
+                max-width: calc(100vw - 8px) !important;
+                height: calc(100vh - 8px) !important;
+                max-height: calc(100vh - 8px) !important;
+                margin: 4px !important;
+                border-radius: 8px !important;
+            }
+            
+            .modal-content > div[style*="grid"] {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                height: calc(100vh - 60px) !important;
+                max-height: calc(100vh - 60px) !important;
+                padding: 12px !important;
+            }
+            
+            .modal-content .stat-card {
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
+                margin-bottom: 6px !important;
+            }
+            
+            .modal-content[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+            
+            .modal-content div[style*="minmax(350px"] {
+                grid-template-columns: 1fr !important;
+            }
 
             .modal-body {
                 padding: 20px;
@@ -3012,8 +3046,9 @@
                     <div class="modal-content" style="
                         max-width: 95%;
                         width: 95%;
-                        max-height: 95vh;
-                        margin: 2vh auto;
+                        height: 98vh;
+                        max-height: 98vh;
+                        margin: 1vh auto;
                         background: white;
                         border-radius: 16px;
                         overflow: hidden;
@@ -3023,7 +3058,7 @@
                     ">
                         <!-- 헤더 -->
                         <div style="
-                            background: #2563eb;
+                            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
                             color: white;
                             padding: 12px 16px;
                             position: relative;
@@ -3037,9 +3072,9 @@
                                 color: white;
                                 width: 28px;
                                 height: 28px;
-                                border-radius: 50%;
+                                border-radius: 6px;
                                 cursor: pointer;
-                                font-size: 14px;
+                                font-size: 16px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
@@ -3060,12 +3095,15 @@
                         <!-- 컨텐츠 -->
                         <div style="
                             padding: 16px;
-                            max-height: calc(95vh - 110px);
+                            height: calc(98vh - 60px);
+                            max-height: calc(98vh - 60px);
                             overflow-y: auto;
                             background: #f8f9fa;
                             display: grid;
                             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-                            gap: 12px;
+                            grid-auto-rows: max-content;
+                            align-items: start;
+                            gap: 4px;
                         ">
                             <!-- 1. 전체 경기 성적 -->
                             <div class="stat-card" style="
@@ -3073,7 +3111,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3097,7 +3135,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3122,7 +3160,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3142,7 +3180,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3167,7 +3205,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3198,7 +3236,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3220,11 +3258,11 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                                    ⚔️ 점수차 분석
+                                    ⚖️ 점수차 분석
                                 </div>
                                 <div style="font-size: 13px; color: #374151; line-height: 1.6;">
                                     <div style="margin-bottom: 8px;">• 대승 (3점차+): <strong style="color: #059669;">${playerStats.advancedStats.bigWins}경기</strong> (${playerStats.advancedStats.bigWinRate}%)</div>
@@ -3241,7 +3279,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3260,7 +3298,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="font-size: 15px; font-weight: 600; color: #1f2937; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
@@ -3279,7 +3317,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="
@@ -3329,7 +3367,7 @@
                                 padding: 16px; 
                                 border-radius: 12px; 
                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                                margin-bottom: 12px;
+                                margin-bottom: 4px;
                                 border: 1px solid #e5e7eb;
                             ">
                                 <div style="
@@ -3352,7 +3390,7 @@
                                         const isPlayerTeam = playerTeam.includes(playerName);
                                         return `<div style="
                                             padding: 12px 16px; 
-                                            margin-bottom: 8px; 
+                                            margin-bottom: 4px; 
                                             background: #ffffff; 
                                             border-radius: 10px; 
                                             border-left: 4px solid ${resultColor};
@@ -3401,7 +3439,7 @@
                                         🤝 파트너별 전적
                                     </h3>
                                 </div>
-                                <div style="font-size: 13px; color: #374151; line-height: 1.6; max-height: 300px; overflow-y: auto;">
+                                <div style="font-size: 13px; color: #374151; line-height: 1.6;">
                                     ${playerStats.partnerWinRates && playerStats.partnerWinRates.length > 0 ? 
                                         playerStats.partnerWinRates.map(partner => `
                                             <div style="
@@ -3417,7 +3455,7 @@
                                                 <span style="font-weight: 600; color: #1f2937;">${partner.name}</span>
                                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                                     <span style="font-size: 12px; color: #1f2937; font-weight: 600;">${partner.totalWins}승 ${partner.totalDraws}무 ${partner.totalLosses}패 (승률 ${partner.totalWinRate}% | ${partner.totalGames}경기)</span>
-                                                    <span style="font-size: 11px; color: #6b7280; font-style: italic;">이번달 ${partner.thisMonthWins}승 ${partner.thisMonthDraws}무 ${partner.thisMonthLosses}패 (승률 ${partner.thisMonthWinRate}% | ${partner.thisMonthGames}경기)</span>
+                                                    <span style="font-size: 12px; color: #6b7280;">이번달 ${partner.thisMonthWins}승 ${partner.thisMonthDraws}무 ${partner.thisMonthLosses}패 (승률 ${partner.thisMonthWinRate}% | ${partner.thisMonthGames}경기)</span>
                                                 </div>
                                             </div>
                                         `).join('') 
@@ -4564,6 +4602,10 @@
                 continuousMonths: continuousMonths,
                 
                 // 경기 유형별 (이미 있지만 정리)
+                menDoublesGames: typeStats['남복'] ? (typeStats['남복'].wins + typeStats['남복'].losses + typeStats['남복'].draws) : 0,
+                womenDoublesGames: typeStats['여복'] ? (typeStats['여복'].wins + typeStats['여복'].losses + typeStats['여복'].draws) : 0,
+                mixedDoublesGames: typeStats['혼복'] ? (typeStats['혼복'].wins + typeStats['혼복'].losses + typeStats['혼복'].draws) : 0,
+                singlesGames: typeStats['단식'] ? (typeStats['단식'].wins + typeStats['단식'].losses + typeStats['단식'].draws) : 0,
                 menDoublesWinRate: typeStats['남복'] && (typeStats['남복'].wins + typeStats['남복'].losses + typeStats['남복'].draws) > 0 ? 
                     ((typeStats['남복'].wins / (typeStats['남복'].wins + typeStats['남복'].losses + typeStats['남복'].draws)) * 100).toFixed(1) : '0.0',
                 womenDoublesWinRate: typeStats['여복'] && (typeStats['여복'].wins + typeStats['여복'].losses + typeStats['여복'].draws) > 0 ? 
@@ -4723,25 +4765,12 @@
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     ">
                         <div style="
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
                             margin-bottom: 16px;
                             padding-bottom: 12px;
                             border-bottom: 2px solid #f1f5f9;
                         ">
-                            <div style="
-                                width: 40px; 
-                                height: 40px; 
-                                background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8)); 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                font-size: 18px;
-                            ">🏆</div>
-                            <h3 style="margin: 0; font-size: 18px; color: #1f2937; font-weight: 700;">
-                                전체 경기 현황
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                🏆 전체 경기 현황
                             </h3>
                         </div>
                         <div style="display: grid; gap: 10px;">
@@ -4774,25 +4803,12 @@
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     ">
                         <div style="
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
                             margin-bottom: 16px;
                             padding-bottom: 12px;
                             border-bottom: 2px solid #f1f5f9;
                         ">
-                            <div style="
-                                width: 40px; 
-                                height: 40px; 
-                                background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(124, 63, 237, 0.8)); 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                font-size: 18px;
-                            ">📈</div>
-                            <h3 style="margin: 0; font-size: 18px; color: #1f2937; font-weight: 700;">
-                                성장 트렌드
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                📈 성장 트렌드
                             </h3>
                         </div>
                         <div style="display: grid; gap: 10px;">
@@ -4821,25 +4837,12 @@
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     ">
                         <div style="
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
                             margin-bottom: 16px;
                             padding-bottom: 12px;
                             border-bottom: 2px solid #f1f5f9;
                         ">
-                            <div style="
-                                width: 40px; 
-                                height: 40px; 
-                                background: linear-gradient(135deg, rgba(16, 185, 129, 0.8), rgba(5, 150, 105, 0.8)); 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                font-size: 18px;
-                            ">🎾</div>
-                            <h3 style="margin: 0; font-size: 18px; color: #1f2937; font-weight: 700;">
-                                경기 유형별 분포
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                🎾 경기 유형별 분포
                             </h3>
                         </div>
                         <div style="display: grid; gap: 10px;">
@@ -4847,28 +4850,28 @@
                                 <span style="color: #374151; font-size: 14px;"> • 남자복식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['남복'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['남복'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthMatchTypes['남복'] || 0}경기</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['남복'] || 0}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 여자복식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['여복'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['여복'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthMatchTypes['여복'] || 0}경기</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['여복'] || 0}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 혼합복식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['혼복'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['혼복'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthMatchTypes['혼복'] || 0}경기</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['혼복'] || 0}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0;">
                                 <span style="color: #374151; font-size: 14px;"> • 단식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['단식'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['단식'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthMatchTypes['단식'] || 0}경기</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['단식'] || 0}경기</span>
                                 </div>
                             </div>
                         </div>
@@ -4884,41 +4887,28 @@
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     ">
                         <div style="
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
                             margin-bottom: 16px;
                             padding-bottom: 12px;
                             border-bottom: 2px solid #f1f5f9;
                         ">
-                            <div style="
-                                width: 40px; 
-                                height: 40px; 
-                                background: linear-gradient(135deg, rgba(245, 158, 11, 0.8), rgba(217, 119, 6, 0.8)); 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                font-size: 18px;
-                            ">🏅</div>
-                            <h3 style="margin: 0; font-size: 18px; color: #1f2937; font-weight: 700;">
-                                클럽 기록
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                🏅 클럽 기록
                             </h3>
                         </div>
                         <div style="display: grid; gap: 10px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 최다 연승자</span>
-                                <span style="color: #dc2626; font-weight: 600; font-size: 14px;">${clubStats.topWinStreakPlayer}</span>
+                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.topWinStreakPlayer}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 최고 승점자</span>
-                                <span style="color: #3b82f6; font-weight: 600; font-size: 14px;">${clubStats.topPointsPlayer}</span>
+                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.topPointsPlayer}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 최다 경기 참가자</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.mostActivePlayer}</span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthMostActivePlayer}</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMostActivePlayer}</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
@@ -4938,25 +4928,12 @@
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     ">
                         <div style="
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
                             margin-bottom: 16px;
                             padding-bottom: 12px;
                             border-bottom: 2px solid #f1f5f9;
                         ">
-                            <div style="
-                                width: 40px; 
-                                height: 40px; 
-                                background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(79, 70, 229, 0.8)); 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                font-size: 18px;
-                            ">⏰</div>
-                            <h3 style="margin: 0; font-size: 18px; color: #1f2937; font-weight: 700;">
-                                활동 패턴
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                ⏰ 활동 패턴
                             </h3>
                         </div>
                         <div style="display: grid; gap: 10px;">
@@ -4964,14 +4941,14 @@
                                 <span style="color: #374151; font-size: 14px;"> • 주중 경기</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.weekdayMatches}경기 <span style="font-size: 12px; color: #94a3b8;">(${clubStats.weekdayPercent}%)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthWeekdayMatches}경기</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthWeekdayMatches}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 주말 경기</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.weekendMatches}경기 <span style="font-size: 12px; color: #94a3b8;">(${clubStats.weekendPercent}%)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthWeekendMatches}경기</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthWeekendMatches}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
@@ -4999,25 +4976,12 @@
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     ">
                         <div style="
-                            display: flex; 
-                            align-items: center; 
-                            gap: 10px; 
                             margin-bottom: 16px;
                             padding-bottom: 12px;
                             border-bottom: 2px solid #f1f5f9;
                         ">
-                            <div style="
-                                width: 40px; 
-                                height: 40px; 
-                                background: linear-gradient(135deg, rgba(236, 72, 153, 0.8), rgba(219, 39, 119, 0.8)); 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                font-size: 18px;
-                            ">🤝</div>
-                            <h3 style="margin: 0; font-size: 18px; color: #1f2937; font-weight: 700;">
-                                파트너십 현황
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                🤝 파트너십 현황
                             </h3>
                         </div>
                         <div style="display: grid; gap: 10px;">
@@ -5029,7 +4993,7 @@
                                 <span style="color: #374151; font-size: 14px;"> • 고정 파트너십</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.fixedPartnerships}개 <span style="font-size: 12px; color: #94a3b8;">(3경기 이상)</span></span>
-                                    <span style="font-size: 11px; color: #9ca3af; font-style: italic;">이번달 ${clubStats.thisMonthFixedPartnerships}개</span>
+                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthFixedPartnerships}개</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
@@ -5042,7 +5006,7 @@
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 최고 승률 파트너</span>
-                                <span style="color: #dc2626; font-weight: 600; font-size: 13px;">${clubStats.bestWinRatePartnership}</span>
+                                <span style="color: #1f2937; font-weight: 600; font-size: 13px;">${clubStats.bestWinRatePartnership}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
                                 <span style="color: #374151; font-size: 14px;"> • 복식 참가률</span>
