@@ -639,9 +639,10 @@
             left: 0;
             top: 0;
             width: 100%;
-            height: 100%;
+            height: 100dvh;
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
+            overflow: hidden;
         }
 
         .modal.show {
@@ -1150,7 +1151,8 @@
             .modal-content {
                 margin: 2px;
                 width: calc(100% - 4px);
-                max-height: calc(100vh - 10px);
+                max-height: calc(100dvh - 10px);
+                height: calc(100dvh - 10px);
                 max-width: none;
             }
 
@@ -1170,8 +1172,8 @@
                 overflow-x: hidden !important;
                 width: calc(100vw - 8px) !important;
                 max-width: calc(100vw - 8px) !important;
-                height: calc(100vh - 8px) !important;
-                max-height: calc(100vh - 8px) !important;
+                height: calc(100dvh - 8px) !important;
+                max-height: calc(100dvh - 8px) !important;
                 margin: 4px !important;
                 border-radius: 8px !important;
             }
@@ -1179,8 +1181,8 @@
             .modal-content > div[style*="grid"] {
                 overflow-x: hidden !important;
                 max-width: 100% !important;
-                height: calc(100vh - 60px) !important;
-                max-height: calc(100vh - 60px) !important;
+                height: calc(100dvh - 60px) !important;
+                max-height: calc(100dvh - 60px) !important;
                 padding: 12px !important;
             }
             
@@ -3046,9 +3048,9 @@
                     <div class="modal-content" style="
                         max-width: 95%;
                         width: 95%;
-                        height: 98vh;
-                        max-height: 98vh;
-                        margin: 1vh auto;
+                        height: 98dvh;
+                        max-height: 98dvh;
+                        margin: 1dvh auto;
                         background: white;
                         border-radius: 16px;
                         overflow: hidden;
@@ -3547,9 +3549,9 @@
                     <div class="modal-content" style="
                         max-width: 480px;
                         width: 95%;
-                        max-height: 95vh;
+                        max-height: 95dvh;
                         overflow-y: auto;
-                        margin: 2.5vh auto;
+                        margin: 2.5dvh auto;
                         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                         border-radius: 16px;
                         box-shadow: 0 15px 30px rgba(0,0,0,0.2);
@@ -5378,7 +5380,7 @@
             let bestWinRatePartnership = '없음';
             if (topPartnerships.length > 0) {
                 bestWinRatePartnership = topPartnerships.map((partnership, index) => {
-                    return `${index + 1}위: ${partnership.name} (승률 ${partnership.winRate}%, ${partnership.games}경기)`;
+                    return `${index + 1}위: ${partnership.name} (승률 ${partnership.winRate}%)`;
                 }).join(' | ');
             }
 
