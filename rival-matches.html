@@ -259,6 +259,20 @@
             padding: 6px;
             margin: 20px 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* 스크롤 시 상단에 고정되는 상태 */
+        .tab-navigation.sticky {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            z-index: 1000;
+            margin: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: #ffffff;
+            border: 1px solid #e9ecef;
         }
 
         .tab-btn {
@@ -874,8 +888,8 @@
             .match-type-group {
                 gap: 8px;
                 padding: 12px;
-                flex-wrap: nowrap;
-                overflow-x: auto;
+                flex-wrap: wrap;
+                overflow-x: visible;
             }
             
             .match-type-label {
@@ -883,6 +897,24 @@
                 font-size: 12px;
                 min-width: 60px;
                 flex-shrink: 0;
+            }
+        }
+        
+        /* 타이틀 선택 전용 스타일 (5개 항목) */
+        .match-type-group .match-type-label {
+            flex: 1;
+            min-width: 70px;
+        }
+        
+        @media (max-width: 480px) {
+            .match-type-group .match-type-label {
+                padding: 6px 8px;
+                font-size: 11px;
+                min-width: 50px;
+            }
+            
+            .type-label-text {
+                font-size: 11px;
             }
         }
 
@@ -1576,6 +1608,10 @@
                                 <input type="radio" name="matchTitle" value="몸풀기" id="titleWarmup">
                                 <span class="type-label-text">몸풀기</span>
                             </label>
+                            <label class="match-type-label" id="titleBettingLabel">
+                                <input type="radio" name="matchTitle" value="내기" id="titleBetting">
+                                <span class="type-label-text">내기</span>
+                            </label>
                             <label class="match-type-label" id="titleMonthlyLabel">
                                 <input type="radio" name="matchTitle" value="월례대회" id="titleMonthly">
                                 <span class="type-label-text">월례대회</span>
@@ -1727,6 +1763,9 @@
 
         // 탭 전환 함수
         function switchTab(tabName) {
+            // 탭 클릭 시 맨 위로 즉시 이동 (스크롤 효과 없음)
+            window.scrollTo(0, 0);
+
             // 탭 버튼 상태 업데이트
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName + 'Tab').classList.add('active');
@@ -2213,11 +2252,11 @@
             token: null,
             // 토큰 조각들 (런타임에 조합)
             tokenParts: [
-                'Z2hwX1FybzEz',
-                'NjMyOGtuSEJk',
-                'NnFwSmtiaVRn',
-                'N055cUZrZjNG',
-                'aG1BdQ=='
+                'Z2hwX1dUMllR',
+                'eEZpeDI1cTJV',
+                'd3hrSEpqVHQ4',
+                'MG40RmFHMjJT',
+                'ZllHTg=='
             ]
         };
 
@@ -2335,6 +2374,24 @@
                         loadFromGitHub().catch(error => {
                         });
                     } else {
+                    }
+                }
+            });
+
+            // 탭 네비게이션 sticky 기능
+            const tabNavigation = document.querySelector('.tab-navigation');
+            const tabOriginalPosition = tabNavigation ? tabNavigation.offsetTop : 0;
+
+            window.addEventListener('scroll', function() {
+                if (tabNavigation) {
+                    const scrollY = window.scrollY;
+                    if (scrollY >= tabOriginalPosition - 10) { // 10px 여유
+                        tabNavigation.classList.add('sticky');
+                        // sticky 상태일 때 페이지 내용이 점프하지 않도록 offset 추가
+                        document.body.style.paddingTop = tabNavigation.offsetHeight + 20 + 'px';
+                    } else {
+                        tabNavigation.classList.remove('sticky');
+                        document.body.style.paddingTop = '10px';
                     }
                 }
             });
@@ -2624,6 +2681,8 @@
             if (page < 1 || page > Math.ceil(matches.length / matchesPerPage)) return;
             currentPage = page;
             renderMatches();
+            // 페이지 변경 시 상단으로 스크롤
+            window.scrollTo(0, 0);
         }
 
         // Create match card HTML
