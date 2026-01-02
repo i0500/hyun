@@ -1562,8 +1562,29 @@
             <div class="modal-body">
                 <form id="matchForm">
                     <div class="form-group">
-                        <label for="matchTitle">타이틀</label>
-                        <input type="text" id="matchTitle" placeholder="친선경기">
+                        <label>타이틀</label>
+                        <div class="match-type-group" style="display: flex; gap: 10px; margin-top: 10px;">
+                            <label class="match-type-label selected" id="titleFriendlyLabel">
+                                <input type="radio" name="matchTitle" value="친선" id="titleFriendly" checked>
+                                <span class="type-label-text">친선</span>
+                            </label>
+                            <label class="match-type-label" id="titleRivalLabel">
+                                <input type="radio" name="matchTitle" value="라이벌" id="titleRival">
+                                <span class="type-label-text">라이벌</span>
+                            </label>
+                            <label class="match-type-label" id="titleWarmupLabel">
+                                <input type="radio" name="matchTitle" value="몸풀기" id="titleWarmup">
+                                <span class="type-label-text">몸풀기</span>
+                            </label>
+                            <label class="match-type-label" id="titleMonthlyLabel">
+                                <input type="radio" name="matchTitle" value="월례대회" id="titleMonthly">
+                                <span class="type-label-text">월례대회</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="dateTimeGroup" style="display: none;">
+                        <label for="matchDateTime">경기 일시</label>
+                        <input type="datetime-local" id="matchDateTime">
                     </div>
                     <div class="form-group">
                         <label>경기 유형</label>
@@ -1586,15 +1607,33 @@
                             </label>
                         </div>
                     </div>
+                    <!-- 월례대회 경기 번호 선택 (기본 숨김) -->
+                    <div class="form-group" id="matchNumberGroup" style="display: none;">
+                        <label>경기 번호</label>
+                        <div class="match-type-group" style="display: flex; gap: 10px; margin-top: 10px;">
+                            <label class="match-type-label selected" id="match1Label">
+                                <input type="radio" name="matchNumber" value="1경기" id="match1" checked>
+                                <span class="type-label-text">1경기</span>
+                            </label>
+                            <label class="match-type-label" id="match2Label">
+                                <input type="radio" name="matchNumber" value="2경기" id="match2">
+                                <span class="type-label-text">2경기</span>
+                            </label>
+                            <label class="match-type-label" id="match3Label">
+                                <input type="radio" name="matchNumber" value="3경기" id="match3">
+                                <span class="type-label-text">3경기</span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label>팀 A</label>
+                        <label id="teamALabel">팀 A</label>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" id="teamA1" placeholder="선수1 (예: 김철수)" style="flex: 1;">
                             <input type="text" id="teamA2" placeholder="선수2 (복식)" style="flex: 1;">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>팀 B</label>
+                        <label id="teamBLabel">팀 B</label>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" id="teamB1" placeholder="선수1 (예: 박영희)" style="flex: 1;">
                             <input type="text" id="teamB2" placeholder="선수2 (복식)" style="flex: 1;">
@@ -1631,17 +1670,59 @@
             const labels = document.querySelectorAll('.match-type-label');
             labels.forEach(label => {
                 label.addEventListener('click', function() {
-                    // 모든 라벨에서 selected 클래스 제거
-                    labels.forEach(l => l.classList.remove('selected'));
+                    // 같은 그룹의 라벨들 찾기
+                    const radioName = this.querySelector('input[type="radio"]').name;
+                    const groupLabels = document.querySelectorAll(`.match-type-label input[name="${radioName}"]`);
+                    
+                    // 같은 그룹의 모든 라벨에서 selected 클래스 제거
+                    groupLabels.forEach(radio => {
+                        radio.closest('.match-type-label').classList.remove('selected');
+                    });
+                    
                     // 클릭된 라벨에 selected 클래스 추가
                     this.classList.add('selected');
                     // 라디오 버튼 선택
                     const radio = this.querySelector('input[type="radio"]');
                     if (radio) {
                         radio.checked = true;
+                        
+                        // 타이틀 선택이 변경된 경우 UI 업데이트
+                        if (radioName === 'matchTitle') {
+                            updateMonthlyMatchUI();
+                        }
                     }
                 });
             });
+        }
+        
+        // 월례대회 UI 업데이트 함수
+        function updateMonthlyMatchUI() {
+            const selectedTitle = document.querySelector('input[name="matchTitle"]:checked');
+            const isMonthly = selectedTitle && selectedTitle.value === '월례대회';
+            
+            // 경기 번호 선택 영역 표시/숨김
+            const matchNumberGroup = document.getElementById('matchNumberGroup');
+            if (matchNumberGroup) {
+                matchNumberGroup.style.display = isMonthly ? 'block' : 'none';
+            }
+            
+            // 팀 레이블 변경
+            const teamALabel = document.getElementById('teamALabel');
+            const teamBLabel = document.getElementById('teamBLabel');
+            const scoreALabel = document.querySelector('label[for="scoreA"]');
+            const scoreBLabel = document.querySelector('label[for="scoreB"]');
+            
+            if (isMonthly) {
+                if (teamALabel) teamALabel.textContent = '회장팀';
+                if (teamBLabel) teamBLabel.textContent = '부회장팀';
+                if (scoreALabel) scoreALabel.textContent = '회장팀 점수';
+                if (scoreBLabel) scoreBLabel.textContent = '부회장팀 점수';
+            } else {
+                if (teamALabel) teamALabel.textContent = '팀 A';
+                if (teamBLabel) teamBLabel.textContent = '팀 B';
+                if (scoreALabel) scoreALabel.textContent = '팀 A 점수';
+                if (scoreBLabel) scoreBLabel.textContent = '팀 B 점수';
+            }
         }
 
         // 탭 전환 함수
@@ -1694,6 +1775,11 @@
                 
                 // A팀 플레이어들 처리
                 playersA.forEach(player => {
+                    // 게스트는 통계에서 제외
+                    if (isGuestPlayer(player)) {
+                        return;
+                    }
+                    
                     if (!playerStats[player]) {
                         playerStats[player] = { 
                             wins: 0, 
@@ -1739,6 +1825,11 @@
                 
                 // B팀 플레이어들 처리
                 playersB.forEach(player => {
+                    // 게스트는 통계에서 제외
+                    if (isGuestPlayer(player)) {
+                        return;
+                    }
+                    
                     if (!playerStats[player]) {
                         playerStats[player] = { 
                             wins: 0, 
@@ -1819,6 +1910,181 @@
                 .filter(name => !name.match(/^(팀|vs|대|VS)$/i)); // 팀, vs 등 키워드 제거
             
             return players.length > 0 ? players : [teamName]; // 분리되지 않으면 전체를 하나의 플레이어로
+        }
+
+        // 게스트 유저인지 체크하는 함수
+        function isGuestPlayer(playerName) {
+            if (!playerName) return false;
+            return playerName.includes('게스트');
+        }
+
+        // 월례대회 분기별 성적 계산 함수
+        function calculateMonthlyTournamentStats(allMatches, playerName) {
+            const currentYear = new Date().getFullYear();
+            const quarterlyStats = {
+                [currentYear]: {
+                    Q1: { matches: [], wins: 0, losses: 0, draws: 0, details: {} },
+                    Q2: { matches: [], wins: 0, losses: 0, draws: 0, details: {} },
+                    Q3: { matches: [], wins: 0, losses: 0, draws: 0, details: {} },
+                    Q4: { matches: [], wins: 0, losses: 0, draws: 0, details: {} }
+                }
+            };
+
+            // 분기 계산 함수
+            function getQuarter(month) {
+                if (month <= 3) return 'Q1';
+                if (month <= 6) return 'Q2';
+                if (month <= 9) return 'Q3';
+                return 'Q4';
+            }
+
+            // 월례대회 경기 필터링 및 분석
+            allMatches.forEach(match => {
+                if (!match.title || !match.title.includes('월례대회')) return;
+
+                const playersA = extractPlayers(match.teamA);
+                const playersB = extractPlayers(match.teamB);
+                
+                // 플레이어가 참여한 경기인지 확인
+                const isInTeamA = playersA.includes(playerName);
+                const isInTeamB = playersB.includes(playerName);
+                if (!isInTeamA && !isInTeamB) return;
+
+                const matchDate = new Date(match.timestamp || match.date || Date.now());
+                const year = matchDate.getFullYear();
+                const month = matchDate.getMonth() + 1;
+                const quarter = getQuarter(month);
+
+                if (!quarterlyStats[year]) {
+                    quarterlyStats[year] = {
+                        Q1: { matches: [], wins: 0, losses: 0, draws: 0, details: {} },
+                        Q2: { matches: [], wins: 0, losses: 0, draws: 0, details: {} },
+                        Q3: { matches: [], wins: 0, losses: 0, draws: 0, details: {} },
+                        Q4: { matches: [], wins: 0, losses: 0, draws: 0, details: {} }
+                    };
+                }
+
+                const scoreA = parseInt(match.scoreA) || 0;
+                const scoreB = parseInt(match.scoreB) || 0;
+                
+                // 경기 결과 판정
+                let result, team;
+                if (isInTeamA) {
+                    team = '회장팀';
+                    if (scoreA > scoreB) result = 'W';
+                    else if (scoreA < scoreB) result = 'L';
+                    else result = 'D';
+                } else {
+                    team = '부회장팀';
+                    if (scoreB > scoreA) result = 'W';
+                    else if (scoreB < scoreA) result = 'L';
+                    else result = 'D';
+                }
+
+                // 경기 번호 추출
+                const matchNumber = match.title.match(/(\d+경기)/)?.[1] || '1경기';
+                
+                // 통계 업데이트
+                const quarterData = quarterlyStats[year][quarter];
+                quarterData.matches.push({
+                    date: matchDate,
+                    title: match.title,
+                    matchNumber: matchNumber,
+                    team: team,
+                    result: result,
+                    score: `${scoreA}-${scoreB}`,
+                    opponent: isInTeamA ? playersB.join(', ') : playersA.join(', ')
+                });
+
+                if (result === 'W') quarterData.wins++;
+                else if (result === 'L') quarterData.losses++;
+                else quarterData.draws++;
+
+                // 경기별 세부 통계
+                if (!quarterData.details[matchNumber]) {
+                    quarterData.details[matchNumber] = { wins: 0, losses: 0, draws: 0 };
+                }
+                if (result === 'W') quarterData.details[matchNumber].wins++;
+                else if (result === 'L') quarterData.details[matchNumber].losses++;
+                else quarterData.details[matchNumber].draws++;
+            });
+
+            return quarterlyStats;
+        }
+
+        // 클럽 월례대회 현황 계산 함수
+        function calculateClubMonthlyTournamentStats(allMatches) {
+            const currentYear = new Date().getFullYear();
+            const quarterlyStats = {
+                [currentYear]: {
+                    Q1: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 },
+                    Q2: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 },
+                    Q3: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 },
+                    Q4: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 }
+                }
+            };
+
+            // 분기 계산 함수
+            function getQuarter(month) {
+                if (month <= 3) return 'Q1';
+                if (month <= 6) return 'Q2';
+                if (month <= 9) return 'Q3';
+                return 'Q4';
+            }
+
+            // 월례대회 경기 필터링 및 분석
+            allMatches.forEach(match => {
+                if (!match.title || !match.title.includes('월례대회')) return;
+
+                const matchDate = new Date(match.timestamp || match.date || Date.now());
+                const year = matchDate.getFullYear();
+                const month = matchDate.getMonth() + 1;
+                const quarter = getQuarter(month);
+
+                if (!quarterlyStats[year]) {
+                    quarterlyStats[year] = {
+                        Q1: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 },
+                        Q2: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 },
+                        Q3: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 },
+                        Q4: { presidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, vicePresidentTeam: {wins: 0, losses: 0, draws: 0, details: {}}, total: 0 }
+                    };
+                }
+
+                const scoreA = parseInt(match.scoreA) || 0;
+                const scoreB = parseInt(match.scoreB) || 0;
+                const matchNumber = match.title.match(/(\d+경기)/)?.[1] || '1경기';
+                
+                const quarterData = quarterlyStats[year][quarter];
+                quarterData.total++;
+
+                // 회장팀(팀A) vs 부회장팀(팀B) 결과
+                if (scoreA > scoreB) {
+                    quarterData.presidentTeam.wins++;
+                    if (!quarterData.presidentTeam.details[matchNumber]) {
+                        quarterData.presidentTeam.details[matchNumber] = {wins: 0, losses: 0, draws: 0};
+                    }
+                    quarterData.presidentTeam.details[matchNumber].wins++;
+                } else if (scoreA < scoreB) {
+                    quarterData.vicePresidentTeam.wins++;
+                    if (!quarterData.vicePresidentTeam.details[matchNumber]) {
+                        quarterData.vicePresidentTeam.details[matchNumber] = {wins: 0, losses: 0, draws: 0};
+                    }
+                    quarterData.vicePresidentTeam.details[matchNumber].wins++;
+                } else {
+                    quarterData.presidentTeam.draws++;
+                    quarterData.vicePresidentTeam.draws++;
+                    if (!quarterData.presidentTeam.details[matchNumber]) {
+                        quarterData.presidentTeam.details[matchNumber] = {wins: 0, losses: 0, draws: 0};
+                    }
+                    if (!quarterData.vicePresidentTeam.details[matchNumber]) {
+                        quarterData.vicePresidentTeam.details[matchNumber] = {wins: 0, losses: 0, draws: 0};
+                    }
+                    quarterData.presidentTeam.details[matchNumber].draws++;
+                    quarterData.vicePresidentTeam.details[matchNumber].draws++;
+                }
+            });
+
+            return quarterlyStats;
         }
 
         // 랭킹 렌더링
@@ -2438,6 +2704,7 @@
             editingIndex = -1;
             document.getElementById('modalTitle').textContent = '경기 기록 추가';
             document.getElementById('deleteBtn').style.display = 'none';
+            document.getElementById('dateTimeGroup').style.display = 'none'; // 날짜/시간 필드 숨김
             document.getElementById('matchForm').reset();
             // 입력 필드 초기화
             document.getElementById('teamA1').value = '';
@@ -2445,9 +2712,31 @@
             document.getElementById('teamB1').value = '';
             document.getElementById('teamB2').value = '';
             
+            // 타이틀 기본 선택 (친선 경기)
+            document.querySelectorAll('.match-type-label input[name="matchTitle"]').forEach(radio => {
+                const label = radio.closest('.match-type-label');
+                label.classList.remove('selected');
+                radio.checked = false;
+            });
+            document.getElementById('titleFriendly').checked = true;
+            document.getElementById('titleFriendlyLabel').classList.add('selected');
+            
+            // 월례대회 관련 UI 초기화
+            updateMonthlyMatchUI();
+            
+            // 경기 번호 기본 선택 (1경기)
+            document.querySelectorAll('.match-type-label input[name="matchNumber"]').forEach(radio => {
+                radio.closest('.match-type-label').classList.remove('selected');
+                radio.checked = false;
+            });
+            document.getElementById('match1').checked = true;
+            document.getElementById('match1Label').classList.add('selected');
+            
             // 경기 유형 기본 선택 (남복)
             document.getElementById('menDoubles').checked = true;
-            document.querySelectorAll('.match-type-label').forEach(label => label.classList.remove('selected'));
+            document.querySelectorAll('.match-type-label input[name="matchType"]').forEach(radio => {
+                radio.closest('.match-type-label').classList.remove('selected');
+            });
             document.getElementById('menDoublesLabel').classList.add('selected');
             
             // 바디 스크롤 방지
@@ -2480,8 +2769,50 @@
             
             document.getElementById('modalTitle').textContent = '경기 기록 수정';
             document.getElementById('deleteBtn').style.display = 'block';
+            document.getElementById('dateTimeGroup').style.display = 'block'; // 날짜/시간 필드 표시
             
-            document.getElementById('matchTitle').value = match.title || '';
+            // 기존 타이틀에 맞는 라디오 버튼 선택
+            const existingTitle = match.title || '';
+            let titleFound = false;
+            
+            // " 경기"를 제거한 값으로 비교
+            let titleWithoutMatch = existingTitle;
+            if (existingTitle.endsWith(' 경기')) {
+                titleWithoutMatch = existingTitle.replace(' 경기', '');
+            }
+            
+            // 모든 타이틀 라디오 버튼과 레이블 초기화
+            document.querySelectorAll('.match-type-label input[name="matchTitle"]').forEach(radio => {
+                const label = radio.closest('.match-type-label');
+                label.classList.remove('selected');
+                radio.checked = false;
+                
+                // 원본 타이틀 또는 "경기"를 제거한 타이틀과 비교
+                if (radio.value === existingTitle || radio.value === titleWithoutMatch) {
+                    radio.checked = true;
+                    label.classList.add('selected');
+                    titleFound = true;
+                }
+            });
+            
+            // 기존 타이틀이 옵션에 없으면 친선으로 설정
+            if (!titleFound) {
+                document.getElementById('titleFriendly').checked = true;
+                document.getElementById('titleFriendlyLabel').classList.add('selected');
+            }
+            
+            // 월례대회 관련 UI 업데이트
+            updateMonthlyMatchUI();
+            
+            // 날짜/시간 설정
+            const matchDate = new Date(match.timestamp || match.date || Date.now());
+            // datetime-local 형식으로 변환 (YYYY-MM-DDTHH:MM)
+            const year = matchDate.getFullYear();
+            const month = String(matchDate.getMonth() + 1).padStart(2, '0');
+            const day = String(matchDate.getDate()).padStart(2, '0');
+            const hours = String(matchDate.getHours()).padStart(2, '0');
+            const minutes = String(matchDate.getMinutes()).padStart(2, '0');
+            document.getElementById('matchDateTime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
             
             // 팀 이름을 선수별로 분리
             const teamAPlayers = (match.teamA || '').split('/').map(p => p.trim());
@@ -2552,7 +2883,17 @@
 
         // Save match
         function saveMatch() {
-            const title = document.getElementById('matchTitle').value.trim();
+            const selectedTitle = document.querySelector('input[name="matchTitle"]:checked');
+            let title = selectedTitle ? selectedTitle.value : '친선';
+            
+            // 월례대회인 경우 경기 번호 추가, 아닌 경우 " 경기" 추가
+            if (title === '월례대회') {
+                const selectedMatchNumber = document.querySelector('input[name="matchNumber"]:checked');
+                const matchNumber = selectedMatchNumber ? selectedMatchNumber.value : '1경기';
+                title = `월례대회 ${matchNumber}`;
+            } else {
+                title += ' 경기';
+            }
             const teamA1 = document.getElementById('teamA1').value.trim();
             const teamA2 = document.getElementById('teamA2').value.trim();
             const teamB1 = document.getElementById('teamB1').value.trim();
@@ -2582,6 +2923,26 @@
                 return;
             }
 
+            // 날짜/시간 처리
+            let timestamp, dateValue;
+            if (editingIndex >= 0) {
+                // 수정 모드일 때
+                const dateTimeInput = document.getElementById('matchDateTime').value;
+                if (dateTimeInput) {
+                    const selectedDate = new Date(dateTimeInput);
+                    timestamp = selectedDate.getTime();
+                    dateValue = selectedDate.toISOString();
+                } else {
+                    // 기존 날짜 유지
+                    timestamp = matches[editingIndex].timestamp;
+                    dateValue = matches[editingIndex].date || new Date(timestamp).toISOString();
+                }
+            } else {
+                // 추가 모드일 때 (현재 시간 사용)
+                timestamp = Date.now();
+                dateValue = new Date().toISOString();
+            }
+
             const matchData = {
                 title: title,
                 teamA: teamA,
@@ -2589,8 +2950,8 @@
                 scoreA: scoreA,
                 scoreB: scoreB,
                 matchType: matchType, // 경기 유형 추가
-                timestamp: editingIndex >= 0 ? matches[editingIndex].timestamp : Date.now(),
-                date: new Date().toISOString() // 날짜 필드 추가
+                timestamp: timestamp,
+                date: dateValue // 날짜 필드
             };
 
             if (editingIndex >= 0) {
@@ -3538,6 +3899,71 @@
                                 </div>
                             </div>
                             
+                            <!-- 월례대회 성적 -->
+                            <div style="
+                                background: #ffffff; 
+                                border-radius: 12px; 
+                                padding: 16px; 
+                                margin-bottom: 16px; 
+                                border: 1px solid #e5e7eb;
+                                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                            ">
+                                <div style="
+                                    margin-bottom: 16px;
+                                    padding-bottom: 12px;
+                                    border-bottom: 2px solid #f1f5f9;
+                                ">
+                                    <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                        🏆 월례대회 성적
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px; color: #374151; line-height: 1.6;">
+                                    ${(() => {
+                                        if (!playerStats.monthlyTournamentStats) {
+                                            return `<div style="text-align: center; color: #9ca3af; padding: 16px;">월례대회 참가 기록이 없습니다</div>`;
+                                        }
+                                        
+                                        let hasData = false;
+                                        let resultHTML = '';
+                                        
+                                        Object.entries(playerStats.monthlyTournamentStats).forEach(([year, yearData]) => {
+                                            Object.entries(yearData).forEach(([quarter, quarterData]) => {
+                                                if (quarterData.matches.length > 0) {
+                                                    hasData = true;
+                                                    const totalMatches = quarterData.wins + quarterData.losses + quarterData.draws;
+                                                    const winRate = totalMatches > 0 ? Math.round((quarterData.wins / totalMatches) * 100) : 0;
+                                                    resultHTML += `
+                                                        <div style="
+                                                            padding: 12px; 
+                                                            margin-bottom: 12px; 
+                                                            background: #f8fafc; 
+                                                            border-radius: 8px; 
+                                                            border-left: 3px solid #f59e0b;
+                                                        ">
+                                                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 8px;">
+                                                                ${year}년 ${quarter === 'Q1' ? '1분기' : quarter === 'Q2' ? '2분기' : quarter === 'Q3' ? '3분기' : '4분기'} 
+                                                                (${quarterData.wins}승 ${quarterData.draws}무 ${quarterData.losses}패 | 승률 ${winRate}%)
+                                                            </div>
+                                                            <div style="margin-left: 12px;">
+                                                                ${Object.entries(quarterData.details).map(([matchNum, detail]) => {
+                                                                    const matchTotal = detail.wins + detail.losses + detail.draws;
+                                                                    const matchWinRate = matchTotal > 0 ? Math.round((detail.wins / matchTotal) * 100) : 0;
+                                                                    return `<div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">
+                                                                        • ${matchNum}: ${detail.wins}승 ${detail.draws}무 ${detail.losses}패 (승률 ${matchWinRate}%)
+                                                                    </div>`;
+                                                                }).join('')}
+                                                            </div>
+                                                        </div>
+                                                    `;
+                                                }
+                                            });
+                                        });
+                                        
+                                        return hasData ? resultHTML : `<div style="text-align: center; color: #9ca3af; padding: 16px;">월례대회 참가 기록이 없습니다</div>`;
+                                    })()}
+                                </div>
+                            </div>
+                            
                             <!-- 파트너하지 않은 플레이어 -->
                             <div class="stat-card" style="
                                 background: white; 
@@ -3947,12 +4373,19 @@
                         const trimmed = name.trim();
                         if (trimmed) {
                             playersA.push(trimmed);
-                            allPlayers.add(trimmed);
+                            // 게스트가 아닌 경우에만 전체 플레이어 목록에 추가
+                            if (!trimmed.includes('게스트')) {
+                                allPlayers.add(trimmed);
+                            }
                         }
                     });
                 } else if (teamAString.trim()) {
-                    playersA.push(teamAString.trim());
-                    allPlayers.add(teamAString.trim());
+                    const trimmed = teamAString.trim();
+                    playersA.push(trimmed);
+                    // 게스트가 아닌 경우에만 전체 플레이어 목록에 추가
+                    if (!trimmed.includes('게스트')) {
+                        allPlayers.add(trimmed);
+                    }
                 }
                 
                 // teamB 처리
@@ -3961,12 +4394,19 @@
                         const trimmed = name.trim();
                         if (trimmed) {
                             playersB.push(trimmed);
-                            allPlayers.add(trimmed);
+                            // 게스트가 아닌 경우에만 전체 플레이어 목록에 추가
+                            if (!trimmed.includes('게스트')) {
+                                allPlayers.add(trimmed);
+                            }
                         }
                     });
                 } else if (teamBString.trim()) {
-                    playersB.push(teamBString.trim());
-                    allPlayers.add(teamBString.trim());
+                    const trimmed = teamBString.trim();
+                    playersB.push(trimmed);
+                    // 게스트가 아닌 경우에만 전체 플레이어 목록에 추가
+                    if (!trimmed.includes('게스트')) {
+                        allPlayers.add(trimmed);
+                    }
                 }
                 
                 // teamA2, teamB2도 추가 (구버전 호환)
@@ -3984,6 +4424,10 @@
                 const isDraw = scoreA === scoreB;
                 
                 playersA.forEach(player => {
+                    // 게스트는 통계에서 제외
+                    if (isGuestPlayer(player)) {
+                        return;
+                    }
                     if (!playerStats[player]) {
                         playerStats[player] = { wins: 0, losses: 0, draws: 0, totalMatches: 0 };
                     }
@@ -3994,6 +4438,10 @@
                 });
                 
                 playersB.forEach(player => {
+                    // 게스트는 통계에서 제외
+                    if (isGuestPlayer(player)) {
+                        return;
+                    }
                     if (!playerStats[player]) {
                         playerStats[player] = { wins: 0, losses: 0, draws: 0, totalMatches: 0 };
                     }
@@ -4320,7 +4768,9 @@
                 else monthlyData[monthKey].draws++;
             });
             
-            
+            // 월례대회 분기별 성적 계산
+            const monthlyTournamentStats = calculateMonthlyTournamentStats(allMatches, playerName);
+            stats.monthlyTournamentStats = monthlyTournamentStats;
             
             // 월간 최다승 계산
             stats.monthlyBest = Math.max(...Object.values(monthlyData).map(d => d.wins), 0);
@@ -4725,7 +5175,8 @@
                     opponentTeam = playersA;
                 }
                 
-                if (playerPartner) {
+                if (playerPartner && !isGuestPlayer(playerPartner)) {
+                    // 게스트가 아닌 파트너만 통계에 포함
                     if (!partnerStats[playerPartner]) {
                         partnerStats[playerPartner] = {
                             totalWins: 0,
@@ -4802,7 +5253,8 @@
                 const playersA = extractPlayers(match.teamA);
                 const playersB = extractPlayers(match.teamB);
                 [...playersA, ...playersB].forEach(player => {
-                    if (player !== playerName) {
+                    // 본인과 게스트를 제외한 플레이어만 추가
+                    if (player !== playerName && !isGuestPlayer(player)) {
                         allPlayers.add(player);
                     }
                 });
@@ -4827,6 +5279,7 @@
             }
 
             const clubStats = calculateClubStats();
+            const monthlyTournamentStats = calculateClubMonthlyTournamentStats(matches);
             
             const clubStatsHtml = `
                 <div class="club-stats-grid" style="
@@ -5097,6 +5550,98 @@
                         </div>
                     </div>
 
+                    <!-- 월례대회 현황 -->
+                    <div class="stat-card" style="
+                        background: white; 
+                        padding: 20px; 
+                        border-radius: 12px; 
+                        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+                        border: 1px solid #e5e7eb;
+                        transition: transform 0.2s ease, box-shadow 0.2s ease;
+                        grid-column: 1 / -1;
+                    ">
+                        <div style="
+                            margin-bottom: 16px;
+                            padding-bottom: 12px;
+                            border-bottom: 2px solid #f1f5f9;
+                        ">
+                            <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                🏆 월례대회 현황
+                            </h3>
+                        </div>
+                        <div style="display: grid; gap: 16px;">
+                            ${Object.entries(monthlyTournamentStats).map(([year, yearData]) => 
+                                Object.entries(yearData).map(([quarter, quarterData]) => {
+                                    if (quarterData.total === 0) return '';
+                                    const presidentTotal = quarterData.presidentTeam.wins + quarterData.presidentTeam.losses + quarterData.presidentTeam.draws;
+                                    const vicePresidentTotal = quarterData.vicePresidentTeam.wins + quarterData.vicePresidentTeam.losses + quarterData.vicePresidentTeam.draws;
+                                    const presidentWinRate = presidentTotal > 0 ? Math.round((quarterData.presidentTeam.wins / presidentTotal) * 100) : 0;
+                                    const vicePresidentWinRate = vicePresidentTotal > 0 ? Math.round((quarterData.vicePresidentTeam.wins / vicePresidentTotal) * 100) : 0;
+                                    
+                                    return `
+                                        <div style="
+                                            padding: 16px;
+                                            background: #f8fafc;
+                                            border-radius: 8px;
+                                            border-left: 4px solid #f59e0b;
+                                        ">
+                                            <div style="margin-bottom: 16px;">
+                                                <h4 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #1f2937;">
+                                                    ${year}년 ${quarter === 'Q1' ? '1분기' : quarter === 'Q2' ? '2분기' : quarter === 'Q3' ? '3분기' : '4분기'}
+                                                    <span style="font-size: 12px; color: #6b7280; font-weight: normal;">(총 ${quarterData.total}경기)</span>
+                                                </h4>
+                                            </div>
+                                            
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                                <!-- 회장팀 -->
+                                                <div style="
+                                                    background: white;
+                                                    padding: 12px;
+                                                    border-radius: 6px;
+                                                    border: 1px solid #e5e7eb;
+                                                ">
+                                                    <div style="font-weight: 600; color: #059669; margin-bottom: 8px; font-size: 13px;">
+                                                        👑 회장팀
+                                                    </div>
+                                                    <div style="font-size: 12px; color: #374151; margin-bottom: 6px;">
+                                                        ${quarterData.presidentTeam.wins}승 ${quarterData.presidentTeam.draws}무 ${quarterData.presidentTeam.losses}패 
+                                                        <span style="color: #059669; font-weight: 600;">(승률 ${presidentWinRate}%)</span>
+                                                    </div>
+                                                    <div style="font-size: 11px; color: #6b7280;">
+                                                        ${Object.entries(quarterData.presidentTeam.details).map(([matchNum, detail]) => 
+                                                            `• ${matchNum}: ${detail.wins}승 ${detail.draws}무 ${detail.losses}패`
+                                                        ).join('<br>')}
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- 부회장팀 -->
+                                                <div style="
+                                                    background: white;
+                                                    padding: 12px;
+                                                    border-radius: 6px;
+                                                    border: 1px solid #e5e7eb;
+                                                ">
+                                                    <div style="font-weight: 600; color: #dc2626; margin-bottom: 8px; font-size: 13px;">
+                                                        🏅 부회장팀
+                                                    </div>
+                                                    <div style="font-size: 12px; color: #374151; margin-bottom: 6px;">
+                                                        ${quarterData.vicePresidentTeam.wins}승 ${quarterData.vicePresidentTeam.draws}무 ${quarterData.vicePresidentTeam.losses}패 
+                                                        <span style="color: #dc2626; font-weight: 600;">(승률 ${vicePresidentWinRate}%)</span>
+                                                    </div>
+                                                    <div style="font-size: 11px; color: #6b7280;">
+                                                        ${Object.entries(quarterData.vicePresidentTeam.details).map(([matchNum, detail]) => 
+                                                            `• ${matchNum}: ${detail.wins}승 ${detail.draws}무 ${detail.losses}패`
+                                                        ).join('<br>')}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')
+                            ).join('') || '<div style="text-align: center; color: #9ca3af; padding: 20px;">월례대회 기록이 없습니다</div>'}
+                        </div>
+                    </div>
+
                 </div>
             `;
             
@@ -5171,6 +5716,11 @@
                 const playersB = extractPlayers(match.teamB);
                 
                 [...playersA, ...playersB].forEach(player => {
+                    // 게스트는 통계에서 제외
+                    if (isGuestPlayer(player)) {
+                        return;
+                    }
+                    
                     if (!playerStats[player]) {
                         playerStats[player] = { matches: 0, wins: 0, losses: 0, draws: 0, points: 0 };
                     }
