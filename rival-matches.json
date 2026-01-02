@@ -108,9 +108,19 @@
       "scoreB": 6,
       "matchType": "남복",
       "timestamp": 1767086262187
+    },
+    {
+      "title": "친선",
+      "teamA": "조영식 / 전찬경",
+      "teamB": "우수문 / 채영수",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1767318710706,
+      "date": "2026-01-02T01:51:50.706Z"
     }
   ],
-  "lastUpdated": "2026-01-02T01:17:27.011Z",
+  "lastUpdated": "2026-01-02T01:51:50.712Z",
   "version": "1.0",
-  "totalMatches": 12
+  "totalMatches": 13
 }
