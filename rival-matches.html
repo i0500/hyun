@@ -404,6 +404,15 @@
             padding: 30px;
         }
 
+        .page-info {
+            color: rgba(0, 0, 0, 0.4);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: left;
+            margin: 10px 0 15px 0;
+            padding-left: 5px;
+        }
+
         .matches-grid {
             display: grid;
             gap: 20px;
@@ -1156,6 +1165,12 @@
 
             .main-content {
                 padding: 15px;
+            }
+
+            .page-info {
+                font-size: 12px;
+                margin: 5px 0 10px 0;
+                padding-left: 3px;
             }
 
             .matches-grid {
@@ -2635,7 +2650,12 @@
                 
                 const paginationHTML = totalPages > 1 ? createPaginationHTML(totalPages) : '';
 
+                // 페이지 정보 표시 (1페이지보다 많을 때만)
+                const pageInfoHTML = totalPages > 1 ? 
+                    `<div class="page-info">page ${currentPage} / ${totalPages}</div>` : '';
+
                 const html = `
+                    ${pageInfoHTML}
                     <div class="matches-grid">
                         ${matchesHTML}
                     </div>
