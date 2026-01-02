@@ -1,6 +1,16 @@
 {
   "matches": [
     {
+      "title": "친선",
+      "teamA": "조영식 / 전찬경",
+      "teamB": "우수문 / 채영수",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1767318710706,
+      "date": "2026-01-02T01:51:50.706Z"
+    },
+    {
       "title": "친선 몸풀기",
       "teamA": "전찬경 / 조영식",
       "teamB": "우수문 / 채영수",
@@ -110,17 +120,17 @@
       "timestamp": 1767086262187
     },
     {
-      "title": "친선",
-      "teamA": "조영식 / 전찬경",
-      "teamB": "우수문 / 채영수",
-      "scoreA": 5,
-      "scoreB": 5,
+      "title": "친선경기",
+      "teamA": "전찬경 / 신명식",
+      "teamB": "우수문 / 게스트",
+      "scoreA": 4,
+      "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1767318710706,
-      "date": "2026-01-02T01:51:50.706Z"
+      "timestamp": 1767323436604,
+      "date": "2026-01-02T03:10:36.604Z"
     }
   ],
-  "lastUpdated": "2026-01-02T01:51:50.712Z",
+  "lastUpdated": "2026-01-02T03:10:36.607Z",
   "version": "1.0",
-  "totalMatches": 13
+  "totalMatches": 14
 }
