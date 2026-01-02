@@ -2265,12 +2265,18 @@
             allMatches.push(matchData);
             localStorage.setItem('rivalMatches', JSON.stringify(allMatches));
             
-            // 현재 표시 데이터도 업데이트 (올해/작년이면)
+            // 현재 표시 데이터도 업데이트
+            // date 필드가 없으면 현재 날짜로 설정
+            if (!matchData.date) {
+                matchData.date = new Date().toISOString();
+            }
+            
             const matchDate = new Date(matchData.date);
             const matchYear = matchDate.getFullYear();
             const currentYear = new Date().getFullYear();
             const lastYear = currentYear - 1;
             
+            // 올해나 작년 경기는 matches 배열에도 추가
             if (matchYear === currentYear || matchYear === lastYear) {
                 matches.push(matchData);
             }
@@ -2583,7 +2589,8 @@
                 scoreA: scoreA,
                 scoreB: scoreB,
                 matchType: matchType, // 경기 유형 추가
-                timestamp: editingIndex >= 0 ? matches[editingIndex].timestamp : Date.now()
+                timestamp: editingIndex >= 0 ? matches[editingIndex].timestamp : Date.now(),
+                date: new Date().toISOString() // 날짜 필드 추가
             };
 
             if (editingIndex >= 0) {
