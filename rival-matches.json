@@ -128,9 +128,19 @@
       "scoreB": 6,
       "matchType": "남복",
       "timestamp": 1767086262187
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "성기수 / 김탄",
+      "teamB": "송민곤 / 채영수",
+      "scoreA": 6,
+      "scoreB": 1,
+      "matchType": "남복",
+      "timestamp": 1767406060804,
+      "date": "2026-01-03T02:07:40.804Z"
     }
   ],
-  "lastUpdated": "2026-01-02T23:54:09.688Z",
+  "lastUpdated": "2026-01-03T02:07:40.813Z",
   "version": "1.0",
-  "totalMatches": 14
+  "totalMatches": 15
 }
