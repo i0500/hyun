@@ -1,6 +1,26 @@
 {
   "matches": [
     {
+      "title": "친선 경기",
+      "teamA": "성기수 / 김탄",
+      "teamB": "송민곤 / 채영수",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1767406082868,
+      "date": "2026-01-03T02:08:02.868Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "성기수 / 김탄",
+      "teamB": "송민곤 / 채영수",
+      "scoreA": 6,
+      "scoreB": 1,
+      "matchType": "남복",
+      "timestamp": 1767406060804,
+      "date": "2026-01-03T02:07:40.804Z"
+    },
+    {
       "title": "친선경기",
       "teamA": "조영식 / 전찬경",
       "teamB": "우수문 / 채영수",
@@ -131,26 +151,16 @@
     },
     {
       "title": "친선 경기",
-      "teamA": "성기수 / 김탄",
-      "teamB": "송민곤 / 채영수",
+      "teamA": "양승일 / 박성민",
+      "teamB": "우수문 / 조영식",
       "scoreA": 6,
-      "scoreB": 1,
+      "scoreB": 4,
       "matchType": "남복",
-      "timestamp": 1767406060804,
-      "date": "2026-01-03T02:07:40.804Z"
-    },
-    {
-      "title": "친선 경기",
-      "teamA": "성기수 / 김탄",
-      "teamB": "송민곤 / 채영수",
-      "scoreA": 5,
-      "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767406082868,
-      "date": "2026-01-03T02:08:02.868Z"
+      "timestamp": 1767406587530,
+      "date": "2026-01-03T02:16:27.530Z"
     }
   ],
-  "lastUpdated": "2026-01-03T02:08:02.876Z",
+  "lastUpdated": "2026-01-03T02:16:27.537Z",
   "version": "1.0",
-  "totalMatches": 16
+  "totalMatches": 17
 }
