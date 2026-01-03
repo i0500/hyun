@@ -1687,7 +1687,7 @@
                     <path d="M1.5 14h13v-1h-13v1zm0-2h13v-1h-13v1zm0-2h13v-1h-13v1z"/>
                     <path d="M3 9V3h2v6H3zm3-4v4h2V5H6zm3-2v6h2V3H9zm3 4v2h2V7h-2z"/>
                 </svg>
-                통계
+                클럽통계
             </button>
         </div>
 
@@ -1771,6 +1771,7 @@
                     <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #dee2e6; font-size: 13px; color: #6c757d;">
                         <div>• 단식/복식 구분 없이 동일한 점수 적용</div>
                         <div>• 팀 경기에서도 개인별로 점수 획득</div>
+                        <div>• 플레이어 이름을 클릭하면 개인 통계를 확인할 수 있습니다</div>
                     </div>
                 </div>
             </div>
@@ -1790,6 +1791,14 @@
 
         <!-- 클럽 통계 탭 -->
         <div id="clubstatsContent" class="tab-content">
+            
+            <!-- 클럽 통계 필터 -->
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                    <button id="clubStatsPeriodAll" class="filter-btn period-filter" onclick="setClubStatsPeriod('all')" style="padding: 8px 24px; min-width: 80px;">전체</button>
+                    <button id="clubStatsPeriodMonth" class="filter-btn period-filter active" onclick="setClubStatsPeriod('month')" style="padding: 8px 24px; min-width: 80px;">이번달</button>
+                </div>
+            </div>
             
             <div id="clubStatsContainer">
                 <div class="empty-stats" style="text-align: center; padding: 60px 20px; color: #6b7280;">
@@ -3331,7 +3340,7 @@
         }
 
         // Delete match
-        function deleteMatch(index = null) {
+        async function deleteMatch(index = null) {
             const targetIndex = index !== null ? index : editingIndex;
             
             if (targetIndex < 0 || targetIndex >= matches.length) return;
@@ -3340,20 +3349,57 @@
                 return;
             }
 
-            matches.splice(targetIndex, 1);
-            
-            // 삭제 후 페이지 조정
-            const totalPages = Math.ceil(matches.length / matchesPerPage);
-            if (currentPage > totalPages && totalPages > 0) {
-                currentPage = totalPages;
+            // 로딩 시작
+            showLoading('경기기록 삭제 중...', '데이터 처리 중입니다');
+            updateLoadingProgress(20, '경기기록 삭제 중...', '로컬 데이터 삭제');
+
+            try {
+                matches.splice(targetIndex, 1);
+                
+                // 삭제 후 페이지 조정
+                const totalPages = Math.ceil(matches.length / matchesPerPage);
+                if (currentPage > totalPages && totalPages > 0) {
+                    currentPage = totalPages;
+                }
+                
+                saveMatches();
+                updateLoadingProgress(40, '경기기록 삭제 중...', 'GitHub 업로드 준비');
+                
+                hideModal();
+                
+                // GitHub 동기화
+                updateLoadingProgress(60, '경기기록 삭제 중...', 'GitHub 업로드 중');
+                await autoSyncToGitHub('경기기록 삭제');
+                
+                updateLoadingProgress(75, '경기기록 삭제 중...', '최신 데이터 동기화');
+                // GitHub에서 최신 데이터를 다시 가져와서 확실한 동기화
+                await loadFromGitHub();
+                
+                updateLoadingProgress(90, '경기기록 삭제 중...', '화면 갱신 중');
+                
+                // 모든 화면 갱신 (GitHub 동기화 완료 후)
+                renderMatches();
+                updateClubStats(); // 클럽 통계도 갱신
+                updateRankings(); // 랭킹도 갱신
+                
+                // 경기기록 탭이 아닌 곳에서 삭제한 경우 경기기록 탭으로 이동
+                const currentActiveTab = document.querySelector('.tab-content.active');
+                if (currentActiveTab && currentActiveTab.id !== 'matchesContent') {
+                    switchTab('matches');
+                }
+                
+                updateLoadingProgress(100, '삭제 완료!', '모든 작업이 완료되었습니다');
+                
+                // 짧은 성공 메시지 후 로딩 숨기기
+                setTimeout(() => {
+                    hideLoading();
+                }, 500);
+                
+            } catch (error) {
+                console.error('삭제 처리 중 오류:', error);
+                hideLoading();
+                alert('삭제 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
             }
-            
-            saveMatches();
-            renderMatches();
-            hideModal();
-            
-            // 자동 GitHub 동기화 (즉시 업로드)
-            autoSyncToGitHub('경기기록 삭제');
         }
 
         // Export to Excel
@@ -5298,7 +5344,7 @@
             const allPlayerStats = {};
             
             // 모든 경기를 분석하여 각 플레이어의 승점 계산
-            matches.forEach(match => {
+            allMatches.forEach(match => {
                 const teamA1 = match.teamA1 || match.teamA || '';
                 const teamA2 = match.teamA2 || '';
                 const teamB1 = match.teamB1 || match.teamB || '';
@@ -5698,21 +5744,55 @@
             return stats;
         }
 
+        // 클럽 통계 필터 상태
+        let clubStatsPeriod = 'month';
+
+        // 클럽 통계 기간 필터 설정
+        function setClubStatsPeriod(period) {
+            clubStatsPeriod = period;
+            
+            // 버튼 활성화 상태 업데이트
+            document.querySelectorAll('.period-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`clubStatsPeriod${period === 'all' ? 'All' : 'Month'}`).classList.add('active');
+            
+            // 클럽 통계 업데이트
+            updateClubStats();
+        }
+
         // 클럽 통계 업데이트 함수
         function updateClubStats() {
-            if (matches.length === 0) {
+            // 필터에 따라 경기 데이터 선택
+            let filteredMatches = matches;
+            if (clubStatsPeriod === 'month') {
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                
+                filteredMatches = matches.filter(match => {
+                    const matchDate = new Date(match.date || match.timestamp);
+                    return matchDate.getMonth() === currentMonth && matchDate.getFullYear() === currentYear;
+                });
+            }
+            
+            if (filteredMatches.length === 0) {
+                const emptyText = clubStatsPeriod === 'month' ? 
+                    '이번달 경기 기록이 없습니다' : 
+                    '경기 기록이 쌓이면 클럽 전체 통계를 확인할 수 있습니다';
+                    
                 document.getElementById('clubStatsContainer').innerHTML = `
                     <div class="empty-stats" style="text-align: center; padding: 60px 20px; color: #6b7280;">
                         <div style="font-size: 64px; margin-bottom: 20px;">📈</div>
                         <h3>클럽 통계를 준비하고 있습니다</h3>
-                        <p>경기 기록이 쌓이면 클럽 전체 통계를 확인할 수 있습니다</p>
+                        <p>${emptyText}</p>
                     </div>
                 `;
                 return;
             }
 
-            const clubStats = calculateClubStats();
-            const monthlyTournamentStats = calculateClubMonthlyTournamentStats(matches);
+            const clubStats = calculateClubStats(filteredMatches);
+            const monthlyTournamentStats = calculateClubMonthlyTournamentStats(filteredMatches);
             
             const clubStatsHtml = `
                 <div class="club-stats-grid" style="
@@ -5751,12 +5831,12 @@
                                 <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.monthlyAvgMatches}경기</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
-                                <span style="color: #374151; font-size: 14px;"> • 이번달 활성 플레이어</span>
-                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.thisMonthActivePlayers}명 <span style="font-size: 12px; color: #94a3b8;">(이번달 3경기 이상)</span></span>
+                                <span style="color: #374151; font-size: 14px;"> • 활성 플레이어</span>
+                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.activePlayers}명 <span style="font-size: 12px; color: #94a3b8;">(3경기 이상)</span></span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
                                 <span style="color: #374151; font-size: 14px;"> • 누적 경기 등록자</span>
-                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.totalPlayersWithMatches}명 <span style="font-size: 12px; color: #94a3b8;">(전체 기간)</span></span>
+                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.totalPlayersWithMatches}명</span>
                             </div>
                         </div>
                     </div>
@@ -5818,28 +5898,24 @@
                                 <span style="color: #374151; font-size: 14px;"> • 남자복식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['남복'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['남복'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['남복'] || 0}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 여자복식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['여복'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['여복'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['여복'] || 0}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 혼합복식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['혼복'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['혼복'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['혼복'] || 0}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0;">
                                 <span style="color: #374151; font-size: 14px;"> • 단식</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.matchTypes['단식'] || 0}경기 <span style="font-size: 12px; color: #94a3b8;">(${Math.round((clubStats.matchTypes['단식'] || 0) / clubStats.totalMatches * 100)}%)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMatchTypes['단식'] || 0}경기</span>
                                 </div>
                             </div>
                         </div>
@@ -5876,7 +5952,6 @@
                                 <span style="color: #374151; font-size: 14px;"> • 최다 경기 참가자</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.mostActivePlayer}</span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthMostActivePlayer}</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
@@ -5909,23 +5984,17 @@
                                 <span style="color: #374151; font-size: 14px;"> • 주중 경기</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.weekdayMatches}경기 <span style="font-size: 12px; color: #94a3b8;">(${clubStats.weekdayPercent}%)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthWeekdayMatches}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 주말 경기</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.weekendMatches}경기 <span style="font-size: 12px; color: #94a3b8;">(${clubStats.weekendPercent}%)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthWeekendMatches}경기</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 가장 활발한 월</span>
                                 <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.busiestMonth}</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
-                                <span style="color: #374151; font-size: 14px;"> • 이번 달 경기</span>
-                                <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.thisMonthMatches}경기</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
                                 <span style="color: #374151; font-size: 14px;"> • 최근 활동</span>
@@ -5961,7 +6030,6 @@
                                 <span style="color: #374151; font-size: 14px;"> • 고정 파트너십</span>
                                 <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                     <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clubStats.fixedPartnerships}개 <span style="font-size: 12px; color: #94a3b8;">(3경기 이상)</span></span>
-                                    <span style="font-size: 12px; color: #9ca3af;">이번달 ${clubStats.thisMonthFixedPartnerships}개</span>
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
@@ -6082,9 +6150,9 @@
         }
 
         // 클럽 통계 계산 함수
-        function calculateClubStats() {
+        function calculateClubStats(filteredMatches = matches) {
             const stats = {
-                totalMatches: matches.length,
+                totalMatches: filteredMatches.length,
                 totalPlayers: 0,
                 activePlayers: 0,
                 matchTypes: {},
@@ -6102,7 +6170,7 @@
                 topPlayers: []
             };
 
-            if (matches.length === 0) return stats;
+            if (filteredMatches.length === 0) return stats;
 
             // 플레이어 통계 수집
             const playerStats = {};
@@ -6113,7 +6181,7 @@
             let closeGames = 0;
             let bigWins = 0;
 
-            matches.forEach(match => {
+            filteredMatches.forEach(match => {
                 // 경기 유형별 집계
                 const type = match.matchType || '남복';
                 stats.matchTypes[type] = (stats.matchTypes[type] || 0) + 1;
@@ -6204,7 +6272,7 @@
             const thisMonthKey = `${thisMonth.getFullYear()}-${String(thisMonth.getMonth() + 1).padStart(2, '0')}`;
             const thisMonthPlayerStats = {};
             
-            matches.forEach(match => {
+            filteredMatches.forEach(match => {
                 const matchDate = new Date(match.date || match.timestamp);
                 const matchMonthKey = `${matchDate.getFullYear()}-${String(matchDate.getMonth() + 1).padStart(2, '0')}`;
                 
@@ -6233,7 +6301,7 @@
             let thisMonthWeekdayMatches = 0;
             let thisMonthWeekendMatches = 0;
             
-            matches.forEach(match => {
+            filteredMatches.forEach(match => {
                 const matchDate = new Date(match.date || match.timestamp);
                 const matchMonthKey = `${matchDate.getFullYear()}-${String(matchDate.getMonth() + 1).padStart(2, '0')}`;
                 
@@ -6260,7 +6328,7 @@
             // 이번달 파트너십 계산
             const thisMonthPartnerships = {};
             
-            matches.forEach(match => {
+            filteredMatches.forEach(match => {
                 const matchDate = new Date(match.date || match.timestamp);
                 const matchMonthKey = `${matchDate.getFullYear()}-${String(matchDate.getMonth() + 1).padStart(2, '0')}`;
                 
@@ -6290,7 +6358,7 @@
             stats.mostPartnership = mostPartnershipEntry ? `${mostPartnershipEntry[0]} (${mostPartnershipEntry[1]}경기)` : '없음';
             
             const doublesMatches = (stats.matchTypes['남복'] || 0) + (stats.matchTypes['여복'] || 0) + (stats.matchTypes['혼복'] || 0);
-            stats.doublesParticipation = Math.round((doublesMatches / matches.length) * 100);
+            stats.doublesParticipation = Math.round((doublesMatches / filteredMatches.length) * 100);
 
             // 클럽 기록 계산
             let maxWinStreak = 0;
@@ -6403,7 +6471,7 @@
             Object.entries(partnerships).forEach(([partnershipName, games]) => {
                 if (games >= 3) { // 3경기 이상만 고려
                     // 해당 파트너십의 승률 계산
-                    const partnershipMatches = matches.filter(match => {
+                    const partnershipMatches = filteredMatches.filter(match => {
                         const playersA = extractPlayers(match.teamA);
                         const playersB = extractPlayers(match.teamB);
                         const teamAPartnership = playersA.length > 1 ? playersA.sort().join(' / ') : '';
@@ -6455,32 +6523,39 @@
             stats.bestWinRatePartnership = bestWinRatePartnership;
 
             // 기간 및 성장 분석
-            const dates = matches.map(m => new Date(m.date || m.timestamp)).sort((a, b) => a - b);
+            const dates = filteredMatches.map(m => new Date(m.date || m.timestamp)).sort((a, b) => a - b);
             const firstDate = dates[0];
             const lastDate = dates[dates.length - 1];
             const diffMonths = Math.ceil((lastDate - firstDate) / (1000 * 60 * 60 * 24 * 30.44));
             
             stats.activityPeriod = diffMonths > 0 ? `${diffMonths}개월` : '1개월 미만';
-            stats.monthlyAvgMatches = diffMonths > 0 ? (matches.length / diffMonths).toFixed(1) : matches.length.toString();
+            stats.monthlyAvgMatches = diffMonths > 0 ? (filteredMatches.length / diffMonths).toFixed(1) : filteredMatches.length.toString();
+
+            // 성장 트렌드 계산을 위한 전체 데이터 기반 월별 데이터 생성
+            const allTimeMonthlyData = {};
+            matches.forEach(match => {
+                const date = new Date(match.date || match.timestamp);
+                const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                allTimeMonthlyData[monthKey] = (allTimeMonthlyData[monthKey] || 0) + 1;
+            });
 
             // 이번 달 경기
-            stats.thisMonthMatches = monthlyData[thisMonthKey] || 0;
+            stats.thisMonthMatches = allTimeMonthlyData[thisMonthKey] || 0;
 
             // 가장 바쁜 달
-            const busiestMonthEntry = Object.entries(monthlyData).sort((a, b) => b[1] - a[1])[0];
+            const busiestMonthEntry = Object.entries(allTimeMonthlyData).sort((a, b) => b[1] - a[1])[0];
             stats.busiestMonth = busiestMonthEntry ? `${busiestMonthEntry[0]} (${busiestMonthEntry[1]}경기)` : '없음';
 
             // 클럽 평균 승률
             const totalWins = Object.values(playerStats).reduce((sum, p) => sum + p.wins, 0);
             const totalMatches = Object.values(playerStats).reduce((sum, p) => sum + p.matches, 0);
             stats.clubAvgWinRate = totalMatches > 0 ? Math.round((totalWins / totalMatches) * 100) : 0;
-
-            // 성장 트렌드 계산
+            
             const lastMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() - 1);
             const lastMonthKey = `${lastMonth.getFullYear()}-${String(lastMonth.getMonth() + 1).padStart(2, '0')}`;
             
-            const thisMonthMatches = monthlyData[thisMonthKey] || 0;
-            const lastMonthMatches = monthlyData[lastMonthKey] || 0;
+            const thisMonthMatches = allTimeMonthlyData[thisMonthKey] || 0;
+            const lastMonthMatches = allTimeMonthlyData[lastMonthKey] || 0;
             
             // 월간 경기수 증가율
             if (lastMonthMatches > 0) {
@@ -6495,6 +6570,7 @@
             const allTimePlayerStats = {};
             const thisMonthNewPlayers = {};
             
+            // 전체 경기 데이터를 사용하여 신규 플레이어 계산
             matches.forEach(match => {
                 const matchDate = new Date(match.date || match.timestamp);
                 const matchMonthKey = `${matchDate.getFullYear()}-${String(matchDate.getMonth() + 1).padStart(2, '0')}`;
@@ -6523,7 +6599,7 @@
             stats.avgParticipation = stats.totalPlayers > 0 ? Math.round((stats.activePlayers / stats.totalPlayers) * 100) : 0;
 
             // 최근 활동 및 성장
-            const recentMatches = matches.filter(m => {
+            const recentMatches = filteredMatches.filter(m => {
                 const matchDate = new Date(m.date || m.timestamp);
                 const monthAgo = new Date();
                 monthAgo.setMonth(monthAgo.getMonth() - 1);
@@ -6537,7 +6613,7 @@
             threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
             const recentPlayerMatches = {};
             
-            matches.filter(m => new Date(m.date || m.timestamp) >= threeMonthsAgo).forEach(match => {
+            filteredMatches.filter(m => new Date(m.date || m.timestamp) >= threeMonthsAgo).forEach(match => {
                 [...extractPlayers(match.teamA), ...extractPlayers(match.teamB)].forEach(player => {
                     recentPlayerMatches[player] = true;
                 });
@@ -6548,10 +6624,16 @@
             stats.retentionRate = stats.totalPlayers > 0 ? Math.round((stats.activePlayers / stats.totalPlayers) * 100) : 0;
             
             // 성장률
-            const firstHalf = matches.slice(0, Math.floor(matches.length / 2));
-            const secondHalf = matches.slice(Math.floor(matches.length / 2));
+            const firstHalf = filteredMatches.slice(0, Math.floor(filteredMatches.length / 2));
+            const secondHalf = filteredMatches.slice(Math.floor(filteredMatches.length / 2));
             const growthRate = firstHalf.length > 0 ? ((secondHalf.length - firstHalf.length) / firstHalf.length * 100) : 0;
             stats.growthTrend = growthRate > 10 ? '🚀 급성장' : growthRate > 0 ? '📈 성장' : growthRate < -10 ? '📉 감소' : '➖ 안정';
+
+            // 평균 점수 계산
+            stats.avgTotalScore = filteredMatches.length > 0 ? (totalScore / filteredMatches.length).toFixed(1) : 0;
+            stats.avgScoreDiff = filteredMatches.length > 0 ? (totalScoreDiff / filteredMatches.length).toFixed(1) : 0;
+            stats.closeGameRate = filteredMatches.length > 0 ? Math.round((closeGames / filteredMatches.length) * 100) : 0;
+            stats.bigWinRate = filteredMatches.length > 0 ? Math.round((bigWins / filteredMatches.length) * 100) : 0;
 
             return stats;
         }
