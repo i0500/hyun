@@ -2751,7 +2751,7 @@
         function addNewMatch(matchData) {
             const saved = localStorage.getItem('rivalMatches');
             let allMatches = saved ? JSON.parse(saved) : [];
-            allMatches.push(matchData);
+            allMatches.unshift(matchData); // 전체 데이터에도 최신 경기를 맨 앞에 추가
             localStorage.setItem('rivalMatches', JSON.stringify(allMatches));
             
             // 현재 표시 데이터도 업데이트
@@ -2765,9 +2765,9 @@
             const currentYear = new Date().getFullYear();
             const lastYear = currentYear - 1;
             
-            // 올해나 작년 경기는 matches 배열에도 추가
+            // 올해나 작년 경기는 matches 배열에도 추가 (최신 순으로 맨 앞에)
             if (matchYear === currentYear || matchYear === lastYear) {
-                matches.push(matchData);
+                matches.unshift(matchData);
             }
         }
 
@@ -5797,9 +5797,9 @@
                                 <span style="color: #374151; font-size: 14px;"> • 최다 동반팀</span>
                                 <span style="color: #1f2937; font-weight: 600; font-size: 13px;">${clubStats.mostPartnership}</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f8fafc;">
                                 <span style="color: #374151; font-size: 14px;"> • 최고 승률 파트너</span>
-                                <span style="color: #1f2937; font-weight: 600; font-size: 13px;">${clubStats.bestWinRatePartnership}</span>
+                                <span style="color: #1f2937; font-weight: 600; font-size: 13px; text-align: right; line-height: 1.4;">${clubStats.bestWinRatePartnership}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
                                 <span style="color: #374151; font-size: 14px;"> • 복식 참가률</span>
@@ -6253,11 +6253,16 @@
                     });
 
                     const winRate = (partnershipWins / partnershipMatches.length) * 100;
-                    partnershipRankings.push({
-                        name: partnershipName,
-                        winRate: Math.round(winRate),
-                        games: games
-                    });
+                    const winRateNumber = Math.round(winRate);
+                    
+                    // 승률 50% 이상인 파트너십만 포함
+                    if (winRateNumber >= 50) {
+                        partnershipRankings.push({
+                            name: partnershipName,
+                            winRate: winRateNumber,
+                            games: games
+                        });
+                    }
                 }
             });
 
@@ -6269,7 +6274,7 @@
             if (topPartnerships.length > 0) {
                 bestWinRatePartnership = topPartnerships.map((partnership, index) => {
                     return `${index + 1}위: ${partnership.name} (승률 ${partnership.winRate}%)`;
-                }).join(' | ');
+                }).join('<br>'); // 줄바꿈으로 변경
             }
 
             stats.bestWinRatePartnership = bestWinRatePartnership;
@@ -6460,8 +6465,8 @@
             name = name.trim();
             if (name && !playerNames.includes(name)) {
                 playerNames.unshift(name); // 맨 앞에 추가
-                if (playerNames.length > 10) { // 최대 10개만 유지
-                    playerNames = playerNames.slice(0, 10);
+                if (playerNames.length > 50) { // 최대 50개만 유지
+                    playerNames = playerNames.slice(0, 50);
                 }
                 savePlayerNames();
             }
@@ -6481,8 +6486,9 @@
             selectedIndex = -1;
 
             if (!query.trim()) {
-                // 쿼리가 없으면 전체 이름 표시 (이미 최대 10개)
-                displayAutocompleteItems(dropdown, playerNames, inputId);
+                // 쿼리가 없으면 최근 10개만 표시
+                const recentNames = playerNames.slice(0, 10);
+                displayAutocompleteItems(dropdown, recentNames, inputId);
                 return;
             }
 
