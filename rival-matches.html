@@ -763,6 +763,134 @@
             justify-content: center;
         }
 
+        /* 자동완성 드롭다운 스타일 */
+        .autocomplete-dropdown {
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10001;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .autocomplete-item {
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .autocomplete-item:hover,
+        .autocomplete-item.selected {
+            background-color: #f0f0f0;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        /* 점수 입력 세련된 스타일 */
+        .score-container {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c5282;
+            padding: 8px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 6px;
+            border: 2px solid #e2e8f0;
+            min-width: 32px;
+            flex-shrink: 0;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-buttons {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .score-button {
+            flex: 1;
+            padding: 8px 4px;
+            font-size: 14px;
+            font-weight: 600;
+            background: #ffffff;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 0;
+            height: 34px;
+        }
+
+        .score-button.selected {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            border-color: #3182ce;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(49, 130, 206, 0.3);
+        }
+
+        .score-button:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-button.selected:hover {
+            background: linear-gradient(135deg, #3182ce, #2c5282);
+        }
+
+        .score-clear-button {
+            padding: 8px 12px;
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+            color: #c53030;
+            border: 2px solid #fed7d7;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            white-space: nowrap;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-clear-button:hover {
+            background: linear-gradient(135deg, #feb2b2 0%, #fc8181 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(197, 48, 48, 0.2);
+        }
+
+        .player-input-wrapper {
+            position: relative;
+        }
+
         .modal-body {
             padding: 30px;
         }
@@ -1673,26 +1801,60 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label id="teamALabel">팀 A</label>
+                        <label id="teamALabel">팀 A 이름/점수</label>
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" id="teamA1" placeholder="선수1 (예: 김철수)" style="flex: 1;">
-                            <input type="text" id="teamA2" placeholder="선수2 (복식)" style="flex: 1;">
+                            <div class="player-input-wrapper" style="flex: 1;">
+                                <input type="text" id="teamA1" placeholder="선수1 (예: 김철수)" style="width: 100%;" autocomplete="off">
+                                <div id="autocompleteA1" class="autocomplete-dropdown"></div>
+                            </div>
+                            <div class="player-input-wrapper" style="flex: 1;">
+                                <input type="text" id="teamA2" placeholder="선수2 (복식)" style="width: 100%;" autocomplete="off">
+                                <div id="autocompleteA2" class="autocomplete-dropdown"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <div class="score-container">
+                                <div class="score-display" id="scoreADisplay">0</div>
+                                <div class="score-buttons">
+                                    <button type="button" class="score-button" onclick="setScore('A', 1)">1</button>
+                                    <button type="button" class="score-button" onclick="setScore('A', 2)">2</button>
+                                    <button type="button" class="score-button" onclick="setScore('A', 3)">3</button>
+                                    <button type="button" class="score-button" onclick="setScore('A', 4)">4</button>
+                                    <button type="button" class="score-button" onclick="setScore('A', 5)">5</button>
+                                    <button type="button" class="score-button" onclick="setScore('A', 6)">6</button>
+                                </div>
+                                <button type="button" class="score-clear-button" onclick="clearScore('A')">↻</button>
+                            </div>
+                            <input type="hidden" id="scoreA" min="0" value="0" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label id="teamBLabel">팀 B</label>
+                        <label id="teamBLabel">팀 B 이름/점수</label>
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" id="teamB1" placeholder="선수1 (예: 박영희)" style="flex: 1;">
-                            <input type="text" id="teamB2" placeholder="선수2 (복식)" style="flex: 1;">
+                            <div class="player-input-wrapper" style="flex: 1;">
+                                <input type="text" id="teamB1" placeholder="선수1 (예: 박영희)" style="width: 100%;" autocomplete="off">
+                                <div id="autocompleteB1" class="autocomplete-dropdown"></div>
+                            </div>
+                            <div class="player-input-wrapper" style="flex: 1;">
+                                <input type="text" id="teamB2" placeholder="선수2 (복식)" style="width: 100%;" autocomplete="off">
+                                <div id="autocompleteB2" class="autocomplete-dropdown"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="scoreA">팀 A 점수</label>
-                        <input type="number" id="scoreA" min="0" placeholder="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="scoreB">팀 B 점수</label>
-                        <input type="number" id="scoreB" min="0" placeholder="0" required>
+                        <div style="margin-top: 15px;">
+                            <div class="score-container">
+                                <div class="score-display" id="scoreBDisplay">0</div>
+                                <div class="score-buttons">
+                                    <button type="button" class="score-button" onclick="setScore('B', 1)">1</button>
+                                    <button type="button" class="score-button" onclick="setScore('B', 2)">2</button>
+                                    <button type="button" class="score-button" onclick="setScore('B', 3)">3</button>
+                                    <button type="button" class="score-button" onclick="setScore('B', 4)">4</button>
+                                    <button type="button" class="score-button" onclick="setScore('B', 5)">5</button>
+                                    <button type="button" class="score-button" onclick="setScore('B', 6)">6</button>
+                                </div>
+                                <button type="button" class="score-clear-button" onclick="clearScore('B')">↻</button>
+                            </div>
+                            <input type="hidden" id="scoreB" min="0" value="0" required>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -1756,19 +1918,12 @@
             // 팀 레이블 변경
             const teamALabel = document.getElementById('teamALabel');
             const teamBLabel = document.getElementById('teamBLabel');
-            const scoreALabel = document.querySelector('label[for="scoreA"]');
-            const scoreBLabel = document.querySelector('label[for="scoreB"]');
-            
             if (isMonthly) {
-                if (teamALabel) teamALabel.textContent = '회장팀';
-                if (teamBLabel) teamBLabel.textContent = '부회장팀';
-                if (scoreALabel) scoreALabel.textContent = '회장팀 점수';
-                if (scoreBLabel) scoreBLabel.textContent = '부회장팀 점수';
+                if (teamALabel) teamALabel.textContent = '회장팀 이름/점수';
+                if (teamBLabel) teamBLabel.textContent = '부회장팀 이름/점수';
             } else {
-                if (teamALabel) teamALabel.textContent = '팀 A';
-                if (teamBLabel) teamBLabel.textContent = '팀 B';
-                if (scoreALabel) scoreALabel.textContent = '팀 A 점수';
-                if (scoreBLabel) scoreBLabel.textContent = '팀 B 점수';
+                if (teamALabel) teamALabel.textContent = '팀 A 이름/점수';
+                if (teamBLabel) teamBLabel.textContent = '팀 B 이름/점수';
             }
         }
 
@@ -2787,6 +2942,10 @@
             document.getElementById('teamB1').value = '';
             document.getElementById('teamB2').value = '';
             
+            // 점수 디스플레이 초기화
+            clearScore('A');
+            clearScore('B');
+            
             // 타이틀 기본 선택 (친선 경기)
             document.querySelectorAll('.match-type-label input[name="matchTitle"]').forEach(radio => {
                 const label = radio.closest('.match-type-label');
@@ -2900,6 +3059,30 @@
             
             document.getElementById('scoreA').value = match.scoreA || 0;
             document.getElementById('scoreB').value = match.scoreB || 0;
+            
+            // 점수 디스플레이 업데이트
+            document.getElementById('scoreADisplay').textContent = match.scoreA || 0;
+            document.getElementById('scoreBDisplay').textContent = match.scoreB || 0;
+            
+            // 점수 버튼 선택 상태 복원
+            const scoreA = parseInt(match.scoreA) || 0;
+            const scoreB = parseInt(match.scoreB) || 0;
+            
+            // 팀 A 버튼 선택
+            const buttonsA = document.querySelectorAll(`.score-container .score-button[onclick*="'A'"]`);
+            buttonsA.forEach(btn => btn.classList.remove('selected'));
+            if (scoreA >= 1 && scoreA <= 6) {
+                const buttonA = document.querySelector(`.score-button[onclick="setScore('A', ${scoreA})"]`);
+                if (buttonA) buttonA.classList.add('selected');
+            }
+            
+            // 팀 B 버튼 선택
+            const buttonsB = document.querySelectorAll(`.score-container .score-button[onclick*="'B'"]`);
+            buttonsB.forEach(btn => btn.classList.remove('selected'));
+            if (scoreB >= 1 && scoreB <= 6) {
+                const buttonB = document.querySelector(`.score-button[onclick="setScore('B', ${scoreB})"]`);
+                if (buttonB) buttonB.classList.add('selected');
+            }
             
             // 경기 유형 선택 복원
             const matchType = match.matchType || '혼복';
@@ -6253,6 +6436,228 @@
                 document.body.style.overflow = '';
             }
         }
+
+        // 자동완성 시스템 
+        let playerNames = [];
+        let currentDropdown = null;
+        let selectedIndex = -1;
+
+        // 로컬 저장소에서 선수 이름 목록 로드
+        function loadPlayerNames() {
+            const saved = localStorage.getItem('tennisPlayerNames');
+            if (saved) {
+                playerNames = JSON.parse(saved);
+            }
+        }
+
+        // 선수 이름 저장
+        function savePlayerNames() {
+            localStorage.setItem('tennisPlayerNames', JSON.stringify(playerNames));
+        }
+
+        // 선수 이름 추가
+        function addPlayerName(name) {
+            name = name.trim();
+            if (name && !playerNames.includes(name)) {
+                playerNames.unshift(name); // 맨 앞에 추가
+                if (playerNames.length > 10) { // 최대 10개만 유지
+                    playerNames = playerNames.slice(0, 10);
+                }
+                savePlayerNames();
+            }
+        }
+
+        // 자동완성 드롭다운 표시
+        function showAutocomplete(inputId, query) {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById('autocomplete' + inputId.slice(-2)); // A1, A2, B1, B2
+            
+            if (!input || !dropdown) return;
+
+            // 기존 드롭다운 숨기기
+            hideAllAutocomplete();
+            
+            currentDropdown = dropdown;
+            selectedIndex = -1;
+
+            if (!query.trim()) {
+                // 쿼리가 없으면 전체 이름 표시 (이미 최대 10개)
+                displayAutocompleteItems(dropdown, playerNames, inputId);
+                return;
+            }
+
+            // 필터링된 이름 찾기 (대소문자 구분 없이)
+            const filteredNames = playerNames.filter(name => 
+                name.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (filteredNames.length > 0) {
+                displayAutocompleteItems(dropdown, filteredNames, inputId);
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 자동완성 아이템 표시
+        function displayAutocompleteItems(dropdown, names, inputId) {
+            dropdown.innerHTML = '';
+            
+            names.forEach((name, index) => {
+                const item = document.createElement('div');
+                item.className = 'autocomplete-item';
+                item.textContent = name;
+                item.onclick = () => selectAutocompleteItem(inputId, name);
+                dropdown.appendChild(item);
+            });
+
+            dropdown.style.display = 'block';
+        }
+
+        // 자동완성 아이템 선택
+        function selectAutocompleteItem(inputId, name) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.value = name;
+                hideAllAutocomplete();
+                // 선택된 이름을 목록 맨 앞으로 이동
+                const index = playerNames.indexOf(name);
+                if (index > 0) {
+                    playerNames.splice(index, 1);
+                    playerNames.unshift(name);
+                    savePlayerNames();
+                }
+            }
+        }
+
+        // 모든 자동완성 드롭다운 숨기기
+        function hideAllAutocomplete() {
+            document.querySelectorAll('.autocomplete-dropdown').forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+            currentDropdown = null;
+            selectedIndex = -1;
+        }
+
+        // 키보드 네비게이션
+        function handleAutocompleteKeyboard(event, inputId) {
+            if (!currentDropdown || currentDropdown.style.display === 'none') return;
+
+            const items = currentDropdown.querySelectorAll('.autocomplete-item');
+            
+            switch (event.key) {
+                case 'ArrowDown':
+                    event.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                    updateSelection(items);
+                    break;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, -1);
+                    updateSelection(items);
+                    break;
+                case 'Enter':
+                    event.preventDefault();
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        items[selectedIndex].click();
+                    }
+                    break;
+                case 'Escape':
+                    hideAllAutocomplete();
+                    break;
+            }
+        }
+
+        // 선택 상태 업데이트
+        function updateSelection(items) {
+            items.forEach((item, index) => {
+                item.classList.toggle('selected', index === selectedIndex);
+            });
+        }
+
+        // 점수 선택 기능
+        function setScore(team, score) {
+            const scoreInput = document.getElementById('score' + team);
+            const scoreDisplay = document.getElementById('score' + team + 'Display');
+            const buttons = document.querySelectorAll(`.score-container .score-button[onclick*="'${team}'"]`);
+            
+            // 모든 버튼의 선택 상태 제거
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            // 클릭된 버튼 선택 표시
+            event.target.classList.add('selected');
+            
+            // 점수 설정
+            scoreInput.value = score;
+            scoreDisplay.textContent = score;
+        }
+
+        function clearScore(team) {
+            const scoreInput = document.getElementById('score' + team);
+            const scoreDisplay = document.getElementById('score' + team + 'Display');
+            const buttons = document.querySelectorAll(`.score-container .score-button[onclick*="'${team}'"]`);
+            
+            // 모든 버튼의 선택 상태 제거
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            scoreInput.value = 0;
+            scoreDisplay.textContent = 0;
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPlayerNames();
+            
+            // 모든 선수 이름 입력 필드에 이벤트 리스너 추가
+            ['teamA1', 'teamA2', 'teamB1', 'teamB2'].forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        showAutocomplete(inputId, this.value);
+                    });
+                    
+                    input.addEventListener('focus', function() {
+                        showAutocomplete(inputId, this.value);
+                    });
+                    
+                    input.addEventListener('keydown', function(event) {
+                        handleAutocompleteKeyboard(event, inputId);
+                    });
+                    
+                    // 블러 이벤트 (약간 지연 후 숨기기 - 클릭 가능하도록)
+                    input.addEventListener('blur', function() {
+                        setTimeout(() => {
+                            hideAllAutocomplete();
+                        }, 200);
+                    });
+                }
+            });
+
+            // 문서 클릭 시 자동완성 숨기기
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.player-input-wrapper')) {
+                    hideAllAutocomplete();
+                }
+            });
+        });
+
+        // 기존 saveMatch 함수 수정하여 선수 이름 저장
+        const originalSaveMatch = saveMatch;
+        saveMatch = function() {
+            // 선수 이름들을 저장
+            const names = [
+                document.getElementById('teamA1').value.trim(),
+                document.getElementById('teamA2').value.trim(),
+                document.getElementById('teamB1').value.trim(),
+                document.getElementById('teamB2').value.trim()
+            ];
+            
+            names.forEach(name => {
+                if (name) addPlayerName(name);
+            });
+            
+            // 기존 saveMatch 함수 실행
+            return originalSaveMatch();
+        };
     </script>
 </body>
 </html>
