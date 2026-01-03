@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "양승일 / 박성민",
+      "teamB": "우수문 / 조영식",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1767406914737,
+      "date": "2026-01-03T02:21:54.737Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "성기수 / 김탄",
       "teamB": "송민곤 / 채영수",
       "scoreA": 6,
@@ -141,16 +151,16 @@
     },
     {
       "title": "친선 경기",
-      "teamA": "양승일 / 박성민",
-      "teamB": "우수문 / 조영식",
+      "teamA": "우수문 / 양승일",
+      "teamB": "박성민 / 이봉교",
       "scoreA": 6,
-      "scoreB": 4,
+      "scoreB": 0,
       "matchType": "남복",
-      "timestamp": 1767406914737,
-      "date": "2026-01-03T02:21:54.737Z"
+      "timestamp": 1767407103975,
+      "date": "2026-01-03T02:25:03.975Z"
     }
   ],
-  "lastUpdated": "2026-01-03T02:22:20.809Z",
+  "lastUpdated": "2026-01-03T02:25:03.994Z",
   "version": "1.0",
-  "totalMatches": 16
+  "totalMatches": 17
 }
