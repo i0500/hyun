@@ -3336,11 +3336,9 @@
             renderMatches();
             hideModal();
             
-            // 새 경기 추가 후 페이지 최상단으로 스크롤
+            // 새 경기 추가 후 페이지 최상단으로 즉시 이동
             if (editingIndex === -1) {  // 새 경기 추가인 경우만
-                setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
+                window.scrollTo(0, 0);
             }
             
             // 자동 GitHub 동기화 (즉시 업로드)
