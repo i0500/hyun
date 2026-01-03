@@ -2887,7 +2887,6 @@
 
         // Render matches with pagination
         function renderMatches() {
-            console.log(`[renderMatches] 렌더링 시작, 총 ${matches.length}개 경기, 삭제중: ${isDeleting}`);
             const container = document.getElementById('matchesContainer');
             
             if (matches.length === 0) {
@@ -3360,10 +3359,8 @@
 
             // 삭제 중 플래그 설정 (자동 동기화 방지)
             isDeleting = true;
-            console.log(`[로컬삭제] 인덱스 ${targetIndex} 삭제 시작, 현재 총 ${matches.length}개 경기`);
 
             matches.splice(targetIndex, 1);
-            console.log(`[로컬삭제] 삭제 완료, 현재 총 ${matches.length}개 경기`);
             
             // 삭제 후 페이지 조정
             const totalPages = Math.ceil(matches.length / matchesPerPage);
@@ -3372,10 +3369,7 @@
             }
             
             saveMatches();
-            console.log('[로컬삭제] localStorage 저장 완료');
-            
             renderMatches();
-            console.log('[로컬삭제] 화면 갱신 완료');
             
             updateClubStats(); // 클럽 통계도 갱신
             updateRankings(); // 랭킹도 갱신
@@ -3782,7 +3776,6 @@
             
             // 삭제 중일 때는 GitHub 데이터 로드 차단
             if (isDeleting) {
-                console.log(`[GitHub다운로드] 삭제 처리 중이므로 로드 차단 (isDeleting: ${isDeleting})`);
                 return false;
             }
             
