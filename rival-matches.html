@@ -1956,6 +1956,7 @@
         let currentFilter = '전체'; // 현재 필터 상태
         let currentPage = 1;
         let matchesPerPage = 10;
+        let isDeleting = false; // 삭제 중 플래그 (전역 변수)
         
         // 경기 유형 선택 처리
         function setupMatchTypeSelection() {
@@ -2646,7 +2647,7 @@
             // 페이지 포커스시 제한적 동기화 (3초 간격)
             let lastFocusSync = 0;
             window.addEventListener('focus', () => {
-                if (GITHUB_CONFIG.token) {
+                if (GITHUB_CONFIG.token && !isDeleting) { // 삭제 중이 아닐 때만 동기화
                     const now = Date.now();
                     if (now - lastFocusSync > 3000) { // 3초 제한
                         lastFocusSync = now;
@@ -2886,6 +2887,7 @@
 
         // Render matches with pagination
         function renderMatches() {
+            console.log(`[renderMatches] 렌더링 시작, 총 ${matches.length}개 경기, 삭제중: ${isDeleting}`);
             const container = document.getElementById('matchesContainer');
             
             if (matches.length === 0) {
@@ -3335,12 +3337,19 @@
             renderMatches();
             hideModal();
             
+            // 새 경기 추가 후 페이지 최상단으로 스크롤
+            if (editingIndex === -1) {  // 새 경기 추가인 경우만
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+            }
+            
             // 자동 GitHub 동기화 (즉시 업로드)
             autoSyncToGitHub('경기기록 저장');
         }
 
         // Delete match
-        async function deleteMatch(index = null) {
+        function deleteMatch(index = null) {
             const targetIndex = index !== null ? index : editingIndex;
             
             if (targetIndex < 0 || targetIndex >= matches.length) return;
@@ -3349,57 +3358,42 @@
                 return;
             }
 
-            // 로딩 시작
-            showLoading('경기기록 삭제 중...', '데이터 처리 중입니다');
-            updateLoadingProgress(20, '경기기록 삭제 중...', '로컬 데이터 삭제');
+            // 삭제 중 플래그 설정 (자동 동기화 방지)
+            isDeleting = true;
+            console.log(`[로컬삭제] 인덱스 ${targetIndex} 삭제 시작, 현재 총 ${matches.length}개 경기`);
 
-            try {
-                matches.splice(targetIndex, 1);
-                
-                // 삭제 후 페이지 조정
-                const totalPages = Math.ceil(matches.length / matchesPerPage);
-                if (currentPage > totalPages && totalPages > 0) {
-                    currentPage = totalPages;
-                }
-                
-                saveMatches();
-                updateLoadingProgress(40, '경기기록 삭제 중...', 'GitHub 업로드 준비');
-                
-                hideModal();
-                
-                // GitHub 동기화
-                updateLoadingProgress(60, '경기기록 삭제 중...', 'GitHub 업로드 중');
-                await autoSyncToGitHub('경기기록 삭제');
-                
-                updateLoadingProgress(75, '경기기록 삭제 중...', '최신 데이터 동기화');
-                // GitHub에서 최신 데이터를 다시 가져와서 확실한 동기화
-                await loadFromGitHub();
-                
-                updateLoadingProgress(90, '경기기록 삭제 중...', '화면 갱신 중');
-                
-                // 모든 화면 갱신 (GitHub 동기화 완료 후)
-                renderMatches();
-                updateClubStats(); // 클럽 통계도 갱신
-                updateRankings(); // 랭킹도 갱신
-                
-                // 경기기록 탭이 아닌 곳에서 삭제한 경우 경기기록 탭으로 이동
-                const currentActiveTab = document.querySelector('.tab-content.active');
-                if (currentActiveTab && currentActiveTab.id !== 'matchesContent') {
-                    switchTab('matches');
-                }
-                
-                updateLoadingProgress(100, '삭제 완료!', '모든 작업이 완료되었습니다');
-                
-                // 짧은 성공 메시지 후 로딩 숨기기
-                setTimeout(() => {
-                    hideLoading();
-                }, 500);
-                
-            } catch (error) {
-                console.error('삭제 처리 중 오류:', error);
-                hideLoading();
-                alert('삭제 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+            matches.splice(targetIndex, 1);
+            console.log(`[로컬삭제] 삭제 완료, 현재 총 ${matches.length}개 경기`);
+            
+            // 삭제 후 페이지 조정
+            const totalPages = Math.ceil(matches.length / matchesPerPage);
+            if (currentPage > totalPages && totalPages > 0) {
+                currentPage = totalPages;
             }
+            
+            saveMatches();
+            console.log('[로컬삭제] localStorage 저장 완료');
+            
+            renderMatches();
+            console.log('[로컬삭제] 화면 갱신 완료');
+            
+            updateClubStats(); // 클럽 통계도 갱신
+            updateRankings(); // 랭킹도 갱신
+            hideModal();
+            
+            // 경기기록 탭이 아닌 곳에서 삭제한 경우 경기기록 탭으로 이동
+            const currentActiveTab = document.querySelector('.tab-content.active');
+            if (currentActiveTab && currentActiveTab.id !== 'matchesContent') {
+                switchTab('matches');
+            }
+            
+            // 삭제 완료 후 플래그 해제 (약간의 지연)
+            setTimeout(() => {
+                isDeleting = false;
+            }, 1000);
+            
+            // 자동 GitHub 동기화 (백그라운드)
+            autoSyncToGitHub('경기기록 삭제');
         }
 
         // Export to Excel
@@ -3783,6 +3777,12 @@
 
         async function loadFromGitHub() {
             if (!GITHUB_CONFIG.token) {
+                return false;
+            }
+            
+            // 삭제 중일 때는 GitHub 데이터 로드 차단
+            if (isDeleting) {
+                console.log(`[GitHub다운로드] 삭제 처리 중이므로 로드 차단 (isDeleting: ${isDeleting})`);
                 return false;
             }
             
