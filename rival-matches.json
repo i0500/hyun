@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "테스트4 / 테스트3",
+      "teamB": "테스트2 / 테스트1",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1767422309865,
+      "date": "2026-01-03T06:38:29.865Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "조영식 / 송민곤",
       "teamB": "양승일 / 채영수",
       "scoreA": 4,
@@ -190,7 +200,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-03T06:37:38.481Z",
+  "lastUpdated": "2026-01-03T06:38:29.867Z",
   "version": "1.0",
-  "totalMatches": 20
+  "totalMatches": 21
 }
