@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "김탄",
+      "teamB": "김성준",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "단식",
+      "timestamp": 1767492926397,
+      "date": "2026-01-04T02:15:26.397Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "우수문 / 전찬경",
       "teamB": "김성준 / 게스트",
       "scoreA": 6,
@@ -240,7 +250,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-04T02:12:00.276Z",
+  "lastUpdated": "2026-01-04T02:15:26.418Z",
   "version": "1.0",
-  "totalMatches": 25
+  "totalMatches": 26
 }
