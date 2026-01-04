@@ -27,8 +27,8 @@
       "scoreA": 6,
       "scoreB": 3,
       "matchType": "남복",
-      "timestamp": 1767492720251,
-      "date": "2026-01-04T02:12:00.251Z"
+      "timestamp": 1767489120000,
+      "date": "2026-01-04T01:12:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -260,7 +260,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-04T03:05:16.810Z",
+  "lastUpdated": "2026-01-04T04:20:13.868Z",
   "version": "1.0",
   "totalMatches": 27
 }
