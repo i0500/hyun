@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "라이벌 경기",
+      "teamA": "이만 / 이영호",
+      "teamB": "이윤정 / 김석근",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1767576707180,
+      "date": "2026-01-05T01:31:47.180Z"
+    },
+    {
+      "title": "라이벌 경기",
       "teamA": "이윤정 / 김석근",
       "teamB": "이만 / 이영호",
       "scoreA": 5,
@@ -290,7 +300,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-05T01:09:16.252Z",
+  "lastUpdated": "2026-01-05T01:31:47.202Z",
   "version": "1.0",
-  "totalMatches": 30
+  "totalMatches": 31
 }
