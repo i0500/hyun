@@ -1,6 +1,16 @@
 {
   "matches": [
     {
+      "title": "친선 경기",
+      "teamA": "조영식 / 이재호",
+      "teamB": "김경태 / 채영수",
+      "scoreA": 3,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1767660205322,
+      "date": "2026-01-06T00:43:25.322Z"
+    },
+    {
       "title": "라이벌 경기",
       "teamA": "이만 / 이영호",
       "teamB": "이윤정 / 김석근",
@@ -300,7 +310,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-05T01:31:47.202Z",
+  "lastUpdated": "2026-01-06T00:43:25.346Z",
   "version": "1.0",
-  "totalMatches": 31
+  "totalMatches": 32
 }
