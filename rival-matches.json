@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "이윤정 / 우수문",
+      "teamB": "이만 / 김경희",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "혼복",
+      "timestamp": 1767666915635,
+      "date": "2026-01-06T02:35:15.635Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "조영식 / 채영수",
       "teamB": "김석근 / 김영선",
       "scoreA": 5,
@@ -390,7 +400,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-06T01:47:10.510Z",
+  "lastUpdated": "2026-01-06T02:35:15.645Z",
   "version": "1.0",
-  "totalMatches": 40
+  "totalMatches": 41
 }
