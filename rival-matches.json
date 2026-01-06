@@ -6,9 +6,9 @@
       "teamB": "전찬수 / 김주환",
       "scoreA": 5,
       "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767660755159,
-      "date": "2026-01-06T00:52:35.159Z"
+      "matchType": "혼복",
+      "timestamp": 1767660720000,
+      "date": "2026-01-06T00:52:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -320,7 +320,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-06T00:52:35.185Z",
+  "lastUpdated": "2026-01-06T01:04:46.766Z",
   "version": "1.0",
   "totalMatches": 33
 }
