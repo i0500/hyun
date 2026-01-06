@@ -4,6 +4,16 @@
       "title": "친선 경기",
       "teamA": "김주환 / 우수문",
       "teamB": "양승일 / 게스트",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "남복",
+      "timestamp": 1767661584929,
+      "date": "2026-01-06T01:06:24.929Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "김주환 / 우수문",
+      "teamB": "양승일 / 게스트",
       "scoreA": 5,
       "scoreB": 5,
       "matchType": "남복",
@@ -330,7 +340,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-06T01:05:52.923Z",
+  "lastUpdated": "2026-01-06T01:06:24.937Z",
   "version": "1.0",
-  "totalMatches": 34
+  "totalMatches": 35
 }
