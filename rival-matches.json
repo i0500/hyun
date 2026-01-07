@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "이윤정 / 채영수",
+      "teamB": "김경희 / 김성준",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "혼복",
+      "timestamp": 1767755555920,
+      "date": "2026-01-07T03:12:35.920Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "김성은 / 박성민",
       "teamB": "김성준 / 채영수",
       "scoreA": 6,
@@ -430,7 +440,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-07T02:14:18.138Z",
+  "lastUpdated": "2026-01-07T03:12:35.945Z",
   "version": "1.0",
-  "totalMatches": 44
+  "totalMatches": 45
 }
