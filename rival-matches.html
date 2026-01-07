@@ -4305,8 +4305,9 @@
                                     padding-bottom: 12px;
                                     border-bottom: 2px solid #f1f5f9;
                                 ">
-                                    <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                                        🤝 파트너별 전적
+                                    <h3 style="margin: 0; font-size: 15px; color: #1f2937; font-weight: 600; display: flex; align-items: center; justify-content: space-between;">
+                                        <span style="display: flex; align-items: center; gap: 8px;">🤝 파트너별 전적</span>
+                                        <span style="font-size: 11px; color: #9ca3af; font-weight: 400;">승률 상위 5명 파트너</span>
                                     </h3>
                                 </div>
                                 <div style="font-size: 13px; color: #374151; line-height: 1.6;">
@@ -5441,16 +5442,37 @@
                 }
             });
             
-            // 2. 파트너십 분석 (더 흥미로운 지표들)
+            // 2. 파트너십 분석 (게스트 제외, 정확한 경기 데이터 기반)
             const partnerAnalysis = {};
             let bestWinRatePartner = null;
             let mostGamesPartner = null;
             let chemistryNeededPartner = null;
             
-            playerMatches.forEach(match => {
-                if (match.partner) {
-                    if (!partnerAnalysis[match.partner]) {
-                        partnerAnalysis[match.partner] = { 
+            // allMatches에서 직접 파트너 정보 추출 (정확한 데이터)
+            allMatches.forEach(match => {
+                const playersA = extractPlayers(match.teamA);
+                const playersB = extractPlayers(match.teamB);
+                
+                let playerPartner = null;
+                let playerTeam = null;
+                let isWin = false;
+                let isDraw = false;
+                
+                // 선택된 플레이어가 어느 팀에 속하는지 확인하고 파트너 찾기 (복식경기만)
+                if (playersA.includes(playerName) && playersA.length === 2) {
+                    // 플레이어가 팀A에 속하고 복식경기인 경우
+                    playerPartner = playersA.find(p => p !== playerName);
+                    playerTeam = 'A';
+                } else if (playersB.includes(playerName) && playersB.length === 2) {
+                    // 플레이어가 팀B에 속하고 복식경기인 경우
+                    playerPartner = playersB.find(p => p !== playerName);
+                    playerTeam = 'B';
+                }
+                
+                // 파트너가 있고 게스트가 아닌 경우만 분석에 포함
+                if (playerPartner && !isGuestPlayer(playerPartner)) {
+                    if (!partnerAnalysis[playerPartner]) {
+                        partnerAnalysis[playerPartner] = { 
                             games: 0, 
                             wins: 0, 
                             losses: 0, 
@@ -5460,68 +5482,80 @@
                         };
                     }
                     
-                    const partner = partnerAnalysis[match.partner];
+                    const partner = partnerAnalysis[playerPartner];
                     partner.games++;
                     
-                    if (match.result === 'W') {
-                        partner.wins++;
-                        
-                        // 점수차 분석
-                        if (match.score && match.score.includes('-')) {
-                            const [myScore, oppScore] = match.score.split('-').map(s => parseInt(s.trim()));
-                            if (!isNaN(myScore) && !isNaN(oppScore)) {
-                                const diff = Math.abs(myScore - oppScore);
-                                if (diff >= 3) {
-                                    partner.bigWins++;
-                                } else if (diff <= 2) {
-                                    partner.closeGames++;
-                                }
-                            }
-                        }
-                    } else if (match.result === 'L') {
-                        partner.losses++;
-                        
-                        // 패배한 접전도 카운트
-                        if (match.score && match.score.includes('-')) {
-                            const [myScore, oppScore] = match.score.split('-').map(s => parseInt(s.trim()));
-                            if (!isNaN(myScore) && !isNaN(oppScore)) {
-                                const diff = Math.abs(myScore - oppScore);
-                                if (diff <= 2) {
-                                    partner.closeGames++;
-                                }
-                            }
-                        }
-                    } else {
+                    // 승부 결과 계산
+                    const scoreA = parseInt(match.scoreA || 0);
+                    const scoreB = parseInt(match.scoreB || 0);
+                    
+                    if (scoreA === scoreB) {
+                        // 무승부
                         partner.draws++;
+                        isDraw = true;
+                    } else {
+                        // 승부 결정
+                        if ((playerTeam === 'A' && scoreA > scoreB) || (playerTeam === 'B' && scoreB > scoreA)) {
+                            // 승리
+                            partner.wins++;
+                            isWin = true;
+                            
+                            // 점수차 분석 (승리 시)
+                            const diff = Math.abs(scoreA - scoreB);
+                            if (diff >= 3) {
+                                partner.bigWins++;
+                            } else if (diff <= 2) {
+                                partner.closeGames++;
+                            }
+                        } else {
+                            // 패배
+                            partner.losses++;
+                            
+                            // 패배한 접전도 카운트
+                            const diff = Math.abs(scoreA - scoreB);
+                            if (diff <= 2) {
+                                partner.closeGames++;
+                            }
+                        }
                     }
                 }
             });
             
-            // 파트너 분석 결과
+            // 파트너 분석 결과 (게스트 제외된 파트너들만)
             const partnerList = Object.entries(partnerAnalysis)
                 .filter(([name, stats]) => stats.games >= 2) // 2경기 이상만
                 .map(([name, stats]) => ({
                     name,
                     ...stats,
-                    winRate: stats.games > 0 ? (stats.wins / stats.games * 100) : 0
+                    winRate: stats.games > 0 ? Math.round((stats.wins / stats.games) * 100) : 0
                 }));
             
-            // 베스트 파트너 찾기
+            // 베스트 파트너 찾기 (모두 게스트 제외된 파트너들 중에서)
             if (partnerList.length > 0) {
-                // 승률이 가장 높은 파트너 (3경기 이상)
+                // 🏆 최고 승률 파트너 (2경기 이상, 게스트 제외, 승률 동일시 승수 우선)
                 bestWinRatePartner = partnerList
-                    .filter(p => p.games >= 3)
-                    .sort((a, b) => b.winRate - a.winRate)[0];
+                    .filter(p => p.games >= 2)
+                    .sort((a, b) => {
+                        if (b.winRate !== a.winRate) {
+                            return b.winRate - a.winRate; // 승률 우선
+                        }
+                        return b.wins - a.wins; // 승률 같으면 승수 우선
+                    })[0];
                 
-                // 가장 많이 함께한 파트너
+                // 👥 최다 동반 파트너 (게스트 제외)
                 mostGamesPartner = partnerList
                     .sort((a, b) => b.games - a.games)[0];
                 
                 
-                // 케미가 필요한 파트너 (승률이 낮은, 3경기 이상)
+                // 💪 케미가 필요한 파트너 (승률이 낮은, 2경기 이상, 게스트 제외)
                 chemistryNeededPartner = partnerList
-                    .filter(p => p.games >= 3)
-                    .sort((a, b) => a.winRate - b.winRate)[0];
+                    .filter(p => p.games >= 2)
+                    .sort((a, b) => {
+                        if (a.winRate !== b.winRate) {
+                            return a.winRate - b.winRate; // 승률 낮은 순
+                        }
+                        return a.wins - b.wins; // 승률 같으면 승수 적은 순
+                    })[0];
             }
             
             // 3. 시간/요일 패턴 분석
@@ -5618,77 +5652,85 @@
                     ((typeStats['단식'].wins / (typeStats['단식'].wins + typeStats['단식'].losses + typeStats['단식'].draws)) * 100).toFixed(1) : '0.0'
             };
             
-            // 파트너별 승률 계산
+            // 개인 통계: 파트너별 승률 계산 (게스트 제외, 상위 5개만 표시)
             const partnerStats = {};
             const thisMonth = new Date();
             const thisMonthKey = `${thisMonth.getFullYear()}-${String(thisMonth.getMonth() + 1).padStart(2, '0')}`;
             
+            // 모든 경기를 순회하면서 파트너별 통계 수집
             allMatches.forEach(match => {
                 const playersA = extractPlayers(match.teamA);
                 const playersB = extractPlayers(match.teamB);
                 const matchDate = new Date(match.date || match.timestamp);
                 const matchMonthKey = `${matchDate.getFullYear()}-${String(matchDate.getMonth() + 1).padStart(2, '0')}`;
-                const isThisMonth = matchMonthKey === thisMonthKey;
+                const isThisMonth = matchMonthKey === thisMonthKey; // 이번 달 경기인지 확인
                 
                 let playerPartner = null;
                 let playerTeam = null;
                 let opponentTeam = null;
                 
-                // 플레이어가 어느 팀에 속하는지 확인하고 파트너 찾기
+                // 선택된 플레이어가 어느 팀에 속하는지 확인하고 파트너 찾기 (복식경기만)
                 if (playersA.includes(playerName) && playersA.length === 2) {
-                    playerPartner = playersA.find(p => p !== playerName);
+                    // 플레이어가 팀A에 속하고 복식경기인 경우
+                    playerPartner = playersA.find(p => p !== playerName); // 파트너 찾기
                     playerTeam = playersA;
                     opponentTeam = playersB;
                 } else if (playersB.includes(playerName) && playersB.length === 2) {
-                    playerPartner = playersB.find(p => p !== playerName);
+                    // 플레이어가 팀B에 속하고 복식경기인 경우
+                    playerPartner = playersB.find(p => p !== playerName); // 파트너 찾기
                     playerTeam = playersB;
                     opponentTeam = playersA;
                 }
                 
+                // 파트너가 있고 게스트가 아닌 경우에만 통계에 포함
                 if (playerPartner && !isGuestPlayer(playerPartner)) {
-                    // 게스트가 아닌 파트너만 통계에 포함
+                    // 파트너 통계 객체 초기화 (처음 등장하는 파트너인 경우)
                     if (!partnerStats[playerPartner]) {
                         partnerStats[playerPartner] = {
-                            totalWins: 0,
-                            totalDraws: 0,
-                            totalLosses: 0,
-                            totalGames: 0,
-                            thisMonthWins: 0,
-                            thisMonthDraws: 0,
-                            thisMonthLosses: 0,
-                            thisMonthGames: 0
+                            totalWins: 0,      // 전체 승리
+                            totalDraws: 0,     // 전체 무승부
+                            totalLosses: 0,    // 전체 패배
+                            totalGames: 0,     // 전체 경기수
+                            thisMonthWins: 0,  // 이번달 승리
+                            thisMonthDraws: 0, // 이번달 무승부
+                            thisMonthLosses: 0,// 이번달 패배
+                            thisMonthGames: 0  // 이번달 경기수
                         };
                     }
                     
+                    // 경기수 증가
                     partnerStats[playerPartner].totalGames++;
                     if (isThisMonth) {
                         partnerStats[playerPartner].thisMonthGames++;
                     }
                     
-                    // 승부 결과 확인
+                    // 승부 결과 분석 및 통계 업데이트
                     const scoreA = parseInt(match.scoreA || 0);
                     const scoreB = parseInt(match.scoreB || 0);
                     
                     if (scoreA === scoreB) {
-                        // 무승부
+                        // 무승부인 경우
                         partnerStats[playerPartner].totalDraws++;
                         if (isThisMonth) {
                             partnerStats[playerPartner].thisMonthDraws++;
                         }
                     } else {
+                        // 승부가 결정된 경우 승리/패배 판정
                         let isWin = false;
                         if (playerTeam === playersA && scoreA > scoreB) {
-                            isWin = true;
+                            isWin = true; // 팀A로 참여하여 승리
                         } else if (playerTeam === playersB && scoreB > scoreA) {
-                            isWin = true;
+                            isWin = true; // 팀B로 참여하여 승리
                         }
                         
                         if (isWin) {
+                            // 승리한 경우
                             partnerStats[playerPartner].totalWins++;
                             if (isThisMonth) {
                                 partnerStats[playerPartner].thisMonthWins++;
                             }
                         } else {
+                            // 패배한 경우
                             partnerStats[playerPartner].totalLosses++;
                             if (isThisMonth) {
                                 partnerStats[playerPartner].thisMonthLosses++;
@@ -5698,7 +5740,7 @@
                 }
             });
             
-            // 파트너별 승률 정렬
+            // 파트너별 승률 정렬 (상위 5개만 표시, 승률 동일시 승수 우선)
             stats.partnerWinRates = Object.entries(partnerStats)
                 .map(([partnerName, data]) => ({
                     name: partnerName,
@@ -5713,7 +5755,19 @@
                     thisMonthGames: data.thisMonthGames,
                     thisMonthWinRate: data.thisMonthGames > 0 ? Math.round((data.thisMonthWins / data.thisMonthGames) * 100) : 0
                 }))
-                .sort((a, b) => b.totalWinRate - a.totalWinRate);
+                .sort((a, b) => {
+                    // 1순위: 승률 높은 순
+                    if (b.totalWinRate !== a.totalWinRate) {
+                        return b.totalWinRate - a.totalWinRate;
+                    }
+                    // 2순위: 승률이 같을 때 승수 많은 순
+                    if (b.totalWins !== a.totalWins) {
+                        return b.totalWins - a.totalWins;
+                    }
+                    // 3순위: 경기수 많은 순
+                    return b.totalGames - a.totalGames;
+                })
+                .slice(0, 5); // 상위 5개만 선택
             
             // 파트너하지 않은 플레이어 찾기
             const allPlayers = new Set();
@@ -6242,14 +6296,22 @@
                     }
                 });
 
-                // 파트너십 분석
+                // 파트너십 분석 (게스트 플레이어 제외)
                 if (playersA.length > 1) {
-                    const partnership = playersA.sort().join(' / ');
-                    partnerships[partnership] = (partnerships[partnership] || 0) + 1;
+                    // 게스트가 아닌 플레이어들로만 파트너십 구성
+                    const nonGuestPlayersA = playersA.filter(player => !isGuestPlayer(player));
+                    if (nonGuestPlayersA.length > 1) {
+                        const partnership = nonGuestPlayersA.sort().join(' / ');
+                        partnerships[partnership] = (partnerships[partnership] || 0) + 1;
+                    }
                 }
                 if (playersB.length > 1) {
-                    const partnership = playersB.sort().join(' / ');
-                    partnerships[partnership] = (partnerships[partnership] || 0) + 1;
+                    // 게스트가 아닌 플레이어들로만 파트너십 구성
+                    const nonGuestPlayersB = playersB.filter(player => !isGuestPlayer(player));
+                    if (nonGuestPlayersB.length > 1) {
+                        const partnership = nonGuestPlayersB.sort().join(' / ');
+                        partnerships[partnership] = (partnerships[partnership] || 0) + 1;
+                    }
                 }
             });
 
@@ -6456,40 +6518,57 @@
             stats.thisMonthMostActivePlayer = thisMonthMostActivePlayer;
             stats.topCloseGamePlayer = topCloseGamePlayer;
 
-            // 최고 승률 파트너십 계산 (1-3위)
+            // 최고 승률 파트너십 계산 (상위 5위까지 표시)
             let partnershipRankings = [];
 
+            // 각 파트너십별 승률 분석
             Object.entries(partnerships).forEach(([partnershipName, games]) => {
-                if (games >= 3) { // 3경기 이상만 고려
-                    // 해당 파트너십의 승률 계산
+                if (games >= 3) { // 3경기 이상 플레이한 파트너십만 고려 (신뢰성 있는 데이터)
+                    
+                    // 해당 파트너십이 참여한 모든 경기 필터링 (게스트 제외)
                     const partnershipMatches = filteredMatches.filter(match => {
                         const playersA = extractPlayers(match.teamA);
                         const playersB = extractPlayers(match.teamB);
-                        const teamAPartnership = playersA.length > 1 ? playersA.sort().join(' / ') : '';
-                        const teamBPartnership = playersB.length > 1 ? playersB.sort().join(' / ') : '';
+                        
+                        // 게스트가 아닌 플레이어들로만 파트너십 이름 생성 (복식경기인 경우만)
+                        const nonGuestPlayersA = playersA.filter(player => !isGuestPlayer(player));
+                        const nonGuestPlayersB = playersB.filter(player => !isGuestPlayer(player));
+                        
+                        const teamAPartnership = nonGuestPlayersA.length > 1 ? nonGuestPlayersA.sort().join(' / ') : '';
+                        const teamBPartnership = nonGuestPlayersB.length > 1 ? nonGuestPlayersB.sort().join(' / ') : '';
+                        
+                        // 해당 파트너십이 팀A 또는 팀B에 있는 경기만 선택
                         return teamAPartnership === partnershipName || teamBPartnership === partnershipName;
                     });
 
+                    // 파트너십의 승리 횟수 계산 (게스트 제외)
                     let partnershipWins = 0;
                     partnershipMatches.forEach(match => {
                         const playersA = extractPlayers(match.teamA);
                         const playersB = extractPlayers(match.teamB);
                         const scoreA = parseInt(match.scoreA || 0);
                         const scoreB = parseInt(match.scoreB || 0);
-                        const teamAPartnership = playersA.length > 1 ? playersA.sort().join(' / ') : '';
-                        const teamBPartnership = playersB.length > 1 ? playersB.sort().join(' / ') : '';
+                        
+                        // 게스트가 아닌 플레이어들로만 파트너십 이름 생성
+                        const nonGuestPlayersA = playersA.filter(player => !isGuestPlayer(player));
+                        const nonGuestPlayersB = playersB.filter(player => !isGuestPlayer(player));
+                        
+                        const teamAPartnership = nonGuestPlayersA.length > 1 ? nonGuestPlayersA.sort().join(' / ') : '';
+                        const teamBPartnership = nonGuestPlayersB.length > 1 ? nonGuestPlayersB.sort().join(' / ') : '';
 
+                        // 해당 파트너십이 승리한 경기인지 확인
                         if (teamAPartnership === partnershipName && scoreA > scoreB) {
-                            partnershipWins++;
+                            partnershipWins++; // 팀A로 참여하여 승리
                         } else if (teamBPartnership === partnershipName && scoreB > scoreA) {
-                            partnershipWins++;
+                            partnershipWins++; // 팀B로 참여하여 승리
                         }
                     });
 
+                    // 승률 계산 (승리 경기 수 / 전체 경기 수 * 100)
                     const winRate = (partnershipWins / partnershipMatches.length) * 100;
                     const winRateNumber = Math.round(winRate);
                     
-                    // 승률 50% 이상인 파트너십만 포함
+                    // 승률 50% 이상인 파트너십만 랭킹에 포함 (우수한 성과를 보인 파트너십만)
                     if (winRateNumber >= 50) {
                         partnershipRankings.push({
                             name: partnershipName,
@@ -6500,9 +6579,9 @@
                 }
             });
 
-            // 승률 순으로 정렬하고 상위 3개만 선택
+            // 승률 순으로 정렬하고 상위 5개만 선택
             partnershipRankings.sort((a, b) => b.winRate - a.winRate);
-            const topPartnerships = partnershipRankings.slice(0, 3);
+            const topPartnerships = partnershipRankings.slice(0, 5);
             
             let bestWinRatePartnership = '없음';
             if (topPartnerships.length > 0) {
