@@ -56,9 +56,9 @@
       "teamB": "김석근 / 김영선",
       "scoreA": 5,
       "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767664030486,
-      "date": "2026-01-06T01:47:10.486Z"
+      "matchType": "혼복",
+      "timestamp": 1767664020000,
+      "date": "2026-01-06T01:47:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -440,7 +440,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-07T09:48:20.356Z",
+  "lastUpdated": "2026-01-07T09:48:37.373Z",
   "version": "1.0",
   "totalMatches": 45
 }
