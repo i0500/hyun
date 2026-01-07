@@ -66,9 +66,9 @@
       "teamB": "김경희 / 이만",
       "scoreA": 5,
       "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767661858023,
-      "date": "2026-01-06T01:10:58.023Z"
+      "matchType": "혼복",
+      "timestamp": 1767661800000,
+      "date": "2026-01-06T01:10:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -440,7 +440,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-07T09:48:37.373Z",
+  "lastUpdated": "2026-01-07T09:48:43.869Z",
   "version": "1.0",
   "totalMatches": 45
 }
