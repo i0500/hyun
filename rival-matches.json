@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "이재호 / 임자현",
+      "teamB": "이만 / 조영식",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "혼복",
+      "timestamp": 1767847728823,
+      "date": "2026-01-08T04:48:48.823Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "이만 / 이재호",
       "teamB": "조영식 / 임자현",
       "scoreA": 6,
@@ -500,7 +510,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-08T04:48:19.561Z",
+  "lastUpdated": "2026-01-08T04:48:48.830Z",
   "version": "1.0",
-  "totalMatches": 51
+  "totalMatches": 52
 }
