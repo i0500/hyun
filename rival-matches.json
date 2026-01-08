@@ -163,12 +163,12 @@
     {
       "title": "친선 경기",
       "teamA": "우수문 / 게스트",
-      "teamB": "양승일 / 양장환",
+      "teamB": "양승일 / 차장환",
       "scoreA": 4,
       "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1767661634399,
-      "date": "2026-01-06T01:07:14.399Z"
+      "timestamp": 1767661620000,
+      "date": "2026-01-06T01:07:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -510,7 +510,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-08T04:48:48.830Z",
+  "lastUpdated": "2026-01-08T10:01:24.216Z",
   "version": "1.0",
   "totalMatches": 52
 }
