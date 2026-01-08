@@ -1641,6 +1641,22 @@
             .toggle-switch-wrapper span {
                 font-size: 13px !important;
             }
+            
+            /* 개인 승점 탭에서 경기 유형 줄바꿈 처리 */
+            .match-types {
+                flex-wrap: wrap !important;
+            }
+            
+            /* 경기 유형 아이템이 2개까지는 한 줄, 3개부터는 줄바꿈 */
+            .match-type-item {
+                flex: 0 0 auto;
+                min-width: 45%;
+            }
+            
+            /* 경기 유형이 3개 이상일 때 자동 줄바꿈 */
+            .match-types .match-type-item:nth-child(n+3) {
+                margin-top: 4px;
+            }
         }
     </style>
 </head>
@@ -2507,11 +2523,11 @@
                                     ${(player.totalMatches - player.wins - player.losses) > 0 ? `<div class="stat-item"><span style="color: #6c757d; font-weight: 500;">무승부: ${player.totalMatches - player.wins - player.losses}회</span></div>` : ''}
                                     ${player.losses > 0 ? `<div class="stat-item"><span style="color: #dc3545; font-weight: 500;">패배: ${player.losses}회</span></div>` : ''}
                                 </div>
-                                <div class="stat-row match-types" style="display: flex; gap: 12px;">
-                                    ${player.singleMatches > 0 ? `<div class="stat-item"><span>👤 단식:</span><span>${player.singleMatches}회</span></div>` : ''}
-                                    ${player.menDoubles > 0 ? `<div class="stat-item"><span>👥 남복:</span><span>${player.menDoubles}회</span></div>` : ''}
-                                    ${player.womenDoubles > 0 ? `<div class="stat-item"><span>👭 여복:</span><span>${player.womenDoubles}회</span></div>` : ''}
-                                    ${player.mixedDoubles > 0 ? `<div class="stat-item"><span>👫 혼복:</span><span>${player.mixedDoubles}회</span></div>` : ''}
+                                <div class="stat-row match-types" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                    ${player.singleMatches > 0 ? `<div class="stat-item match-type-item"><span>👤 단식:</span><span>${player.singleMatches}회</span></div>` : ''}
+                                    ${player.menDoubles > 0 ? `<div class="stat-item match-type-item"><span>👥 남복:</span><span>${player.menDoubles}회</span></div>` : ''}
+                                    ${player.womenDoubles > 0 ? `<div class="stat-item match-type-item"><span>👭 여복:</span><span>${player.womenDoubles}회</span></div>` : ''}
+                                    ${player.mixedDoubles > 0 ? `<div class="stat-item match-type-item"><span>👫 혼복:</span><span>${player.mixedDoubles}회</span></div>` : ''}
                                 </div>
                             </div>
                         </div>
