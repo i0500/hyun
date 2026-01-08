@@ -4,6 +4,16 @@
       "title": "친선 경기",
       "teamA": "조영식 / 김주환",
       "teamB": "전찬수 / 우수문",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1767834612789,
+      "date": "2026-01-08T01:10:12.789Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "조영식 / 김주환",
+      "teamB": "전찬수 / 우수문",
       "scoreA": 5,
       "scoreB": 5,
       "matchType": "남복",
@@ -470,7 +480,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-08T01:09:45.266Z",
+  "lastUpdated": "2026-01-08T01:10:12.801Z",
   "version": "1.0",
-  "totalMatches": 48
+  "totalMatches": 49
 }
