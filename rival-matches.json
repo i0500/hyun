@@ -14,8 +14,8 @@
       "title": "친선 경기",
       "teamA": "김경희 / 강경덕",
       "teamB": "박성민 / 게스트",
-      "scoreA": 5,
-      "scoreB": 5,
+      "scoreA": 0,
+      "scoreB": 6,
       "matchType": "혼복",
       "timestamp": 1767920400000,
       "date": "2026-01-09T01:00:00.000Z"
@@ -610,7 +610,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-09T01:03:03.104Z",
+  "lastUpdated": "2026-01-09T01:12:39.631Z",
   "version": "1.0",
   "totalMatches": 62
 }
