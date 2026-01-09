@@ -22,16 +22,6 @@
     },
     {
       "title": "친선 경기",
-      "teamA": "조영식 / 이재호",
-      "teamB": "김성준 / 채영수",
-      "scoreA": 5,
-      "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767920583093,
-      "date": "2026-01-09T01:03:03.093Z"
-    },
-    {
-      "title": "친선 경기",
       "teamA": "김경희 / 강경덕",
       "teamB": "박성민 / 게스트",
       "scoreA": 0,
@@ -630,7 +620,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-09T01:27:07.092Z",
+  "lastUpdated": "2026-01-09T01:28:01.147Z",
   "version": "1.0",
-  "totalMatches": 64
+  "totalMatches": 63
 }
