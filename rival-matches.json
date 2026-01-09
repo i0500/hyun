@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "김성준 / 게스트",
+      "teamB": "이재호 / 채영수",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "남복",
+      "timestamp": 1767927363069,
+      "date": "2026-01-09T02:56:03.069Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "조영식 / 이재호",
       "teamB": "이영호 / 강경덕",
       "scoreA": 5,
@@ -62,16 +72,6 @@
     },
     {
       "title": "친선 경기",
-      "teamA": "전찬수 / 우수문",
-      "teamB": "김성은 / 양대승",
-      "scoreA": 5,
-      "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1767920340000,
-      "date": "2026-01-09T00:59:00.000Z"
-    },
-    {
-      "title": "친선 경기",
       "teamA": "이윤정 / 김성준",
       "teamB": "조영식 / 이재호",
       "scoreA": 5,
@@ -79,6 +79,16 @@
       "matchType": "혼복",
       "timestamp": 1767920371579,
       "date": "2026-01-09T00:59:31.579Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "전찬수 / 우수문",
+      "teamB": "김성은 / 양대승",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1767920340000,
+      "date": "2026-01-09T00:59:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -650,7 +660,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-09T02:31:37.506Z",
+  "lastUpdated": "2026-01-09T02:56:03.091Z",
   "version": "1.0",
-  "totalMatches": 66
+  "totalMatches": 67
 }
