@@ -3,6 +3,16 @@
     {
       "title": "친선 경기",
       "teamA": "양대승 / 원종호",
+      "teamB": "조영식 / 송민곤",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1768008869894,
+      "date": "2026-01-10T01:34:29.894Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "양대승 / 원종호",
       "teamB": "채영수 / 송민곤",
       "scoreA": 5,
       "scoreB": 5,
@@ -680,7 +690,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-10T01:34:03.741Z",
+  "lastUpdated": "2026-01-10T01:34:29.917Z",
   "version": "1.0",
-  "totalMatches": 69
+  "totalMatches": 70
 }
