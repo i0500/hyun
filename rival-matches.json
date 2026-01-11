@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "김탄 / 이봉교",
+      "teamB": "김성준 / 김성준",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1768097416644,
+      "date": "2026-01-11T02:10:16.644Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "우수문 / 김성준",
       "teamB": "채영수 / 김탄",
       "scoreA": 6,
@@ -19,6 +29,16 @@
       "matchType": "남복",
       "timestamp": 1768095883819,
       "date": "2026-01-11T01:44:43.819Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 김성준",
+      "teamB": "김탄 / 채영수",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "남복",
+      "timestamp": 1768095791751,
+      "date": "2026-01-11T01:43:11.751Z"
     },
     {
       "title": "친선 경기",
@@ -750,7 +770,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-11T01:45:12.439Z",
+  "lastUpdated": "2026-01-11T02:10:16.668Z",
   "version": "1.0",
-  "totalMatches": 76
+  "totalMatches": 78
 }
