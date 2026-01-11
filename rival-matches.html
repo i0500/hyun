@@ -1051,9 +1051,23 @@
                 font-size: 11px;
                 min-width: 50px;
             }
-            
+
             .type-label-text {
                 font-size: 11px;
+            }
+        }
+
+        /* 승/무/패 라벨 반응형 스타일 */
+        .stat-label-short {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .stat-label-full {
+                display: none;
+            }
+            .stat-label-short {
+                display: inline;
             }
         }
 
@@ -2519,9 +2533,9 @@
                             </div>
                             <div class="player-stats" style="margin-top: 2px;">
                                 <div class="stat-row" style="display: flex; gap: 12px;">
-                                    ${player.wins > 0 ? `<div class="stat-item"><span style="color: #28a745; font-weight: 500;">승리: ${player.wins}회</span></div>` : ''}
-                                    ${(player.totalMatches - player.wins - player.losses) > 0 ? `<div class="stat-item"><span style="color: #6c757d; font-weight: 500;">무승부: ${player.totalMatches - player.wins - player.losses}회</span></div>` : ''}
-                                    ${player.losses > 0 ? `<div class="stat-item"><span style="color: #dc3545; font-weight: 500;">패배: ${player.losses}회</span></div>` : ''}
+                                    ${player.wins > 0 ? `<div class="stat-item"><span style="color: #28a745; font-weight: 500;"><span class="stat-label-full">승리</span><span class="stat-label-short">승</span>: ${player.wins}회</span></div>` : ''}
+                                    ${(player.totalMatches - player.wins - player.losses) > 0 ? `<div class="stat-item"><span style="color: #6c757d; font-weight: 500;"><span class="stat-label-full">무승부</span><span class="stat-label-short">무</span>: ${player.totalMatches - player.wins - player.losses}회</span></div>` : ''}
+                                    ${player.losses > 0 ? `<div class="stat-item"><span style="color: #dc3545; font-weight: 500;"><span class="stat-label-full">패배</span><span class="stat-label-short">패</span>: ${player.losses}회</span></div>` : ''}
                                 </div>
                                 <div class="stat-row match-types" style="display: flex; gap: 8px; flex-wrap: wrap;">
                                     ${player.singleMatches > 0 ? `<div class="stat-item match-type-item"><span>👤 단식:</span><span>${player.singleMatches}회</span></div>` : ''}
