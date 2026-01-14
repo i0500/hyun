@@ -52,13 +52,13 @@
     },
     {
       "title": "친선 경기",
-      "teamA": "전찬경 / 김경미",
+      "teamA": "전찬경 / 강경미",
       "teamB": "성기수 / 박태민",
       "scoreA": 6,
       "scoreB": 3,
-      "matchType": "혼복",
-      "timestamp": 1768357808217,
-      "date": "2026-01-14T02:30:08.217Z"
+      "matchType": "남복",
+      "timestamp": 1768357800000,
+      "date": "2026-01-14T02:30:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -900,7 +900,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-14T03:38:25.272Z",
+  "lastUpdated": "2026-01-14T04:13:19.597Z",
   "version": "1.0",
   "totalMatches": 91
 }
