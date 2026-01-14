@@ -3,12 +3,12 @@
     {
       "title": "친선 경기",
       "teamA": "김성준 / 채영수",
-      "teamB": "박태민 / 이재오",
+      "teamB": "박태민 / 이재호",
       "scoreA": 3,
       "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1768354038729,
-      "date": "2026-01-14T01:27:18.729Z"
+      "timestamp": 1768354020000,
+      "date": "2026-01-14T01:27:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -820,7 +820,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-14T01:27:18.746Z",
+  "lastUpdated": "2026-01-14T01:59:45.088Z",
   "version": "1.0",
   "totalMatches": 83
 }
