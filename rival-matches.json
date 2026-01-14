@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "우수문 / 양대승",
+      "teamB": "전찬경 / 김성은",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1768360301020,
+      "date": "2026-01-14T03:11:41.020Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "전찬수 / 우수문",
       "teamB": "김성은 / 김성준",
       "scoreA": 5,
@@ -880,7 +890,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-14T03:11:04.978Z",
+  "lastUpdated": "2026-01-14T03:11:41.039Z",
   "version": "1.0",
-  "totalMatches": 89
+  "totalMatches": 90
 }
