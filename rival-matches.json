@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "우수문 / 강경미",
+      "teamB": "김성은 / 이재호",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "혼복",
+      "timestamp": 1768360138920,
+      "date": "2026-01-14T03:08:58.920Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "성기수 / 박태민",
       "teamB": "양대승 / 채영수",
       "scoreA": 6,
@@ -860,7 +870,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-14T02:52:32.424Z",
+  "lastUpdated": "2026-01-14T03:08:58.944Z",
   "version": "1.0",
-  "totalMatches": 87
+  "totalMatches": 88
 }
