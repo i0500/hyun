@@ -924,6 +924,13 @@
             position: relative;
         }
 
+        .player-input-wrapper input {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
         .modal-body {
             padding: 30px;
         }
@@ -9043,57 +9050,10 @@
                     });
 
                     input.addEventListener('focus', function(e) {
-                        // 같은 줄 입력란 쌍 정의
-                        const sameRowPairs = {
-                            'teamA1': 'teamA2', 'teamA2': 'teamA1',
-                            'teamB1': 'teamB2', 'teamB2': 'teamB1'
-                        };
-                        const prevInputId = activeInputId;
-                        const isSameRowMove = sameRowPairs[inputId] === prevInputId;
-
+                        // 브라우저 기본 스크롤만 사용 (커스텀 스크롤 제거)
                         activeInputId = inputId;
                         isAutocompleteActive = true;
                         showAutocomplete(inputId, this.value);
-
-                        const modalContent = this.closest('.modal-content');
-
-                        // 같은 줄 이동이면 브라우저 스크롤 방지 (스크롤 위치 복원)
-                        if (isSameRowMove && modalContent) {
-                            const savedScrollTop = modalContent.scrollTop;
-                            setTimeout(() => {
-                                if (Math.abs(modalContent.scrollTop - savedScrollTop) > 10) {
-                                    modalContent.scrollTop = savedScrollTop;
-                                }
-                            }, 50);
-                            return; // 추가 스크롤 로직 스킵
-                        }
-
-                        // 포커스 시점의 스크롤 위치 기록
-                        const initialScrollTop = modalContent ? modalContent.scrollTop : 0;
-
-                        // 키보드가 완전히 올라온 후 위치 확인 및 조정
-                        setTimeout(() => {
-                            if (modalContent) {
-                                // 브라우저가 이미 스크롤했으면 추가 스크롤 안함
-                                if (Math.abs(modalContent.scrollTop - initialScrollTop) > 20) {
-                                    return; // 브라우저가 이미 스크롤함
-                                }
-
-                                const inputRect = this.getBoundingClientRect();
-                                const modalRect = modalContent.getBoundingClientRect();
-
-                                // 입력란이 모달 상단 15%~50% 사이에 있으면 스크롤 불필요
-                                const inputRelativeTop = inputRect.top - modalRect.top;
-                                const relativePercent = inputRelativeTop / modalRect.height;
-                                if (relativePercent > 0.15 && relativePercent < 0.5) {
-                                    return; // 이미 적절한 위치
-                                }
-
-                                // 입력란이 너무 위나 아래에 있으면 조정
-                                const targetPosition = modalContent.scrollTop + inputRelativeTop - (modalRect.height * 0.25);
-                                modalContent.scrollTo({ top: Math.max(0, targetPosition), behavior: 'smooth' });
-                            }
-                        }, 500); // 키보드 올라온 후 체크
                     });
 
                     input.addEventListener('keydown', function(event) {
