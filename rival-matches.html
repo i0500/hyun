@@ -3461,10 +3461,11 @@
                     const existingMatch = duplicateCheck.existingMatch;
                     const existingScore = `${existingMatch.scoreA}:${existingMatch.scoreB}`;
                     const minutesAgo = duplicateCheck.minutesAgo < 1 ? 1 : duplicateCheck.minutesAgo;
+                    const timeAgoText = `${minutesAgo}분 전`;
                     // 등록시간 포맷팅
                     const regDate = new Date(existingMatch.timestamp);
                     const regTimeStr = `${String(regDate.getMonth() + 1).padStart(2, '0')}월 ${String(regDate.getDate()).padStart(2, '0')}일 ${String(regDate.getHours()).padStart(2, '0')}시 ${String(regDate.getMinutes()).padStart(2, '0')}분`;
-                    const confirmMsg = `🚨 ${minutesAgo}분 이내 이미 등록된 경기입니다.\n\n` +
+                    const confirmMsg = `🚨 ${timeAgoText} 이미 등록된 경기입니다.\n\n` +
                         `● 등록시간: ${regTimeStr}\n` +
                         `● A팀: ${existingMatch.teamA}\n` +
                         `● B팀: ${existingMatch.teamB}\n` +
