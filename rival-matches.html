@@ -3269,6 +3269,10 @@
             }, 150);
         }
 
+        // 키보드 상태 추적
+        let isKeyboardVisible = false;
+        let lastViewportHeight = window.innerHeight;
+
         // 검색 컨테이너 위치 업데이트 (키보드 높이 반영)
         function updateSearchContainerPosition(containerId) {
             const container = document.getElementById(containerId);
@@ -3276,20 +3280,17 @@
 
             const initialBottom = window.innerWidth <= 480 ? 15 : 20;
 
-            if (window.visualViewport) {
-                const viewportHeight = window.visualViewport.height;
-                const viewportOffsetTop = window.visualViewport.offsetTop;
-
-                // 키보드가 올라왔을 때: visualViewport가 위로 스크롤됨
-                // offsetTop이 0보다 크면 키보드가 올라온 것
-                if (viewportOffsetTop > 50) {
-                    // 키보드 위 20px에 위치 (화면 위로 넘어가지 않도록 제한)
-                    const newBottom = viewportOffsetTop + initialBottom;
+            if (isKeyboardVisible && window.visualViewport) {
+                const keyboardHeight = window.innerHeight - window.visualViewport.height;
+                if (keyboardHeight > 100) {
+                    const newBottom = keyboardHeight + initialBottom;
                     const maxBottom = window.innerHeight - container.offsetHeight - 10;
                     container.style.bottom = Math.min(newBottom, maxBottom) + 'px';
                 } else {
                     container.style.bottom = initialBottom + 'px';
                 }
+            } else {
+                container.style.bottom = initialBottom + 'px';
             }
         }
 
@@ -3297,43 +3298,51 @@
         function initMobileKeyboardHandler() {
             if (!window.visualViewport) return;
 
+            lastViewportHeight = window.visualViewport.height;
+
             const updateAllSearchPositions = () => {
                 const playerContainer = document.getElementById('playerSearchContainer');
                 const matchContainer = document.getElementById('matchSearchContainer');
                 const initialBottom = window.innerWidth <= 480 ? 15 : 20;
 
-                const viewportHeight = window.visualViewport.height;
-                const viewportOffsetTop = window.visualViewport.offsetTop;
+                const currentViewportHeight = window.visualViewport.height;
+                const heightDiff = lastViewportHeight - currentViewportHeight;
 
-                // 키보드 감지: offsetTop > 50 또는 viewport가 window보다 많이 작을 때
-                const keyboardOffset = viewportOffsetTop > 50 ? viewportOffsetTop :
-                    (window.innerHeight - viewportHeight > 150 ? window.innerHeight - viewportHeight - viewportOffsetTop : 0);
-
-                // 개인승점 검색창
-                if (playerContainer && playerContainer.classList.contains('active')) {
-                    if (keyboardOffset > 0) {
-                        const newBottom = keyboardOffset + initialBottom;
-                        const maxBottom = window.innerHeight - playerContainer.offsetHeight - 10;
-                        playerContainer.style.bottom = Math.min(newBottom, maxBottom) + 'px';
-                    } else {
-                        playerContainer.style.bottom = initialBottom + 'px';
-                    }
+                // 키보드 상태 감지: 높이가 150px 이상 줄어들면 키보드 열림
+                if (heightDiff > 150) {
+                    isKeyboardVisible = true;
+                } else if (heightDiff < -100 || currentViewportHeight >= window.innerHeight - 50) {
+                    isKeyboardVisible = false;
                 }
 
-                // 경기기록 검색창
-                if (matchContainer && matchContainer.classList.contains('active')) {
-                    if (keyboardOffset > 0) {
-                        const newBottom = keyboardOffset + initialBottom;
+                // 키보드가 열린 상태에서만 위치 조정
+                if (isKeyboardVisible) {
+                    const keyboardHeight = window.innerHeight - currentViewportHeight;
+
+                    if (playerContainer && playerContainer.classList.contains('active')) {
+                        const newBottom = keyboardHeight + initialBottom;
+                        const maxBottom = window.innerHeight - playerContainer.offsetHeight - 10;
+                        playerContainer.style.bottom = Math.min(newBottom, maxBottom) + 'px';
+                    }
+
+                    if (matchContainer && matchContainer.classList.contains('active')) {
+                        const newBottom = keyboardHeight + initialBottom;
                         const maxBottom = window.innerHeight - matchContainer.offsetHeight - 10;
                         matchContainer.style.bottom = Math.min(newBottom, maxBottom) + 'px';
-                    } else {
+                    }
+                } else {
+                    // 키보드 닫힘 - 원래 위치로
+                    if (playerContainer && playerContainer.classList.contains('active')) {
+                        playerContainer.style.bottom = initialBottom + 'px';
+                    }
+                    if (matchContainer && matchContainer.classList.contains('active')) {
                         matchContainer.style.bottom = initialBottom + 'px';
                     }
                 }
             };
 
+            // resize만 감지 (scroll은 불필요한 위치 변경 유발)
             window.visualViewport.addEventListener('resize', updateAllSearchPositions);
-            window.visualViewport.addEventListener('scroll', updateAllSearchPositions);
         }
 
         // 더 이상 별도 핸들러 필요 없음
