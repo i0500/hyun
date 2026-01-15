@@ -2,6 +2,16 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "양대승 / 김진영",
+      "teamB": "김성준 / 채영수",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "남복",
+      "timestamp": 1768444082977,
+      "date": "2026-01-15T02:28:02.977Z"
+    },
+    {
+      "title": "친선 경기",
       "teamA": "이영호 / 박성민",
       "teamB": "전찬수 / 성기수",
       "scoreA": 5,
@@ -9,6 +19,16 @@
       "matchType": "남복",
       "timestamp": 1768443169346,
       "date": "2026-01-15T02:12:49.346Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "김성준 / 채영수",
+      "teamB": "이영호 / 양대승",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1768441301968,
+      "date": "2026-01-15T01:41:41.968Z"
     },
     {
       "title": "친선 경기",
@@ -960,7 +980,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-15T02:12:49.358Z",
+  "lastUpdated": "2026-01-15T02:28:03.004Z",
   "version": "1.0",
-  "totalMatches": 97
+  "totalMatches": 99
 }
