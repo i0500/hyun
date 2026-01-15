@@ -748,7 +748,6 @@
             max-height: 95dvh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
             transform: scale(0.7) translateY(-50px);
             transition: all 0.3s ease;
             opacity: 0;
@@ -9029,13 +9028,33 @@
                         showAutocomplete(inputId, this.value);
                     });
 
-                    input.addEventListener('focus', function() {
+                    input.addEventListener('focus', function(e) {
+                        // 같은 줄 입력란 쌍 정의
+                        const sameRowPairs = {
+                            'teamA1': 'teamA2', 'teamA2': 'teamA1',
+                            'teamB1': 'teamB2', 'teamB2': 'teamB1'
+                        };
+                        const prevInputId = activeInputId;
+                        const isSameRowMove = sameRowPairs[inputId] === prevInputId;
+
                         activeInputId = inputId;
                         isAutocompleteActive = true;
                         showAutocomplete(inputId, this.value);
 
-                        // 포커스 시점의 스크롤 위치 기록
                         const modalContent = this.closest('.modal-content');
+
+                        // 같은 줄 이동이면 브라우저 스크롤 방지 (스크롤 위치 복원)
+                        if (isSameRowMove && modalContent) {
+                            const savedScrollTop = modalContent.scrollTop;
+                            setTimeout(() => {
+                                if (Math.abs(modalContent.scrollTop - savedScrollTop) > 10) {
+                                    modalContent.scrollTop = savedScrollTop;
+                                }
+                            }, 50);
+                            return; // 추가 스크롤 로직 스킵
+                        }
+
+                        // 포커스 시점의 스크롤 위치 기록
                         const initialScrollTop = modalContent ? modalContent.scrollTop : 0;
 
                         // 키보드가 완전히 올라온 후 위치 확인 및 조정
