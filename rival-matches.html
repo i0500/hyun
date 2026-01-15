@@ -9034,17 +9034,24 @@
                         isAutocompleteActive = true;
                         showAutocomplete(inputId, this.value);
 
-                        // 모든 팀 입력란 - 자동완성 목록 5개 보이도록 스크롤
+                        // 키보드가 완전히 올라온 후 위치 확인 및 조정
                         setTimeout(() => {
                             const modalContent = this.closest('.modal-content');
                             if (modalContent) {
                                 const inputRect = this.getBoundingClientRect();
                                 const modalRect = modalContent.getBoundingClientRect();
-                                // 입력란이 모달 상단 1/3 위치에 오도록 스크롤
-                                const targetPosition = modalContent.scrollTop + (inputRect.top - modalRect.top) - (modalRect.height * 0.2);
+
+                                // 입력란이 모달 상단 30% 이내에 있으면 스크롤 불필요
+                                const inputRelativeTop = inputRect.top - modalRect.top;
+                                if (inputRelativeTop < modalRect.height * 0.3) {
+                                    return; // 이미 적절한 위치
+                                }
+
+                                // 입력란이 아래에 있으면 위로 스크롤
+                                const targetPosition = modalContent.scrollTop + inputRelativeTop - (modalRect.height * 0.2);
                                 modalContent.scrollTo({ top: Math.max(0, targetPosition), behavior: 'smooth' });
                             }
-                        }, 300);
+                        }, 500); // 키보드 올라온 후 체크
                     });
 
                     input.addEventListener('keydown', function(event) {
