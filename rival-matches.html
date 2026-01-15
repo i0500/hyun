@@ -1893,6 +1893,7 @@
             overflow: hidden;
             visibility: hidden;
             opacity: 0;
+            will-change: bottom;
             /* 닫힐 때: 내부 사라짐 대기 → width 접힘 → 완전히 사라짐 */
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
                         opacity 0.1s ease 0.35s,
@@ -3278,22 +3279,39 @@
         function initMobileKeyboardHandler() {
             if (!window.visualViewport) return;
 
+            let rafId = null;
+            let lastOffset = 0;
+
             const updatePosition = () => {
-                const playerContainer = document.getElementById('playerSearchContainer');
-                const matchContainer = document.getElementById('matchSearchContainer');
+                // 이미 예약된 업데이트가 있으면 스킵
+                if (rafId) return;
 
-                // visualViewport 하단에서 20px 위에 고정
-                const bottomOffset = 20;
-                const viewportBottom = window.visualViewport.height + window.visualViewport.offsetTop;
-                const newBottom = window.innerHeight - viewportBottom + bottomOffset;
+                rafId = requestAnimationFrame(() => {
+                    const playerContainer = document.getElementById('playerSearchContainer');
+                    const matchContainer = document.getElementById('matchSearchContainer');
 
-                if (playerContainer && playerContainer.classList.contains('active')) {
-                    playerContainer.style.bottom = newBottom + 'px';
-                }
+                    // visualViewport 하단에서 20px 위에 고정
+                    const bottomOffset = 20;
+                    const viewportBottom = window.visualViewport.height + window.visualViewport.offsetTop;
+                    const newBottom = window.innerHeight - viewportBottom + bottomOffset;
 
-                if (matchContainer && matchContainer.classList.contains('active')) {
-                    matchContainer.style.bottom = newBottom + 'px';
-                }
+                    // 변화가 2px 미만이면 업데이트 스킵 (떨림 방지)
+                    if (Math.abs(newBottom - lastOffset) < 2) {
+                        rafId = null;
+                        return;
+                    }
+                    lastOffset = newBottom;
+
+                    if (playerContainer && playerContainer.classList.contains('active')) {
+                        playerContainer.style.bottom = newBottom + 'px';
+                    }
+
+                    if (matchContainer && matchContainer.classList.contains('active')) {
+                        matchContainer.style.bottom = newBottom + 'px';
+                    }
+
+                    rafId = null;
+                });
             };
 
             window.visualViewport.addEventListener('resize', updatePosition);
