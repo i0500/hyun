@@ -2,13 +2,13 @@
   "matches": [
     {
       "title": "친선 경기",
-      "teamA": "김주환 / 우수문",
+      "teamA": "양대승 / 김성준",
       "teamB": "김주환 / 우수문",
       "scoreA": 6,
       "scoreB": 3,
       "matchType": "남복",
-      "timestamp": 1768438708395,
-      "date": "2026-01-15T00:58:28.395Z"
+      "timestamp": 1768438680000,
+      "date": "2026-01-15T00:58:00.000Z"
     },
     {
       "title": "친선 경기",
@@ -920,7 +920,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-15T00:58:28.415Z",
+  "lastUpdated": "2026-01-15T01:00:56.239Z",
   "version": "1.0",
   "totalMatches": 93
 }
