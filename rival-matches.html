@@ -682,8 +682,8 @@
         }
 
         .point-match-score.positive {
-            background: linear-gradient(135deg, rgba(233, 69, 96, 0.15) 0%, rgba(255, 107, 107, 0.15) 100%);
-            color: #e94560;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(186, 104, 200, 0.15) 100%);
+            color: #9c27b0;
         }
 
         .point-match-score.negative {
@@ -2418,15 +2418,15 @@
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
                     <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
                         <span style="display: flex; align-items: center; gap: 5px;">
-                            <span style="font-size: 14px; font-weight: bold; color: #28a745;">승리:</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #28a745;">승:</span>
                             <span style="font-size: 14px; font-weight: bold; color: #28a745;">3점</span>
                         </span>
                         <span style="display: flex; align-items: center; gap: 5px;">
-                            <span style="font-size: 14px; font-weight: bold; color: #6c757d;">무승부:</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #6c757d;">무:</span>
                             <span style="font-size: 14px; font-weight: bold; color: #6c757d;">1점</span>
                         </span>
                         <span style="display: flex; align-items: center; gap: 5px;">
-                            <span style="font-size: 14px; font-weight: bold; color: #dc3545;">패배:</span>
+                            <span style="font-size: 14px; font-weight: bold; color: #dc3545;">패:</span>
                             <span style="font-size: 14px; font-weight: bold; color: #dc3545;">-1점</span>
                         </span>
                         <span style="display: flex; align-items: center; gap: 5px;">
@@ -7102,23 +7102,73 @@
                     stats.recentActivity = '비활성';
                 }
                 
-                // 최근 한달간 경기 빈도 추가 분석
-                const oneMonthAgo = new Date();
-                oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-                const recentMonthMatches = playerMatches.filter(match => 
-                    new Date(match.date) >= oneMonthAgo
+                // 이번달 경기 빈도 - 회원 평균 대비 상대 빈도로 계산
+                const currentDate = new Date();
+                const thisMonthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                const thisMonthMatches = playerMatches.filter(match =>
+                    new Date(match.date) >= thisMonthStart
                 ).length;
-                
-                if (recentMonthMatches >= 8) {
-                    stats.recentActivity = '초고빈도 🚀';
-                } else if (recentMonthMatches >= 5) {
-                    stats.recentActivity = '고빈도 ⚡';
-                } else if (recentMonthMatches >= 2) {
-                    stats.recentActivity = '정상 빈도';
-                } else if (recentMonthMatches >= 1) {
-                    stats.recentActivity = '저빈도';
+
+                // 전체 회원의 이번달 평균 경기 수 계산
+                const allPlayerMonthlyMatches = {};
+                allMatches.forEach(match => {
+                    const matchDate = new Date(match.date);
+                    if (matchDate >= thisMonthStart) {
+                        const teamAString = match.teamA1 || match.teamA || '';
+                        const teamBString = match.teamB1 || match.teamB || '';
+
+                        // teamA 플레이어 추출
+                        if (teamAString.includes('/')) {
+                            teamAString.split('/').forEach(name => {
+                                const trimmed = name.trim();
+                                if (trimmed && !trimmed.includes('게스트')) {
+                                    allPlayerMonthlyMatches[trimmed] = (allPlayerMonthlyMatches[trimmed] || 0) + 1;
+                                }
+                            });
+                        } else if (teamAString.trim() && !teamAString.includes('게스트')) {
+                            allPlayerMonthlyMatches[teamAString.trim()] = (allPlayerMonthlyMatches[teamAString.trim()] || 0) + 1;
+                        }
+
+                        // teamB 플레이어 추출
+                        if (teamBString.includes('/')) {
+                            teamBString.split('/').forEach(name => {
+                                const trimmed = name.trim();
+                                if (trimmed && !trimmed.includes('게스트')) {
+                                    allPlayerMonthlyMatches[trimmed] = (allPlayerMonthlyMatches[trimmed] || 0) + 1;
+                                }
+                            });
+                        } else if (teamBString.trim() && !teamBString.includes('게스트')) {
+                            allPlayerMonthlyMatches[teamBString.trim()] = (allPlayerMonthlyMatches[teamBString.trim()] || 0) + 1;
+                        }
+                    }
+                });
+
+                // 이번달 활동한 회원들의 평균 경기 수 계산
+                const monthlyMatchCounts = Object.values(allPlayerMonthlyMatches);
+                const clubMonthlyAvg = monthlyMatchCounts.length > 0
+                    ? monthlyMatchCounts.reduce((a, b) => a + b, 0) / monthlyMatchCounts.length
+                    : 0;
+
+                // 상대 빈도 계산 (회원 평균 대비 ±%)
+                if (clubMonthlyAvg > 0 && thisMonthMatches > 0) {
+                    const diffPercent = ((thisMonthMatches - clubMonthlyAvg) / clubMonthlyAvg) * 100;
+                    const sign = diffPercent >= 0 ? '+' : '';
+
+                    if (diffPercent >= 100) {
+                        stats.recentActivity = '초고빈도 🚀';
+                    } else if (diffPercent >= 30) {
+                        stats.recentActivity = '고빈도 ⚡';
+                    } else if (diffPercent >= -30) {
+                        stats.recentActivity = '평균 수준 👍';
+                    } else if (diffPercent >= -70) {
+                        stats.recentActivity = '저빈도 🐢';
+                    } else {
+                        stats.recentActivity = '매우 저조 💤';
+                    }
+                } else if (thisMonthMatches === 0) {
+                    stats.recentActivity = '이번달 활동 없음 😴';
                 } else {
-                    stats.recentActivity = '휴면 상태 😴';
+                    stats.recentActivity = `${thisMonthMatches}경기 (비교 데이터 부족)`;
                 }
             }
             
