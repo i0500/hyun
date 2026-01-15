@@ -4,6 +4,16 @@
       "title": "친선 경기",
       "teamA": "테스트1 / 테스트2",
       "teamB": "테스트3 / 테스트4",
+      "scoreA": 6,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1768479794522,
+      "date": "2026-01-15T12:23:14.522Z"
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "테스트1 / 테스트2",
+      "teamB": "테스트3 / 테스트4",
       "scoreA": 5,
       "scoreB": 5,
       "matchType": "남복",
@@ -1020,7 +1030,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-15T12:07:05.757Z",
+  "lastUpdated": "2026-01-15T12:23:14.547Z",
   "version": "1.0",
-  "totalMatches": 103
+  "totalMatches": 104
 }
