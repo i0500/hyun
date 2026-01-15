@@ -791,8 +791,8 @@
             background: white;
             border: 1px solid #ddd;
             border-radius: 8px;
-            max-height: none;
-            overflow-y: visible;
+            max-height: 200px;
+            overflow-y: auto;
             z-index: 10001;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: none;
@@ -3269,80 +3269,15 @@
             }, 150);
         }
 
-        // 키보드 상태 추적
-        let isKeyboardVisible = false;
-        let lastViewportHeight = window.innerHeight;
-
-        // 검색 컨테이너 위치 업데이트 (키보드 높이 반영)
+        // 검색 컨테이너 위치 업데이트 - 브라우저 기본 동작에 맡김
         function updateSearchContainerPosition(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            const initialBottom = window.innerWidth <= 480 ? 15 : 20;
-
-            if (isKeyboardVisible && window.visualViewport) {
-                const keyboardHeight = window.innerHeight - window.visualViewport.height;
-                if (keyboardHeight > 100) {
-                    const newBottom = keyboardHeight + initialBottom;
-                    const maxBottom = window.innerHeight - container.offsetHeight - 10;
-                    container.style.bottom = Math.min(newBottom, maxBottom) + 'px';
-                } else {
-                    container.style.bottom = initialBottom + 'px';
-                }
-            } else {
-                container.style.bottom = initialBottom + 'px';
-            }
+            // 브라우저가 자동으로 스크롤하여 입력창을 키보드 위에 보여주므로
+            // 별도 위치 조정 불필요
         }
 
-        // 통합 모바일 키보드 핸들러
+        // 모바일 키보드 핸들러 - 비활성화
         function initMobileKeyboardHandler() {
-            if (!window.visualViewport) return;
-
-            lastViewportHeight = window.visualViewport.height;
-
-            const updateAllSearchPositions = () => {
-                const playerContainer = document.getElementById('playerSearchContainer');
-                const matchContainer = document.getElementById('matchSearchContainer');
-                const initialBottom = window.innerWidth <= 480 ? 15 : 20;
-
-                const currentViewportHeight = window.visualViewport.height;
-                const heightDiff = lastViewportHeight - currentViewportHeight;
-
-                // 키보드 상태 감지: 높이가 150px 이상 줄어들면 키보드 열림
-                if (heightDiff > 150) {
-                    isKeyboardVisible = true;
-                } else if (heightDiff < -100 || currentViewportHeight >= window.innerHeight - 50) {
-                    isKeyboardVisible = false;
-                }
-
-                // 키보드가 열린 상태에서만 위치 조정
-                if (isKeyboardVisible) {
-                    const keyboardHeight = window.innerHeight - currentViewportHeight;
-
-                    if (playerContainer && playerContainer.classList.contains('active')) {
-                        const newBottom = keyboardHeight + initialBottom;
-                        const maxBottom = window.innerHeight - playerContainer.offsetHeight - 10;
-                        playerContainer.style.bottom = Math.min(newBottom, maxBottom) + 'px';
-                    }
-
-                    if (matchContainer && matchContainer.classList.contains('active')) {
-                        const newBottom = keyboardHeight + initialBottom;
-                        const maxBottom = window.innerHeight - matchContainer.offsetHeight - 10;
-                        matchContainer.style.bottom = Math.min(newBottom, maxBottom) + 'px';
-                    }
-                } else {
-                    // 키보드 닫힘 - 원래 위치로
-                    if (playerContainer && playerContainer.classList.contains('active')) {
-                        playerContainer.style.bottom = initialBottom + 'px';
-                    }
-                    if (matchContainer && matchContainer.classList.contains('active')) {
-                        matchContainer.style.bottom = initialBottom + 'px';
-                    }
-                }
-            };
-
-            // resize만 감지 (scroll은 불필요한 위치 변경 유발)
-            window.visualViewport.addEventListener('resize', updateAllSearchPositions);
+            // 브라우저 기본 동작 사용 (추가 위치 조정 없음)
         }
 
         // 더 이상 별도 핸들러 필요 없음
@@ -4872,12 +4807,18 @@
             
             // 바디 스크롤 방지
             document.body.style.overflow = 'hidden';
-            
+
+            // 검색 FAB 및 검색창 숨기기
+            const matchFab = document.getElementById('matchSearchFab');
+            const matchSearchContainer = document.getElementById('matchSearchContainer');
+            if (matchFab) matchFab.classList.remove('visible');
+            if (matchSearchContainer) matchSearchContainer.classList.remove('active');
+
             const modal = document.getElementById('matchModal');
             modal.style.display = 'flex';
             setTimeout(() => {
                 modal.classList.add('show');
-                
+
                 // 경기 기록 모달 배경 클릭 이벤트 (개별 추가)
                 modal.addEventListener('click', function matchModalBackgroundClick(event) {
                     if (event.target === modal) {
@@ -4888,7 +4829,7 @@
                     }
                 });
             }, 10);
-            
+
             // 경기 유형 선택 이벤트 설정
             setTimeout(setupMatchTypeSelection, 100);
         }
@@ -5047,12 +4988,18 @@
             
             // 바디 스크롤 방지
             document.body.style.overflow = 'hidden';
-            
+
+            // 검색 FAB 및 검색창 숨기기
+            const matchFab = document.getElementById('matchSearchFab');
+            const matchSearchContainer = document.getElementById('matchSearchContainer');
+            if (matchFab) matchFab.classList.remove('visible');
+            if (matchSearchContainer) matchSearchContainer.classList.remove('active');
+
             const modal = document.getElementById('matchModal');
             modal.style.display = 'flex';
             setTimeout(() => {
                 modal.classList.add('show');
-                
+
                 // 경기 기록 모달 배경 클릭 이벤트 (개별 추가)
                 modal.addEventListener('click', function matchModalBackgroundClick(event) {
                     if (event.target === modal) {
@@ -5063,7 +5010,7 @@
                     }
                 });
             }, 10);
-            
+
             // 경기 유형 선택 이벤트 설정
             setTimeout(setupMatchTypeSelection, 100);
         }
@@ -5072,10 +5019,15 @@
         function hideModal() {
             const modal = document.getElementById('matchModal');
             modal.classList.remove('show');
-            
+
             // 바디 스크롤 복원
             document.body.style.overflow = '';
-            
+
+            // 검색 FAB 복원 (경기기록 탭인 경우)
+            setTimeout(() => {
+                updateMatchSearchFabVisibility();
+            }, 100);
+
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 300); // CSS transition 시간과 맞춤
