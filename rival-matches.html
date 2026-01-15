@@ -9034,21 +9034,30 @@
                         isAutocompleteActive = true;
                         showAutocomplete(inputId, this.value);
 
+                        // 포커스 시점의 스크롤 위치 기록
+                        const modalContent = this.closest('.modal-content');
+                        const initialScrollTop = modalContent ? modalContent.scrollTop : 0;
+
                         // 키보드가 완전히 올라온 후 위치 확인 및 조정
                         setTimeout(() => {
-                            const modalContent = this.closest('.modal-content');
                             if (modalContent) {
+                                // 브라우저가 이미 스크롤했으면 추가 스크롤 안함
+                                if (Math.abs(modalContent.scrollTop - initialScrollTop) > 20) {
+                                    return; // 브라우저가 이미 스크롤함
+                                }
+
                                 const inputRect = this.getBoundingClientRect();
                                 const modalRect = modalContent.getBoundingClientRect();
 
-                                // 입력란이 모달 상단 30% 이내에 있으면 스크롤 불필요
+                                // 입력란이 모달 상단 15%~50% 사이에 있으면 스크롤 불필요
                                 const inputRelativeTop = inputRect.top - modalRect.top;
-                                if (inputRelativeTop < modalRect.height * 0.3) {
+                                const relativePercent = inputRelativeTop / modalRect.height;
+                                if (relativePercent > 0.15 && relativePercent < 0.5) {
                                     return; // 이미 적절한 위치
                                 }
 
-                                // 입력란이 아래에 있으면 위로 스크롤
-                                const targetPosition = modalContent.scrollTop + inputRelativeTop - (modalRect.height * 0.2);
+                                // 입력란이 너무 위나 아래에 있으면 조정
+                                const targetPosition = modalContent.scrollTop + inputRelativeTop - (modalRect.height * 0.25);
                                 modalContent.scrollTo({ top: Math.max(0, targetPosition), behavior: 'smooth' });
                             }
                         }, 500); // 키보드 올라온 후 체크
