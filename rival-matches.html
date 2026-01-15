@@ -4844,8 +4844,12 @@
             });
             document.getElementById('menDoublesLabel').classList.add('selected');
             
-            // 바디 스크롤 방지
+            // 바디 스크롤 잠금 (iOS Safari 대응)
+            window.modalScrollY = window.scrollY;
             document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${window.modalScrollY}px`;
+            document.body.style.width = '100%';
 
             // 검색 FAB 및 검색창 숨기기
             const matchFab = document.getElementById('matchSearchFab');
@@ -5025,8 +5029,12 @@
                 pointMatchGroup.style.display = 'none';
             }
             
-            // 바디 스크롤 방지
+            // 바디 스크롤 잠금 (iOS Safari 대응)
+            window.modalScrollY = window.scrollY;
             document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${window.modalScrollY}px`;
+            document.body.style.width = '100%';
 
             // 검색 FAB 및 검색창 숨기기
             const matchFab = document.getElementById('matchSearchFab');
@@ -5059,8 +5067,14 @@
             const modal = document.getElementById('matchModal');
             modal.classList.remove('show');
 
-            // 바디 스크롤 복원
+            // 바디 스크롤 잠금 해제 및 위치 복원
             document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            if (window.modalScrollY !== undefined) {
+                window.scrollTo(0, window.modalScrollY);
+            }
 
             // 검색 FAB 복원 (경기기록 탭인 경우)
             setTimeout(() => {
