@@ -1,17 +1,6 @@
 {
   "matches": [
     {
-      "title": "포인트전 경기",
-      "teamA": "테스트3 / 테스트2",
-      "teamB": "테스트2 / 테스트1",
-      "scoreA": 5,
-      "scoreB": 5,
-      "matchType": "남복",
-      "timestamp": 1768494960000,
-      "date": "2026-01-15T16:36:00.000Z",
-      "pointValue": 5
-    },
-    {
       "title": "친선 경기",
       "teamA": "우수문 / 김성은",
       "teamB": "이재호 / 박성민",
@@ -1021,7 +1010,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-15T16:40:41.439Z",
+  "lastUpdated": "2026-01-15T16:51:19.608Z",
   "version": "1.0",
-  "totalMatches": 103
+  "totalMatches": 102
 }
