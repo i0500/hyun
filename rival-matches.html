@@ -3337,8 +3337,8 @@
             }, 300); // CSS transition 시간과 맞춤
         }
 
-        // 중복 경기 체크 함수 (20분 이내 등록된 동일 플레이어 조합 체크)
-        function checkDuplicateMatch(teamA1, teamA2, teamB1, teamB2, excludeIndex = -1) {
+        // 중복 경기 체크 함수 (20분 이내 동일 플레이어 + 동일 점수 체크)
+        function checkDuplicateMatch(teamA1, teamA2, teamB1, teamB2, scoreA, scoreB, excludeIndex = -1) {
             const DUPLICATE_TIME_WINDOW = 20 * 60 * 1000; // 20분 (밀리초)
             const now = Date.now();
 
@@ -3354,6 +3354,9 @@
             const newTeamA = normalizeNames([teamA1, teamA2]);
             const newTeamB = normalizeNames([teamB1, teamB2]);
             const newAllPlayers = [...newTeamA, ...newTeamB].sort().join(',');
+
+            // 점수 정규화 (A:B와 B:A를 같은 것으로 처리)
+            const newScores = [scoreA, scoreB].sort((a, b) => a - b).join(':');
 
             // 기존 경기들과 비교
             for (let i = 0; i < matches.length; i++) {
@@ -3371,8 +3374,11 @@
                 const existingTeamB = match.teamB.split(' / ').map(n => n.trim().toLowerCase()).sort();
                 const existingAllPlayers = [...existingTeamA, ...existingTeamB].sort().join(',');
 
-                // 동일 플레이어 조합 체크 (팀 순서 무관)
-                if (newAllPlayers === existingAllPlayers) {
+                // 기존 경기 점수 정규화
+                const existingScores = [match.scoreA, match.scoreB].sort((a, b) => a - b).join(':');
+
+                // 동일 플레이어 조합 + 동일 점수일 때만 중복
+                if (newAllPlayers === existingAllPlayers && newScores === existingScores) {
                     const minutesAgo = Math.floor(timeDiff / 60000);
                     return {
                         isDuplicate: true,
@@ -3448,17 +3454,21 @@
                 dateValue = new Date().toISOString();
             }
 
-            // 중복 경기 체크 (새 경기 추가시에만, 20분 이내 동일 조합)
+            // 중복 경기 체크 (새 경기 추가시에만, 20분 이내 동일 조합 + 동일 점수)
             if (editingIndex === -1) {
-                const duplicateCheck = checkDuplicateMatch(teamA1, teamA2, teamB1, teamB2);
+                const duplicateCheck = checkDuplicateMatch(teamA1, teamA2, teamB1, teamB2, scoreA, scoreB);
                 if (duplicateCheck.isDuplicate) {
                     const existingMatch = duplicateCheck.existingMatch;
                     const existingScore = `${existingMatch.scoreA}:${existingMatch.scoreB}`;
                     const minutesAgo = duplicateCheck.minutesAgo < 1 ? 1 : duplicateCheck.minutesAgo;
-                    const confirmMsg = `${minutesAgo}분 이내 이미 등록된 경기입니다.\n\n` +
-                        `A팀: ${existingMatch.teamA}\n` +
-                        `B팀: ${existingMatch.teamB}\n` +
-                        `점수: ${existingScore}\n\n` +
+                    // 등록시간 포맷팅
+                    const regDate = new Date(existingMatch.timestamp);
+                    const regTimeStr = `${String(regDate.getMonth() + 1).padStart(2, '0')}월 ${String(regDate.getDate()).padStart(2, '0')}일 ${String(regDate.getHours()).padStart(2, '0')}시 ${String(regDate.getMinutes()).padStart(2, '0')}분`;
+                    const confirmMsg = `🚨 ${minutesAgo}분 이내 이미 등록된 경기입니다.\n\n` +
+                        `● 등록시간: ${regTimeStr}\n` +
+                        `● A팀: ${existingMatch.teamA}\n` +
+                        `● B팀: ${existingMatch.teamB}\n` +
+                        `● 점수: ${existingScore}\n\n` +
                         `그래도 저장하시겠습니까?`;
 
                     if (!confirm(confirmMsg)) {
