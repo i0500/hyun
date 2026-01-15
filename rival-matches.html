@@ -2050,6 +2050,113 @@
                 margin: 0 6px;
             }
         }
+
+        /* 검색 필터 배지 - 돋보기 버튼 위 */
+        .search-filter-badge {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(44, 95, 45, 0.4);
+            z-index: 1002;
+            font-size: 14px;
+            font-weight: 500;
+            animation: badgeSlideUp 0.3s ease;
+        }
+
+        @keyframes badgeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-filter-badge span {
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .search-filter-badge button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: background 0.2s ease;
+        }
+
+        .search-filter-badge button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 경기 기록 검색 결과 하이라이트 */
+        .match-item.search-highlight {
+            animation: matchHighlightPulse 2s ease-in-out;
+            box-shadow: 0 0 0 3px #2c5f2d !important;
+        }
+
+        @keyframes matchHighlightPulse {
+            0%, 100% { box-shadow: 0 0 0 3px #2c5f2d !important; }
+            50% { box-shadow: 0 0 0 6px rgba(44, 95, 45, 0.3) !important; }
+        }
+
+        /* 검색된 이름 하이라이트 */
+        .name-highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            color: #856404;
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 검색 결과 없음 메시지 */
+        .no-search-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .no-search-results .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .no-search-results p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .no-search-results .hint {
+            font-size: 14px;
+            color: #999;
+        }
+
+        @media (max-width: 480px) {
+            .search-filter-badge {
+                bottom: 85px;
+                right: 16px;
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2357,7 +2464,55 @@
         </div>
     </div>
 
-    <!-- 플레이어 검색 플로팅 버튼 -->
+    <!-- 경기 기록 검색 플로팅 버튼 -->
+    <button class="player-search-fab" id="matchSearchFab" onclick="openMatchSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+        </svg>
+    </button>
+
+    <!-- 경기 기록 검색창 -->
+    <div class="player-search-container" id="matchSearchContainer">
+        <button class="player-search-btn" onclick="executeMatchSearch()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+            </svg>
+        </button>
+        <div class="player-search-input-wrapper">
+            <input type="text" class="player-search-input" id="matchSearchInput"
+                   placeholder="선수 검색"
+                   onfocus="showMatchRecentSearches()"
+                   onkeyup="handleMatchSearchKeyup(event)">
+            <div class="recent-search-dropdown" id="matchRecentSearchDropdown">
+                <div class="recent-search-header" onclick="toggleMatchRecentSearchList(event)">
+                    <span>최근 검색</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+                <div id="matchRecentSearchList"></div>
+            </div>
+        </div>
+        <button class="player-search-close" onclick="closeMatchSearch()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- 검색 필터 표시 배지 -->
+    <div class="search-filter-badge" id="searchFilterBadge" style="display: none;">
+        <span id="searchFilterName"></span>
+        <button onclick="clearMatchSearchFilter()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- 플레이어 검색 플로팅 버튼 (개인승점 탭) -->
     <button class="player-search-fab" id="playerSearchFab" onclick="openPlayerSearch()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
@@ -2365,7 +2520,7 @@
         </svg>
     </button>
 
-    <!-- 플레이어 검색창 -->
+    <!-- 플레이어 검색창 (개인승점 탭) -->
     <div class="player-search-container" id="playerSearchContainer">
         <button class="player-search-btn" onclick="executePlayerSearch()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2375,7 +2530,7 @@
         </button>
         <div class="player-search-input-wrapper">
             <input type="text" class="player-search-input" id="playerSearchInput"
-                   placeholder="플레이어 검색"
+                   placeholder="선수 검색"
                    onfocus="showRecentSearches()"
                    onkeyup="handleSearchKeyup(event)">
             <div class="recent-search-dropdown" id="recentSearchDropdown">
@@ -2409,6 +2564,417 @@
         const MAX_STORED_SEARCHES = 50;  // 저장 최대 개수
         const DISPLAY_RECENT_SEARCHES = 5;  // 표시 최대 개수
         let isProcessingRecentSearch = false;  // 최근 검색 처리 중 플래그
+
+        // 경기 기록 검색 관련 변수
+        const MATCH_RECENT_SEARCHES_KEY = 'recentMatchSearches';
+        let currentMatchSearchFilter = '';  // 현재 검색 필터
+        let isProcessingMatchRecentSearch = false;
+
+        // 경기 기록 검색 FAB 표시/숨기기 (경기 기록 탭에서만)
+        function updateMatchSearchFabVisibility() {
+            const fab = document.getElementById('matchSearchFab');
+            const container = document.getElementById('matchSearchContainer');
+            const badge = document.getElementById('searchFilterBadge');
+            const matchesTab = document.getElementById('matchesTab');
+            const isMatchesTabActive = matchesTab && matchesTab.classList.contains('active');
+
+            if (fab) {
+                if (isMatchesTabActive && !container?.classList.contains('active')) {
+                    fab.classList.add('visible');
+                } else {
+                    fab.classList.remove('visible');
+                }
+            }
+
+            // 배지도 경기기록 탭에서만 표시
+            if (badge && currentMatchSearchFilter) {
+                badge.style.display = isMatchesTabActive ? 'flex' : 'none';
+            }
+        }
+
+        // 경기 기록 검색창 열기
+        function openMatchSearch() {
+            const fab = document.getElementById('matchSearchFab');
+            const container = document.getElementById('matchSearchContainer');
+            const input = document.getElementById('matchSearchInput');
+
+            if (fab) fab.classList.remove('visible');
+
+            setTimeout(() => {
+                if (container) {
+                    container.classList.add('active');
+                    // 키보드 높이 즉시 적용
+                    updateSearchContainerPosition('matchSearchContainer');
+
+                    // 애니메이션 후 검색 이력 표시 및 포커스
+                    setTimeout(() => {
+                        if (input) {
+                            showMatchRecentSearches();
+                            // 포커스는 검색 이력 표시 후에
+                            setTimeout(() => {
+                                input.focus();
+                            }, 50);
+                        }
+                    }, 350);
+                }
+            }, 150);
+        }
+
+        // 경기 기록 검색창 닫기
+        function closeMatchSearch() {
+            const fab = document.getElementById('matchSearchFab');
+            const container = document.getElementById('matchSearchContainer');
+            const dropdown = document.getElementById('matchRecentSearchDropdown');
+            const input = document.getElementById('matchSearchInput');
+
+            if (dropdown) dropdown.classList.remove('show');
+            if (container) container.classList.remove('active');
+            if (input) input.value = '';
+
+            setTimeout(() => {
+                if (fab) {
+                    fab.style.transition = 'none';
+                    updateMatchSearchFabVisibility();
+                    requestAnimationFrame(() => {
+                        fab.style.transition = '';
+                    });
+                }
+            }, 450);
+        }
+
+        // 경기 기록 검색 실행
+        function executeMatchSearch() {
+            const input = document.getElementById('matchSearchInput');
+            const searchName = input?.value.trim();
+
+            if (!searchName) return;
+
+            // 검색 기록 저장
+            saveMatchRecentSearch(searchName);
+
+            // 필터 적용
+            currentMatchSearchFilter = searchName;
+
+            // 배지 표시 (건수는 renderFilteredMatches에서 업데이트)
+            const badge = document.getElementById('searchFilterBadge');
+            if (badge) {
+                badge.style.display = 'flex';
+            }
+
+            // 검색창 닫기
+            closeMatchSearch();
+
+            // 경기 목록 다시 렌더링
+            renderFilteredMatches();
+        }
+
+        // 이름 하이라이트 적용 함수
+        function highlightName(text, searchName) {
+            if (!text || !searchName) return text || '';
+            const regex = new RegExp(`(${searchName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<span class="name-highlight">$1</span>');
+        }
+
+        // 필터링된 경기 목록 렌더링
+        function renderFilteredMatches() {
+            if (!currentMatchSearchFilter) {
+                // 직접 렌더링 (무한 루프 방지)
+                renderMatchesWithoutFilter();
+                return;
+            }
+
+            const searchName = currentMatchSearchFilter.toLowerCase();
+            const container = document.getElementById('matchesContainer');
+
+            // 최신 경기가 위로 오도록 정렬
+            const sortedMatches = [...matches].sort((a, b) => b.timestamp - a.timestamp);
+
+            // 검색 필터 적용 - 해당 이름이 포함된 경기만
+            const searchFilteredMatches = sortedMatches.filter(match => {
+                const teamA = ((match.teamA1 || '') + ' ' + (match.teamA2 || '') + ' ' + (match.teamA || '')).toLowerCase();
+                const teamB = ((match.teamB1 || '') + ' ' + (match.teamB2 || '') + ' ' + (match.teamB || '')).toLowerCase();
+                return teamA.includes(searchName) || teamB.includes(searchName);
+            });
+
+            if (searchFilteredMatches.length === 0) {
+                container.innerHTML = `
+                    <div class="no-search-results">
+                        <div class="icon">🔍</div>
+                        <p>"${currentMatchSearchFilter}" 선수의 경기 기록이 없습니다</p>
+                        <div class="hint">다른 이름으로 검색해보세요</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 페이지네이션 적용
+            const totalPages = Math.ceil(searchFilteredMatches.length / matchesPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * matchesPerPage;
+            const endIndex = startIndex + matchesPerPage;
+            const pageMatches = searchFilteredMatches.slice(startIndex, endIndex);
+
+            // 원본 matches 배열에서의 인덱스 찾기 (하이라이트 적용)
+            const matchesHTML = pageMatches.map(match => {
+                const originalIndex = matches.findIndex(m => m.timestamp === match.timestamp);
+                return createMatchCard(match, originalIndex, currentMatchSearchFilter);
+            }).join('');
+
+            // 페이지네이션 HTML
+            let paginationHTML = '';
+            if (totalPages > 1) {
+                paginationHTML = '<div class="pagination">';
+                if (currentPage > 1) {
+                    paginationHTML += `<button onclick="goToSearchPage(${currentPage - 1})">이전</button>`;
+                }
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                        paginationHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToSearchPage(${i})">${i}</button>`;
+                    } else if (i === currentPage - 3 || i === currentPage + 3) {
+                        paginationHTML += '<span>...</span>';
+                    }
+                }
+                if (currentPage < totalPages) {
+                    paginationHTML += `<button onclick="goToSearchPage(${currentPage + 1})">다음</button>`;
+                }
+                paginationHTML += '</div>';
+            }
+
+            container.innerHTML = `
+                <div class="matches-list">
+                    ${matchesHTML}
+                </div>
+                ${paginationHTML}
+            `;
+
+            // 플로팅 배지에 건수 업데이트
+            const badgeName = document.getElementById('searchFilterName');
+            if (badgeName) {
+                badgeName.textContent = `🔍 ${currentMatchSearchFilter} ${searchFilteredMatches.length}건`;
+            }
+        }
+
+        // 필터 없이 경기 목록 렌더링 (내부용)
+        function renderMatchesWithoutFilter() {
+            const container = document.getElementById('matchesContainer');
+
+            if (matches.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🏆</div>
+                        <h3>등록된 경기 기록이 없습니다</h3>
+                        <p>새로운 경기 기록을 추가해보세요!</p>
+                    </div>
+                `;
+            } else {
+                const sortedMatches = [...matches].sort((a, b) => b.timestamp - a.timestamp);
+                const totalPages = Math.ceil(sortedMatches.length / matchesPerPage);
+                const startIndex = (currentPage - 1) * matchesPerPage;
+                const endIndex = startIndex + matchesPerPage;
+                const currentMatches = sortedMatches.slice(startIndex, endIndex);
+
+                const matchesHTML = currentMatches.map((match, index) => {
+                    const originalIndex = matches.findIndex(m => m.timestamp === match.timestamp);
+                    return createMatchCard(match, originalIndex);
+                }).join('');
+
+                let paginationHTML = '';
+                if (totalPages > 1) {
+                    paginationHTML = '<div class="pagination">';
+                    if (currentPage > 1) {
+                        paginationHTML += `<button onclick="changePage(${currentPage - 1})">이전</button>`;
+                    }
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                            paginationHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+                        } else if (i === currentPage - 3 || i === currentPage + 3) {
+                            paginationHTML += '<span>...</span>';
+                        }
+                    }
+                    if (currentPage < totalPages) {
+                        paginationHTML += `<button onclick="changePage(${currentPage + 1})">다음</button>`;
+                    }
+                    paginationHTML += '</div>';
+                }
+
+                container.innerHTML = `
+                    <div class="matches-header">
+                        <span>총 ${sortedMatches.length}건의 경기 기록</span>
+                    </div>
+                    <div class="matches-list">
+                        ${matchesHTML}
+                    </div>
+                    ${paginationHTML}
+                `;
+            }
+        }
+
+        // 검색용 페이지네이션 렌더링
+        function renderSearchPagination(totalMatches, totalPages) {
+            const pagination = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '<div class="pagination">';
+
+            if (currentPage > 1) {
+                html += `<button onclick="goToSearchPage(${currentPage - 1})">이전</button>`;
+            }
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    html += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToSearchPage(${i})">${i}</button>`;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    html += '<span>...</span>';
+                }
+            }
+
+            if (currentPage < totalPages) {
+                html += `<button onclick="goToSearchPage(${currentPage + 1})">다음</button>`;
+            }
+
+            html += '</div>';
+            pagination.innerHTML = html;
+        }
+
+        // 검색 결과 페이지 이동
+        function goToSearchPage(page) {
+            currentPage = page;
+            renderFilteredMatches();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 검색 필터 해제
+        function clearMatchSearchFilter() {
+            currentMatchSearchFilter = '';
+            currentPage = 1;
+
+            const badge = document.getElementById('searchFilterBadge');
+            if (badge) badge.style.display = 'none';
+
+            const input = document.getElementById('matchSearchInput');
+            if (input) input.value = '';
+
+            renderMatches();
+        }
+
+        // 경기 기록 검색 키 입력 처리
+        function handleMatchSearchKeyup(event) {
+            if (event.key === 'Enter') {
+                executeMatchSearch();
+            } else if (event.key === 'Escape') {
+                closeMatchSearch();
+            }
+        }
+
+        // 경기 기록 최근 검색 기록 가져오기
+        function getMatchRecentSearches() {
+            try {
+                const searches = localStorage.getItem(MATCH_RECENT_SEARCHES_KEY);
+                return searches ? JSON.parse(searches) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // 경기 기록 최근 검색 기록 저장
+        function saveMatchRecentSearch(name) {
+            if (!name || name.trim() === '') return;
+
+            let searches = getMatchRecentSearches();
+            searches = searches.filter(s => s !== name);
+            searches.unshift(name);
+            if (searches.length > MAX_STORED_SEARCHES) {
+                searches = searches.slice(0, MAX_STORED_SEARCHES);
+            }
+
+            try {
+                localStorage.setItem(MATCH_RECENT_SEARCHES_KEY, JSON.stringify(searches));
+            } catch (e) {
+                console.error('검색 기록 저장 실패:', e);
+            }
+        }
+
+        // 경기 기록 최근 검색 기록 삭제
+        function removeMatchRecentSearch(name) {
+            let searches = getMatchRecentSearches();
+            searches = searches.filter(s => s !== name);
+            localStorage.setItem(MATCH_RECENT_SEARCHES_KEY, JSON.stringify(searches));
+            showMatchRecentSearches();
+        }
+
+        // 경기 기록 최근 검색 목록 접기/펼치기
+        function toggleMatchRecentSearchList(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('matchRecentSearchDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('collapsed');
+            }
+        }
+
+        // 경기 기록 최근 검색 목록 표시
+        function showMatchRecentSearches() {
+            const dropdown = document.getElementById('matchRecentSearchDropdown');
+            const list = document.getElementById('matchRecentSearchList');
+            const searches = getMatchRecentSearches();
+
+            if (!dropdown || !list) return;
+
+            if (searches.length === 0) {
+                dropdown.classList.remove('show');
+                return;
+            }
+
+            const displaySearches = searches.slice(0, DISPLAY_RECENT_SEARCHES);
+
+            list.innerHTML = displaySearches.map((name, index) => `
+                <div class="recent-search-item" data-index="${index}" data-name="${name.replace(/"/g, '&quot;')}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    <span>${name}</span>
+                    <button class="remove-recent" data-remove="${index}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            `).join('');
+
+            dropdown.classList.add('show');
+
+            // 이벤트 위임
+            list.onclick = function(e) {
+                const removeBtn = e.target.closest('.remove-recent');
+                if (removeBtn) {
+                    e.stopPropagation();
+                    const index = parseInt(removeBtn.dataset.remove);
+                    const searches = getMatchRecentSearches();
+                    if (searches[index]) {
+                        removeMatchRecentSearch(searches[index]);
+                    }
+                    return;
+                }
+
+                const item = e.target.closest('.recent-search-item');
+                if (item) {
+                    const name = item.dataset.name;
+                    if (name) {
+                        isProcessingMatchRecentSearch = true;
+                        const input = document.getElementById('matchSearchInput');
+                        if (input) input.value = name;
+                        executeMatchSearch();
+                        setTimeout(() => {
+                            isProcessingMatchRecentSearch = false;
+                        }, 100);
+                    }
+                }
+            };
+        }
 
         // 최근 검색 기록 가져오기
         function getRecentSearches() {
@@ -2477,62 +3043,82 @@
             }
         }
 
-        // 검색창 열기
+        // 검색창 열기 (개인승점)
         function openPlayerSearch() {
             const fab = document.getElementById('playerSearchFab');
             const container = document.getElementById('playerSearchContainer');
             const input = document.getElementById('playerSearchInput');
 
-            // FAB 숨기기 (애니메이션)
+            // FAB 숨기기
             if (fab) fab.classList.remove('visible');
 
-            // 검색창 열기 (FAB 위치에서 펼쳐지듯이)
+            // 검색창 열기
             setTimeout(() => {
                 if (container) {
                     container.classList.add('active');
-                    // 펼쳐지는 애니메이션 후 input 포커스
+                    // 키보드 높이 즉시 적용
+                    updateSearchContainerPosition('playerSearchContainer');
+
+                    // 애니메이션 후 포커스 및 검색 이력 표시
                     setTimeout(() => {
                         if (input) {
-                            input.focus();
                             showRecentSearches();
-                            // 모바일 키보드 대응: 입력창이 보이도록 스크롤
+                            // 포커스는 검색 이력 표시 후에
                             setTimeout(() => {
-                                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }, 100);
+                                input.focus();
+                            }, 50);
                         }
-                    }, 300);
+                    }, 350);
                 }
             }, 150);
         }
 
-        // 모바일 키보드 높이 대응 (Visual Viewport API)
-        function initMobileKeyboardHandler() {
-            const container = document.getElementById('playerSearchContainer');
-            if (!container || !window.visualViewport) return;
+        // 검색 컨테이너 위치 업데이트 (키보드 높이 반영)
+        function updateSearchContainerPosition(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
 
-            let initialBottom = 20; // 기본 bottom 값
+            const initialBottom = 20;
 
-            window.visualViewport.addEventListener('resize', () => {
-                // 키보드가 올라온 높이 계산
+            if (window.visualViewport) {
                 const keyboardHeight = window.innerHeight - window.visualViewport.height;
-
-                // 검색창이 활성화된 상태에서만 위치 조정
-                if (container.classList.contains('active') && keyboardHeight > 0) {
+                if (keyboardHeight > 50) { // 키보드가 올라온 경우
                     container.style.bottom = (initialBottom + keyboardHeight) + 'px';
                 } else {
                     container.style.bottom = initialBottom + 'px';
                 }
-            });
+            }
+        }
 
-            window.visualViewport.addEventListener('scroll', () => {
-                // iOS Safari에서 스크롤 시에도 위치 보정
-                if (container.classList.contains('active')) {
-                    const keyboardHeight = window.innerHeight - window.visualViewport.height;
-                    if (keyboardHeight > 0) {
-                        container.style.bottom = (initialBottom + keyboardHeight) + 'px';
-                    }
+        // 통합 모바일 키보드 핸들러
+        function initMobileKeyboardHandler() {
+            if (!window.visualViewport) return;
+
+            const updateAllSearchPositions = () => {
+                const playerContainer = document.getElementById('playerSearchContainer');
+                const matchContainer = document.getElementById('matchSearchContainer');
+                const initialBottom = 20;
+                const keyboardHeight = window.innerHeight - window.visualViewport.height;
+                const offset = keyboardHeight > 50 ? keyboardHeight : 0;
+
+                // 개인승점 검색창
+                if (playerContainer && playerContainer.classList.contains('active')) {
+                    playerContainer.style.bottom = (initialBottom + offset) + 'px';
                 }
-            });
+
+                // 경기기록 검색창
+                if (matchContainer && matchContainer.classList.contains('active')) {
+                    matchContainer.style.bottom = (initialBottom + offset) + 'px';
+                }
+            };
+
+            window.visualViewport.addEventListener('resize', updateAllSearchPositions);
+            window.visualViewport.addEventListener('scroll', updateAllSearchPositions);
+        }
+
+        // 더 이상 별도 핸들러 필요 없음
+        function initMatchSearchKeyboardHandler() {
+            // initMobileKeyboardHandler에서 통합 처리
         }
 
         // 검색창 닫기
@@ -2773,13 +3359,20 @@
         // 검색창 외부 클릭 시 드롭다운 닫기
         document.addEventListener('click', function(event) {
             // 최근 검색 처리 중이면 드롭다운 닫지 않음
-            if (isProcessingRecentSearch) return;
+            if (isProcessingRecentSearch || isProcessingMatchRecentSearch) return;
 
-            const container = document.getElementById('playerSearchContainer');
-            const dropdown = document.getElementById('recentSearchDropdown');
+            // 개인승점 검색 드롭다운
+            const playerContainer = document.getElementById('playerSearchContainer');
+            const playerDropdown = document.getElementById('recentSearchDropdown');
+            if (playerContainer && playerDropdown && !playerContainer.contains(event.target)) {
+                playerDropdown.classList.remove('show');
+            }
 
-            if (container && dropdown && !container.contains(event.target)) {
-                dropdown.classList.remove('show');
+            // 경기기록 검색 드롭다운
+            const matchContainer = document.getElementById('matchSearchContainer');
+            const matchDropdown = document.getElementById('matchRecentSearchDropdown');
+            if (matchContainer && matchDropdown && !matchContainer.contains(event.target)) {
+                matchDropdown.classList.remove('show');
             }
         });
 
@@ -2858,7 +3451,15 @@
 
             // 검색창 닫고 플로팅 버튼 상태 업데이트
             closePlayerSearch();
+            closeMatchSearch();
             updateSearchFabVisibility();
+            updateMatchSearchFabVisibility();
+
+            // 경기기록 탭이 아니면 검색 필터 배지 숨기기
+            const badge = document.getElementById('searchFilterBadge');
+            if (badge) {
+                badge.style.display = (tabName === 'matches' && currentMatchSearchFilter) ? 'flex' : 'none';
+            }
         }
 
         // 기간 필터 변수 (기본값: 이번달)
@@ -3464,9 +4065,11 @@
 
             // 플로팅 검색 버튼 초기화
             updateSearchFabVisibility();
+            updateMatchSearchFabVisibility();
 
             // 모바일 키보드 핸들러 초기화
             initMobileKeyboardHandler();
+            initMatchSearchKeyboardHandler();
 
             // 초기 필터링 상태 확인 및 적용
             setTimeout(() => {
@@ -3722,8 +4325,14 @@
 
         // Render matches with pagination
         function renderMatches() {
+            // 검색 필터가 적용되어 있으면 필터링된 렌더링 사용
+            if (currentMatchSearchFilter) {
+                renderFilteredMatches();
+                return;
+            }
+
             const container = document.getElementById('matchesContainer');
-            
+
             if (matches.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -3853,19 +4462,25 @@
         }
 
         // Create match card HTML
-        function createMatchCard(match, index) {
+        function createMatchCard(match, index, searchHighlight = null) {
             const scoreA = parseInt(match.scoreA);
             const scoreB = parseInt(match.scoreB);
-            
+
+            // 이름 표시 (하이라이트 적용 여부)
+            const displayTeamA = searchHighlight ? highlightName(match.teamA, searchHighlight) : match.teamA;
+            const displayTeamB = searchHighlight ? highlightName(match.teamB, searchHighlight) : match.teamB;
+
             let resultHTML = '';
             if (scoreA > scoreB) {
-                resultHTML = `🏆 승리: ${match.teamA}`;
+                const winnerDisplay = searchHighlight ? highlightName(match.teamA, searchHighlight) : match.teamA;
+                resultHTML = `🏆 승리: ${winnerDisplay}`;
             } else if (scoreB > scoreA) {
-                resultHTML = `🏆 승리: ${match.teamB}`;
+                const winnerDisplay = searchHighlight ? highlightName(match.teamB, searchHighlight) : match.teamB;
+                resultHTML = `🏆 승리: ${winnerDisplay}`;
             } else {
                 resultHTML = `🤝 무승부`;
             }
-            
+
             // 날짜 포맷 (년월일만)
             const matchDate = new Date(match.timestamp || Date.now());
             const dateStr = `${matchDate.getFullYear()}.${(matchDate.getMonth() + 1).toString().padStart(2, '0')}.${matchDate.getDate().toString().padStart(2, '0')}`;
@@ -3874,7 +4489,7 @@
             const matchType = match.matchType || '혼복';
             let typeClass = 'mixed-doubles';
             let typeEmoji = '👫';
-            
+
             if (matchType === '남복') {
                 typeClass = 'men-doubles';
                 typeEmoji = '👬';
@@ -3905,9 +4520,9 @@
                     </div>
                     <div class="match-body">
                         <div class="team-vs">
-                            <span class="team-name">${match.teamA}</span>
+                            <span class="team-name">${displayTeamA}</span>
                             <span class="vs-badge">VS</span>
-                            <span class="team-name">${match.teamB}</span>
+                            <span class="team-name">${displayTeamB}</span>
                         </div>
                         <div class="score-display">
                             <span class="score">${match.scoreA}</span>
@@ -7980,10 +8595,7 @@
 
                     input.addEventListener('focus', function() {
                         showAutocomplete(inputId, this.value);
-                        // 모바일 키보드 대응: 입력창이 보이도록 스크롤
-                        setTimeout(() => {
-                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }, 300);
+                        // 일반 폼 필드는 사용자가 직접 스크롤 (scrollIntoView 제거)
                     });
 
                     input.addEventListener('keydown', function(event) {
