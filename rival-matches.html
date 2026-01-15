@@ -2495,10 +2495,44 @@
                         if (input) {
                             input.focus();
                             showRecentSearches();
+                            // 모바일 키보드 대응: 입력창이 보이도록 스크롤
+                            setTimeout(() => {
+                                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
                         }
                     }, 300);
                 }
             }, 150);
+        }
+
+        // 모바일 키보드 높이 대응 (Visual Viewport API)
+        function initMobileKeyboardHandler() {
+            const container = document.getElementById('playerSearchContainer');
+            if (!container || !window.visualViewport) return;
+
+            let initialBottom = 20; // 기본 bottom 값
+
+            window.visualViewport.addEventListener('resize', () => {
+                // 키보드가 올라온 높이 계산
+                const keyboardHeight = window.innerHeight - window.visualViewport.height;
+
+                // 검색창이 활성화된 상태에서만 위치 조정
+                if (container.classList.contains('active') && keyboardHeight > 0) {
+                    container.style.bottom = (initialBottom + keyboardHeight) + 'px';
+                } else {
+                    container.style.bottom = initialBottom + 'px';
+                }
+            });
+
+            window.visualViewport.addEventListener('scroll', () => {
+                // iOS Safari에서 스크롤 시에도 위치 보정
+                if (container.classList.contains('active')) {
+                    const keyboardHeight = window.innerHeight - window.visualViewport.height;
+                    if (keyboardHeight > 0) {
+                        container.style.bottom = (initialBottom + keyboardHeight) + 'px';
+                    }
+                }
+            });
         }
 
         // 검색창 닫기
@@ -3430,7 +3464,10 @@
 
             // 플로팅 검색 버튼 초기화
             updateSearchFabVisibility();
-            
+
+            // 모바일 키보드 핸들러 초기화
+            initMobileKeyboardHandler();
+
             // 초기 필터링 상태 확인 및 적용
             setTimeout(() => {
                 const checkbox = document.getElementById('showAllRecords');
@@ -7940,15 +7977,19 @@
                     input.addEventListener('input', function() {
                         showAutocomplete(inputId, this.value);
                     });
-                    
+
                     input.addEventListener('focus', function() {
                         showAutocomplete(inputId, this.value);
+                        // 모바일 키보드 대응: 입력창이 보이도록 스크롤
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
                     });
-                    
+
                     input.addEventListener('keydown', function(event) {
                         handleAutocompleteKeyboard(event, inputId);
                     });
-                    
+
                     // 블러 이벤트 (약간 지연 후 숨기기 - 클릭 가능하도록)
                     input.addEventListener('blur', function() {
                         setTimeout(() => {
