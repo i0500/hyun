@@ -3269,15 +3269,35 @@
             }, 150);
         }
 
-        // 검색 컨테이너 위치 업데이트 - 브라우저 기본 동작에 맡김
+        // 검색 컨테이너 위치 업데이트
         function updateSearchContainerPosition(containerId) {
-            // 브라우저가 자동으로 스크롤하여 입력창을 키보드 위에 보여주므로
-            // 별도 위치 조정 불필요
+            // initMobileKeyboardHandler에서 통합 처리
         }
 
-        // 모바일 키보드 핸들러 - 비활성화
+        // 모바일 키보드 핸들러 - visualViewport 기반 위치 고정
         function initMobileKeyboardHandler() {
-            // 브라우저 기본 동작 사용 (추가 위치 조정 없음)
+            if (!window.visualViewport) return;
+
+            const updatePosition = () => {
+                const playerContainer = document.getElementById('playerSearchContainer');
+                const matchContainer = document.getElementById('matchSearchContainer');
+
+                // visualViewport 하단에서 20px 위에 고정
+                const bottomOffset = 20;
+                const viewportBottom = window.visualViewport.height + window.visualViewport.offsetTop;
+                const newBottom = window.innerHeight - viewportBottom + bottomOffset;
+
+                if (playerContainer && playerContainer.classList.contains('active')) {
+                    playerContainer.style.bottom = newBottom + 'px';
+                }
+
+                if (matchContainer && matchContainer.classList.contains('active')) {
+                    matchContainer.style.bottom = newBottom + 'px';
+                }
+            };
+
+            window.visualViewport.addEventListener('resize', updatePosition);
+            window.visualViewport.addEventListener('scroll', updatePosition);
         }
 
         // 더 이상 별도 핸들러 필요 없음
