@@ -939,12 +939,30 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-                gap: 15px;
+                gap: 8px;
+                padding: 15px;
             }
-            
+
             .modal-footer .btn {
                 flex: 1;
                 margin: 0;
+                padding: 10px 8px;
+                font-size: 14px;
+                min-width: 0;
+                white-space: nowrap;
+            }
+        }
+
+        /* 더 작은 화면에서 버튼 추가 조정 */
+        @media (max-width: 400px) {
+            .modal-footer {
+                gap: 6px;
+                padding: 12px;
+            }
+
+            .modal-footer .btn {
+                padding: 10px 6px;
+                font-size: 13px;
             }
         }
 
@@ -1679,6 +1697,359 @@
                 margin-top: 4px;
             }
         }
+
+        /* 플로팅 검색 버튼 스타일 */
+        .player-search-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(44, 95, 45, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transform: scale(0);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s ease,
+                        visibility 0.3s ease;
+        }
+
+        .player-search-fab.visible {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .player-search-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(44, 95, 45, 0.5);
+        }
+
+        .player-search-fab svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* 검색창 컨테이너 */
+        .player-search-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            z-index: 1001;
+            height: 56px;
+            width: 56px;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+            /* 닫힐 때: 내부 사라짐 대기 → width 접힘 → 완전히 사라짐 */
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                        opacity 0.1s ease 0.35s,
+                        visibility 0.1s ease 0.35s;
+        }
+
+        .player-search-container.active {
+            width: 320px;
+            opacity: 1;
+            visibility: visible;
+            overflow: visible;
+            /* 열릴 때: 바로 나타나고, width 펼쳐짐 */
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.1s ease,
+                        visibility 0.1s ease;
+        }
+
+        /* 검색창 내부 요소들 */
+        .player-search-container .player-search-input-wrapper,
+        .player-search-container .player-search-close {
+            opacity: 0;
+            /* 닫힐 때: 빠르게 사라짐 */
+            transition: opacity 0.1s ease;
+        }
+
+        .player-search-container.active .player-search-input-wrapper,
+        .player-search-container.active .player-search-close {
+            opacity: 1;
+            /* 열릴 때: 펼쳐진 후 나타남 */
+            transition: opacity 0.2s ease 0.25s;
+        }
+
+        .player-search-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1b 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .player-search-btn:hover {
+            background: linear-gradient(135deg, #3a7a3b 0%, #2c5f2d 100%);
+        }
+
+        .player-search-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .player-search-input-wrapper {
+            flex: 1;
+            position: relative;
+            margin: 0 10px;
+        }
+
+        .player-search-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 20px;
+            background: #f5f5f5;
+            font-size: 14px;
+            outline: none;
+            transition: background 0.2s ease;
+        }
+
+        .player-search-input:focus {
+            background: #eeeeee;
+        }
+
+        .player-search-input::placeholder {
+            color: #999;
+        }
+
+        .player-search-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .player-search-close:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .player-search-close svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* 최근 검색 드롭다운 */
+        .recent-search-dropdown {
+            position: absolute;
+            bottom: calc(100% + 15px);
+            left: -52px;
+            right: -48px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+            z-index: 1003;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .recent-search-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .recent-search-header {
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #888;
+            background: #f8f8f8;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .recent-search-header:hover {
+            background: #f0f0f0;
+        }
+
+        .recent-search-header .toggle-arrow {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .recent-search-dropdown.collapsed .recent-search-header .toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        .recent-search-dropdown.collapsed #recentSearchList {
+            display: none;
+        }
+
+        .recent-search-dropdown.collapsed {
+            border-radius: 12px;
+        }
+
+        .recent-search-dropdown.collapsed .recent-search-header {
+            border-bottom: none;
+            border-radius: 12px;
+        }
+
+        .recent-search-item {
+            padding: 12px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s ease;
+        }
+
+        .recent-search-item:hover {
+            background: #f5f5f5;
+        }
+
+        .recent-search-item svg {
+            width: 16px;
+            height: 16px;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .recent-search-item span {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .recent-search-item .remove-recent {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            transition: all 0.2s ease;
+        }
+
+        .recent-search-item .remove-recent:hover {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        /* 검색 결과 하이라이트 */
+        .ranking-item.search-highlight {
+            animation: highlightPulse 2s ease-in-out;
+            box-shadow: 0 0 0 3px #2c5f2d;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 3px #2c5f2d; }
+            50% { box-shadow: 0 0 0 6px rgba(44, 95, 45, 0.3); }
+        }
+
+        /* 태블릿 검색창 조정 */
+        @media (max-width: 768px) {
+            .player-search-container.active {
+                width: min(320px, calc(100vw - 40px));
+            }
+        }
+
+        /* 모바일 검색창 조정 */
+        @media (max-width: 480px) {
+            .player-search-fab {
+                right: 15px;
+                bottom: 15px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .player-search-container {
+                right: 15px;
+                bottom: 15px;
+                height: 50px;
+                width: 50px;
+            }
+
+            .player-search-container.active {
+                width: calc(100vw - 30px);
+            }
+
+            .player-search-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .player-search-close {
+                width: 32px;
+                height: 32px;
+            }
+
+            .player-search-input {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+        }
+
+        /* 아주 작은 화면 */
+        @media (max-width: 360px) {
+            .player-search-fab {
+                right: 10px;
+                bottom: 10px;
+                width: 46px;
+                height: 46px;
+            }
+
+            .player-search-container {
+                right: 10px;
+                bottom: 10px;
+                height: 46px;
+                width: 46px;
+            }
+
+            .player-search-container.active {
+                width: calc(100vw - 20px);
+            }
+
+            .player-search-input-wrapper {
+                margin: 0 6px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1986,6 +2357,44 @@
         </div>
     </div>
 
+    <!-- 플레이어 검색 플로팅 버튼 -->
+    <button class="player-search-fab" id="playerSearchFab" onclick="openPlayerSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+        </svg>
+    </button>
+
+    <!-- 플레이어 검색창 -->
+    <div class="player-search-container" id="playerSearchContainer">
+        <button class="player-search-btn" onclick="executePlayerSearch()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+            </svg>
+        </button>
+        <div class="player-search-input-wrapper">
+            <input type="text" class="player-search-input" id="playerSearchInput"
+                   placeholder="플레이어 검색"
+                   onfocus="showRecentSearches()"
+                   onkeyup="handleSearchKeyup(event)">
+            <div class="recent-search-dropdown" id="recentSearchDropdown">
+                <div class="recent-search-header" onclick="toggleRecentSearchList(event)">
+                    <span>최근 검색</span>
+                    <svg class="toggle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+                <div id="recentSearchList"></div>
+            </div>
+        </div>
+        <button class="player-search-close" onclick="closePlayerSearch()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
     <script>
         // Global variables
         let matches = [];
@@ -1994,7 +2403,352 @@
         let currentPage = 1;
         let matchesPerPage = 10;
         let isDeleting = false; // 삭제 중 플래그 (전역 변수)
-        
+
+        // 플레이어 검색 관련 변수
+        const RECENT_SEARCHES_KEY = 'recentPlayerSearches';
+        const MAX_STORED_SEARCHES = 50;  // 저장 최대 개수
+        const DISPLAY_RECENT_SEARCHES = 5;  // 표시 최대 개수
+        let isProcessingRecentSearch = false;  // 최근 검색 처리 중 플래그
+
+        // 최근 검색 기록 가져오기
+        function getRecentSearches() {
+            try {
+                const searches = localStorage.getItem(RECENT_SEARCHES_KEY);
+                return searches ? JSON.parse(searches) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // 최근 검색 기록 저장
+        function saveRecentSearch(name) {
+            if (!name || name.trim() === '') return;
+
+            let searches = getRecentSearches();
+            // 이미 있으면 제거 (맨 위로 올리기 위해)
+            searches = searches.filter(s => s !== name);
+            // 맨 앞에 추가
+            searches.unshift(name);
+            // 최대 개수 제한
+            if (searches.length > MAX_STORED_SEARCHES) {
+                searches = searches.slice(0, MAX_STORED_SEARCHES);
+            }
+            localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches));
+
+            // 최근 검색 목록 UI 즉시 업데이트 (드롭다운이 열려있을 때)
+            const dropdown = document.getElementById('recentSearchDropdown');
+            if (dropdown && dropdown.classList.contains('show')) {
+                showRecentSearches();
+            }
+        }
+
+        // 최근 검색 기록 삭제
+        function removeRecentSearch(name) {
+            let searches = getRecentSearches();
+            searches = searches.filter(s => s !== name);
+            localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(searches));
+            showRecentSearches();
+        }
+
+        // 최근 검색 목록 접기/펼치기
+        function toggleRecentSearchList(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('recentSearchDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('collapsed');
+            }
+        }
+
+        // 플로팅 검색 버튼 표시/숨기기 (개인승점 탭에서만)
+        function updateSearchFabVisibility() {
+            const fab = document.getElementById('playerSearchFab');
+            const container = document.getElementById('playerSearchContainer');
+            const rankingsTab = document.getElementById('rankingsContent');
+
+            if (fab && rankingsTab) {
+                const isRankingsActive = rankingsTab.classList.contains('active');
+                const isSearchOpen = container && container.classList.contains('active');
+
+                if (isRankingsActive && !isSearchOpen) {
+                    fab.classList.add('visible');
+                } else {
+                    fab.classList.remove('visible');
+                }
+            }
+        }
+
+        // 검색창 열기
+        function openPlayerSearch() {
+            const fab = document.getElementById('playerSearchFab');
+            const container = document.getElementById('playerSearchContainer');
+            const input = document.getElementById('playerSearchInput');
+
+            // FAB 숨기기 (애니메이션)
+            if (fab) fab.classList.remove('visible');
+
+            // 검색창 열기 (FAB 위치에서 펼쳐지듯이)
+            setTimeout(() => {
+                if (container) {
+                    container.classList.add('active');
+                    // 펼쳐지는 애니메이션 후 input 포커스
+                    setTimeout(() => {
+                        if (input) {
+                            input.focus();
+                            showRecentSearches();
+                        }
+                    }, 300);
+                }
+            }, 150);
+        }
+
+        // 검색창 닫기
+        function closePlayerSearch() {
+            const fab = document.getElementById('playerSearchFab');
+            const container = document.getElementById('playerSearchContainer');
+            const dropdown = document.getElementById('recentSearchDropdown');
+            const input = document.getElementById('playerSearchInput');
+
+            // 드롭다운 먼저 닫기
+            if (dropdown) dropdown.classList.remove('show');
+
+            // 검색창 접기 (내부 페이드아웃 → width 접힘 → 사라짐)
+            if (container) container.classList.remove('active');
+            if (input) input.value = '';
+
+            // FAB 다시 표시 (애니메이션 없이 바로)
+            setTimeout(() => {
+                if (fab) {
+                    fab.style.transition = 'none';
+                    updateSearchFabVisibility();
+                    // 다음 프레임에서 transition 복원
+                    requestAnimationFrame(() => {
+                        fab.style.transition = '';
+                    });
+                }
+            }, 450);
+        }
+
+        // 최근 검색 목록 표시
+        function showRecentSearches() {
+            const dropdown = document.getElementById('recentSearchDropdown');
+            const list = document.getElementById('recentSearchList');
+            const searches = getRecentSearches();
+
+            if (!dropdown || !list) return;
+
+            if (searches.length === 0) {
+                dropdown.classList.remove('show');
+                return;
+            }
+
+            // 현재 랭킹에서 플레이어 정보 찾기
+            function getPlayerRankInfo(playerName) {
+                const rankingItems = document.querySelectorAll('.ranking-item');
+                for (const item of rankingItems) {
+                    const nameEl = item.querySelector('.player-name');
+                    if (nameEl) {
+                        // 첫 번째 텍스트 노드에서 이름 추출
+                        let name = '';
+                        for (const node of nameEl.childNodes) {
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                name = node.textContent.trim();
+                                if (name) break;
+                            }
+                        }
+                        if (name === playerName) {
+                            // 순위 가져오기
+                            const rankEl = item.querySelector('.rank-number');
+                            const rank = rankEl ? rankEl.textContent.trim() : '';
+                            // 타이틀 가져오기 (상위권 등)
+                            const titleEl = nameEl.querySelector('span');
+                            const title = titleEl ? titleEl.textContent.trim() : '';
+                            return { rank, title };
+                        }
+                    }
+                }
+                return { rank: '', title: '' };
+            }
+
+            // 표시할 검색 목록 (최대 5개)
+            const displaySearches = searches.slice(0, DISPLAY_RECENT_SEARCHES);
+
+            // data 속성 사용으로 특수문자 문제 해결
+            list.innerHTML = displaySearches.map((name, index) => {
+                const info = getPlayerRankInfo(name);
+                const rankBadge = info.rank ? `<span style="color: #2c5f2d; font-weight: 600; margin-right: 4px;">${info.rank}</span>` : '';
+                const titleBadge = info.title ? `<span style="color: #888; font-size: 11px; margin-left: 4px;">${info.title}</span>` : '';
+
+                return `
+                <div class="recent-search-item" data-index="${index}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span class="recent-name">${rankBadge}${escapeHtml(name)}${titleBadge}</span>
+                    <button class="remove-recent" data-remove-index="${index}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            `}).join('');
+
+            dropdown.classList.add('show');
+        }
+
+        // HTML 이스케이프 함수
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 최근 검색 목록 클릭 이벤트 위임
+        document.addEventListener('click', function(e) {
+            // 삭제 버튼 클릭
+            const removeBtn = e.target.closest('.remove-recent');
+            if (removeBtn) {
+                e.stopPropagation();
+                const index = parseInt(removeBtn.dataset.removeIndex);
+                const searches = getRecentSearches();
+                if (searches[index]) {
+                    removeRecentSearch(searches[index]);
+                }
+                return;
+            }
+
+            // 최근 검색 항목 클릭
+            const item = e.target.closest('.recent-search-item');
+            if (item && item.dataset.index !== undefined) {
+                e.stopPropagation();
+                // 최근 검색 처리 중 플래그 설정 (DOM 재구성 후 드롭다운 닫힘 방지)
+                isProcessingRecentSearch = true;
+                const index = parseInt(item.dataset.index);
+                const searches = getRecentSearches();
+                if (searches[index]) {
+                    selectRecentSearch(searches[index]);
+                }
+                // 플래그 해제 (다음 이벤트 루프에서)
+                setTimeout(() => {
+                    isProcessingRecentSearch = false;
+                }, 0);
+                return;
+            }
+        });
+
+        // 최근 검색에서 선택
+        // 최근 검색에서 선택 시 해당 위치로 바로 이동 (입력창 변경 없음, 순서 유지)
+        function selectRecentSearch(name) {
+            const rankingItems = document.querySelectorAll('.ranking-item');
+
+            // 기존 하이라이트 제거
+            rankingItems.forEach(item => {
+                item.classList.remove('search-highlight');
+            });
+
+            for (const item of rankingItems) {
+                const nameEl = item.querySelector('.player-name');
+                if (nameEl) {
+                    let playerName = '';
+                    for (const node of nameEl.childNodes) {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            playerName = node.textContent.trim();
+                            if (playerName) break;
+                        }
+                    }
+
+                    if (playerName === name) {
+                        // 해당 위치로 스크롤
+                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // 하이라이트 효과
+                        item.classList.add('search-highlight');
+                        // 3초 후 하이라이트 제거
+                        setTimeout(() => {
+                            item.classList.remove('search-highlight');
+                        }, 3000);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // 검색 실행
+        function executePlayerSearch() {
+            const input = document.getElementById('playerSearchInput');
+
+            if (!input) return;
+
+            const searchName = input.value.trim();
+            if (!searchName) return;
+
+            // 플레이어 찾기
+            const rankingItems = document.querySelectorAll('.ranking-item');
+            let found = false;
+
+            // 기존 하이라이트 제거
+            rankingItems.forEach(item => {
+                item.classList.remove('search-highlight');
+            });
+
+            for (const item of rankingItems) {
+                const nameEl = item.querySelector('.player-name');
+                if (nameEl) {
+                    // 첫 번째 텍스트 노드만 가져오기 (상위권 등 제외)
+                    let playerName = '';
+                    for (const node of nameEl.childNodes) {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            playerName = node.textContent.trim();
+                            if (playerName) break;
+                        }
+                    }
+
+                    if (playerName && playerName.includes(searchName)) {
+                        // 해당 위치로 스크롤
+                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // 하이라이트 효과
+                        item.classList.add('search-highlight');
+                        // 3초 후 하이라이트 제거
+                        setTimeout(() => {
+                            item.classList.remove('search-highlight');
+                        }, 3000);
+
+                        found = true;
+                        // 검색 기록 저장 (이름만)
+                        saveRecentSearch(playerName);
+                        // 입력창에 이름 표시
+                        input.value = playerName;
+                        break;
+                    }
+                }
+            }
+
+            if (!found) {
+                alert(`'${searchName}' 플레이어를 찾을 수 없습니다.`);
+            }
+        }
+
+        // 검색 키 입력 처리
+        function handleSearchKeyup(event) {
+            if (event.key === 'Enter') {
+                executePlayerSearch();
+            } else if (event.key === 'Escape') {
+                closePlayerSearch();
+            }
+        }
+
+        // 검색창 외부 클릭 시 드롭다운 닫기
+        document.addEventListener('click', function(event) {
+            // 최근 검색 처리 중이면 드롭다운 닫지 않음
+            if (isProcessingRecentSearch) return;
+
+            const container = document.getElementById('playerSearchContainer');
+            const dropdown = document.getElementById('recentSearchDropdown');
+
+            if (container && dropdown && !container.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
         // 경기 유형 선택 처리
         function setupMatchTypeSelection() {
             const labels = document.querySelectorAll('.match-type-label');
@@ -2056,17 +2810,21 @@
             // 탭 버튼 상태 업데이트
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName + 'Tab').classList.add('active');
-            
+
             // 탭 콘텐츠 상태 업데이트
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.getElementById(tabName + 'Content').classList.add('active');
-            
+
             // 탭별 데이터 업데이트
             if (tabName === 'rankings') {
                 updateRankings();
             } else if (tabName === 'clubstats') {
                 updateClubStats();
             }
+
+            // 검색창 닫고 플로팅 버튼 상태 업데이트
+            closePlayerSearch();
+            updateSearchFabVisibility();
         }
 
         // 기간 필터 변수 (기본값: 이번달)
@@ -2666,9 +3424,12 @@
             // 경기 유형 선택 이벤트 설정
             updateLoadingProgress(95, '인터페이스 설정 중...', '마지막 설정');
             setupMatchTypeSelection();
-            
+
             // 로딩 완료
             hideLoading();
+
+            // 플로팅 검색 버튼 초기화
+            updateSearchFabVisibility();
             
             // 초기 필터링 상태 확인 및 적용
             setTimeout(() => {
