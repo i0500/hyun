@@ -2,14 +2,14 @@
   "matches": [
     {
       "title": "포인트전 경기",
-      "teamA": "테스트3 / 테스트2",
+      "teamA": "테스트3 / 테스트4",
       "teamB": "테스트2 / 테스트1",
       "scoreA": 5,
       "scoreB": 5,
       "matchType": "남복",
-      "timestamp": 1768494965978,
-      "date": "2026-01-15T16:36:05.978Z",
-      "pointValue": 5
+      "timestamp": 1768494960000,
+      "date": "2026-01-15T16:36:00.000Z",
+      "pointValue": null
     },
     {
       "title": "친선 경기",
@@ -1021,7 +1021,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-15T16:36:05.983Z",
+  "lastUpdated": "2026-01-15T16:38:40.047Z",
   "version": "1.0",
   "totalMatches": 103
 }
