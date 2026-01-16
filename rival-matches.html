@@ -3439,11 +3439,17 @@
             const removeBtn = e.target.closest('.remove-recent');
             if (removeBtn) {
                 e.stopPropagation();
+                // DOM 재구성 후 드롭다운 닫힘 방지를 위한 플래그 설정
+                isProcessingRecentSearch = true;
                 const index = parseInt(removeBtn.dataset.removeIndex);
                 const searches = getRecentSearches();
                 if (searches[index]) {
                     removeRecentSearch(searches[index]);
                 }
+                // 플래그 리셋
+                setTimeout(() => {
+                    isProcessingRecentSearch = false;
+                }, 100);
                 return;
             }
 
