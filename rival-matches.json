@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "전찬경 / 박성민",
+      "teamB": "채영수 / 박태민",
+      "scoreA": 5,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1768532985045,
+      "date": "2026-01-16T03:09:45.045Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "우수문 / 게스트",
       "teamB": "게스트 / 게스트",
       "scoreA": 6,
@@ -42,6 +53,17 @@
       "matchType": "남복",
       "timestamp": 1768530720000,
       "date": "2026-01-16T02:32:00.000Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "전찬경 / 채영수",
+      "teamB": "박성민 / 박태민",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1768530665294,
+      "date": "2026-01-16T02:31:05.294Z",
       "pointValue": null
     },
     {
@@ -1098,7 +1120,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-16T02:35:45.748Z",
+  "lastUpdated": "2026-01-16T03:09:45.085Z",
   "version": "1.0",
-  "totalMatches": 110
+  "totalMatches": 112
 }
