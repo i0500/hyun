@@ -6,9 +6,9 @@
       "teamB": "김영선 / 게스트",
       "scoreA": 6,
       "scoreB": 2,
-      "matchType": "남복",
-      "timestamp": 1768602331689,
-      "date": "2026-01-16T22:25:31.689Z",
+      "matchType": "혼복",
+      "timestamp": 1768602300000,
+      "date": "2026-01-16T22:25:00.000Z",
       "pointValue": null
     },
     {
@@ -1142,7 +1142,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-16T22:25:31.728Z",
+  "lastUpdated": "2026-01-16T22:25:49.660Z",
   "version": "1.0",
   "totalMatches": 114
 }
