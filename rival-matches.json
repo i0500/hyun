@@ -3,12 +3,12 @@
     {
       "title": "친선 경기",
       "teamA": "조영식 / 서동수",
-      "teamB": "김성준 / 김용광",
+      "teamB": "김성준 / 게스트",
       "scoreA": 3,
       "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1768690832889,
-      "date": "2026-01-17T23:00:32.889Z",
+      "timestamp": 1768690800000,
+      "date": "2026-01-17T23:00:00.000Z",
       "pointValue": null
     },
     {
@@ -1274,7 +1274,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-17T23:00:32.937Z",
+  "lastUpdated": "2026-01-17T23:01:00.438Z",
   "version": "1.0",
   "totalMatches": 126
 }
