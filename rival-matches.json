@@ -4,11 +4,11 @@
       "title": "친선 경기",
       "teamA": "우수문 / 이봉교",
       "teamB": "조영식 / 김석근",
-      "scoreA": 5,
-      "scoreB": 5,
+      "scoreA": 1,
+      "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1768616703475,
-      "date": "2026-01-17T02:25:03.475Z",
+      "timestamp": 1768616700000,
+      "date": "2026-01-17T02:25:00.000Z",
       "pointValue": null
     },
     {
@@ -1252,7 +1252,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-17T02:25:03.512Z",
+  "lastUpdated": "2026-01-17T02:32:12.517Z",
   "version": "1.0",
   "totalMatches": 124
 }
