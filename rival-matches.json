@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "전찬수 / 정혜림",
+      "teamB": "김경희 / 임자현",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "혼복",
+      "timestamp": 1768613307444,
+      "date": "2026-01-17T01:28:27.444Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "조영식 / 김석근",
       "teamB": "김주환 / 이봉교",
       "scoreA": 5,
@@ -1208,7 +1219,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-17T01:26:07.698Z",
+  "lastUpdated": "2026-01-17T01:28:27.480Z",
   "version": "1.0",
-  "totalMatches": 120
+  "totalMatches": 121
 }
