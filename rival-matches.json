@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "임자현 / 전찬수",
+      "teamB": "김경희 / 양승일",
+      "scoreA": 2,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1768699006145,
+      "date": "2026-01-18T01:16:46.145Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "박성민 / 김진영",
       "teamB": "김탄 / 김성준",
       "scoreA": 6,
@@ -1318,7 +1329,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-18T01:16:18.476Z",
+  "lastUpdated": "2026-01-18T01:16:46.168Z",
   "version": "1.0",
-  "totalMatches": 130
+  "totalMatches": 131
 }
