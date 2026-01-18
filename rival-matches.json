@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "이영기 / 서동수",
+      "teamB": "김성준 / 김진영",
+      "scoreA": 6,
+      "scoreB": 0,
+      "matchType": "남복",
+      "timestamp": 1768696112869,
+      "date": "2026-01-18T00:28:32.869Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "김성준 / 김진영",
       "teamB": "서동수 / 조영식",
       "scoreA": 6,
@@ -1285,7 +1296,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-17T23:37:30.522Z",
+  "lastUpdated": "2026-01-18T00:28:32.907Z",
   "version": "1.0",
-  "totalMatches": 127
+  "totalMatches": 128
 }
