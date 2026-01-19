@@ -6,9 +6,9 @@
       "teamB": "채영수 / 김진영",
       "scoreA": 0,
       "scoreB": 6,
-      "matchType": "남복",
-      "timestamp": 1768788132752,
-      "date": "2026-01-19T02:02:12.752Z",
+      "matchType": "혼복",
+      "timestamp": 1768788120000,
+      "date": "2026-01-19T02:02:00.000Z",
       "pointValue": null
     },
     {
@@ -1384,7 +1384,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-19T02:02:12.796Z",
+  "lastUpdated": "2026-01-19T02:02:25.130Z",
   "version": "1.0",
   "totalMatches": 136
 }
