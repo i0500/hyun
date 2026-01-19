@@ -6,9 +6,9 @@
       "teamB": "이윤정 / 우수문",
       "scoreA": 3,
       "scoreB": 6,
-      "matchType": "남복",
-      "timestamp": 1768788183805,
-      "date": "2026-01-19T02:03:03.805Z",
+      "matchType": "혼복",
+      "timestamp": 1768788180000,
+      "date": "2026-01-19T02:03:00.000Z",
       "pointValue": null
     },
     {
@@ -1406,7 +1406,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-19T02:03:03.837Z",
+  "lastUpdated": "2026-01-19T02:38:41.719Z",
   "version": "1.0",
   "totalMatches": 138
 }
