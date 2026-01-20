@@ -2,13 +2,13 @@
   "matches": [
     {
       "title": "친선 경기",
-      "teamA": "전찬수 / 채영수",
+      "teamA": "전찬경 / 채영수",
       "teamB": "우수문 / 게스트",
       "scoreA": 4,
       "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1768877502996,
-      "date": "2026-01-20T02:51:42.996Z",
+      "timestamp": 1768877460000,
+      "date": "2026-01-20T02:51:00.000Z",
       "pointValue": null
     },
     {
@@ -1450,7 +1450,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-20T02:51:43.043Z",
+  "lastUpdated": "2026-01-20T07:45:20.521Z",
   "version": "1.0",
   "totalMatches": 142
 }
