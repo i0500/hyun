@@ -4,11 +4,11 @@
       "title": "친선 경기",
       "teamA": "조영식 / 전찬경",
       "teamB": "채영수 / 게스트",
-      "scoreA": 5,
-      "scoreB": 5,
+      "scoreA": 3,
+      "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1768872889658,
-      "date": "2026-01-20T01:34:49.658Z",
+      "timestamp": 1768872840000,
+      "date": "2026-01-20T01:34:00.000Z",
       "pointValue": null
     },
     {
@@ -1428,7 +1428,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-20T01:34:49.688Z",
+  "lastUpdated": "2026-01-20T01:51:46.592Z",
   "version": "1.0",
   "totalMatches": 140
 }
