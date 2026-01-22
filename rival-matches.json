@@ -2,13 +2,13 @@
   "matches": [
     {
       "title": "친선 경기",
-      "teamA": "전찬수 / 김진영",
+      "teamA": "전찬경 / 김진영",
       "teamB": "강경덕 / 김성준",
       "scoreA": 6,
       "scoreB": 2,
       "matchType": "남복",
-      "timestamp": 1769048894444,
-      "date": "2026-01-22T02:28:14.444Z",
+      "timestamp": 1769048880000,
+      "date": "2026-01-22T02:28:00.000Z",
       "pointValue": null
     },
     {
@@ -1560,7 +1560,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-22T02:28:14.487Z",
+  "lastUpdated": "2026-01-22T02:28:26.363Z",
   "version": "1.0",
   "totalMatches": 152
 }
