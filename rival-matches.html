@@ -4137,7 +4137,7 @@
                             borderColor = '#CD7F32';
                             textColor = '#fff';
                             avatarBg = 'linear-gradient(135deg, #E67E22 0%, #A0522D 100%)';
-                            height = '55px';
+                            height = '65px';
                         }
 
                         const points = players[0].points;
@@ -4268,9 +4268,9 @@
                                     display: flex;
                                     flex-direction: column;
                                     align-items: center;
-                                    justify-content: flex-end;
+                                    justify-content: center;
                                     box-shadow: 0 -4px 20px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
-                                    padding: 8px 0;
+                                    padding: 10px 0;
                                     transform-origin: bottom;
                                     transform: scaleY(0);
                                     animation: podiumGrow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -4351,9 +4351,9 @@
                             ${player.rank}위
                         </div>
                         <div style="flex: 1; min-width: 0;">
-                            <div style="font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 2px;">${player.name}</div>
-                            <div style="font-size: 10px; color: #9ca3af;">
-                                ${player.games}경기 · ${player.wins}승 ${player.losses}패 · ${winRate}%
+                            <div style="font-size: 12px; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                <span style="font-weight: 600;">${player.name}</span>
+                                <span style="color: #9ca3af; margin-left: 6px;">${player.games}경기 · ${player.wins}승 ${player.losses}패 · ${winRate}%</span>
                             </div>
                         </div>
                         <div style="text-align: right;">
@@ -4865,6 +4865,7 @@
                         </div>
                         <div class="total-points">
                             <span>${player.totalPoints}<span class="points-suffix">점</span></span>
+                            <span style="font-size: 11px; color: #888; font-weight: 400;">평균 ${player.totalMatches > 0 ? (player.totalPoints / player.totalMatches).toFixed(1) : '0.0'}점</span>
                             ${(player.pointMatchWins > 0 || player.pointMatchLosses > 0 || player.pointMatchDraws > 0) ? `
                             <span class="point-match-score ${player.pointMatchPoints >= 0 ? 'positive' : 'negative'}">P ${player.pointMatchPoints >= 0 ? '+' : ''}${player.pointMatchPoints}</span>
                             ` : ''}
