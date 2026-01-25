@@ -1,6 +1,17 @@
 {
   "matches": [
     {
+      "title": "공식 경기",
+      "teamA": "임자현 / 이봉교",
+      "teamB": "이재호 / 김경희",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1769313925022,
+      "date": "2026-01-25T04:05:25.022Z",
+      "pointValue": null
+    },
+    {
       "title": "친선 경기",
       "teamA": "양승일 / 박성민",
       "teamB": "전찬경 / 채영수",
@@ -1706,7 +1717,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T04:02:33.463Z",
+  "lastUpdated": "2026-01-25T04:05:25.046Z",
   "version": "1.0",
-  "totalMatches": 165
+  "totalMatches": 166
 }
