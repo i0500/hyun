@@ -12,14 +12,14 @@
       "pointValue": null
     },
     {
-      "title": "친선 경기",
+      "title": "공식 경기",
       "teamA": "신삼용 / 김석근",
       "teamB": "송민곤 / 김성은",
       "scoreA": 1,
       "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1769313527743,
-      "date": "2026-01-25T03:58:47.743Z",
+      "timestamp": 1769227080000,
+      "date": "2026-01-24T03:58:00.000Z",
       "pointValue": null
     },
     {
@@ -1725,7 +1725,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T03:59:28.093Z",
+  "lastUpdated": "2026-01-25T03:59:38.982Z",
   "version": "1.0",
   "totalMatches": 167
 }
