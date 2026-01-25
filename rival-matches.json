@@ -1416,14 +1416,15 @@
       "pointValue": null
     },
     {
-      "title": "라이벌 경기",
+      "title": "친선 경기",
       "teamA": "이윤정 / 김석근",
       "teamB": "이만 / 이영호",
       "scoreA": 5,
       "scoreB": 6,
       "matchType": "혼복",
       "timestamp": 1767575340000,
-      "date": "2026-01-05T01:09:00.000Z"
+      "date": "2026-01-05T01:09:00.000Z",
+      "pointValue": null
     },
     {
       "title": "친선 경기",
@@ -1705,7 +1706,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T04:02:18.820Z",
+  "lastUpdated": "2026-01-25T04:02:33.463Z",
   "version": "1.0",
   "totalMatches": 165
 }
