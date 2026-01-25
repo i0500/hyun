@@ -7,19 +7,8 @@
       "scoreA": 3,
       "scoreB": 6,
       "matchType": "혼복",
-      "timestamp": 1769313974576,
-      "date": "2026-01-25T04:06:14.576Z",
-      "pointValue": null
-    },
-    {
-      "title": "공식 경기",
-      "teamA": "임자현 / 이봉교",
-      "teamB": "이재호 / 김경희",
-      "scoreA": 6,
-      "scoreB": 4,
-      "matchType": "혼복",
-      "timestamp": 1769227500000,
-      "date": "2026-01-24T04:05:00.000Z",
+      "timestamp": 1769227560000,
+      "date": "2026-01-24T04:06:00.000Z",
       "pointValue": null
     },
     {
@@ -75,6 +64,17 @@
       "matchType": "남복",
       "timestamp": 1769300948516,
       "date": "2026-01-25T00:29:08.516Z",
+      "pointValue": null
+    },
+    {
+      "title": "공식 경기",
+      "teamA": "임자현 / 이봉교",
+      "teamB": "이재호 / 김경희",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "혼복",
+      "timestamp": 1769227500000,
+      "date": "2026-01-24T04:05:00.000Z",
       "pointValue": null
     },
     {
@@ -1728,7 +1728,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T04:06:20.102Z",
+  "lastUpdated": "2026-01-25T04:06:35.615Z",
   "version": "1.0",
   "totalMatches": 167
 }
