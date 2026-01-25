@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "공식 경기",
+      "teamA": "정혜림 / 김진영",
+      "teamB": "조영식 / 이윤정",
+      "scoreA": 3,
+      "scoreB": 6,
+      "matchType": "혼복",
+      "timestamp": 1769313504696,
+      "date": "2026-01-25T03:58:24.696Z",
+      "pointValue": null
+    },
+    {
+      "title": "공식 경기",
       "teamA": "임자현 / 이봉교",
       "teamB": "이재호 / 김경희",
       "scoreA": 6,
@@ -1692,7 +1703,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T03:58:07.695Z",
+  "lastUpdated": "2026-01-25T03:58:24.723Z",
   "version": "1.0",
-  "totalMatches": 164
+  "totalMatches": 165
 }
