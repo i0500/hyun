@@ -4,6 +4,17 @@
       "title": "친선 경기",
       "teamA": "우수문 / 임자현",
       "teamB": "양승일 / 김경희",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1769300948516,
+      "date": "2026-01-25T00:29:08.516Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 임자현",
+      "teamB": "양승일 / 김경희",
       "scoreA": 6,
       "scoreB": 4,
       "matchType": "혼복",
@@ -1626,7 +1637,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-24T06:10:49.314Z",
+  "lastUpdated": "2026-01-25T00:29:08.557Z",
   "version": "1.0",
-  "totalMatches": 158
+  "totalMatches": 159
 }
