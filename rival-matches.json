@@ -1,6 +1,17 @@
 {
   "matches": [
     {
+      "title": "친선 경기",
+      "teamA": "신삼용 / 김석근",
+      "teamB": "송민곤 / 김성은",
+      "scoreA": 1,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1769313527743,
+      "date": "2026-01-25T03:58:47.743Z",
+      "pointValue": null
+    },
+    {
       "title": "공식 경기",
       "teamA": "정혜림 / 김진영",
       "teamB": "조영식 / 이윤정",
@@ -1703,7 +1714,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T03:58:24.723Z",
+  "lastUpdated": "2026-01-25T03:58:47.764Z",
   "version": "1.0",
-  "totalMatches": 165
+  "totalMatches": 166
 }
