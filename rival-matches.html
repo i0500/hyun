@@ -196,34 +196,42 @@
             100% { opacity: 0; }
         }
 
-        @keyframes podiumPop {
+        @keyframes podiumGrow {
             0% {
-                opacity: 0;
-                transform: scale(0) translateY(50px);
+                transform: scaleY(0);
+                opacity: 1;
             }
-            50% {
-                transform: scale(1.1) translateY(-10px);
-            }
-            70% {
-                transform: scale(0.95) translateY(5px);
+            80% {
+                transform: scaleY(1.02);
             }
             100% {
+                transform: scaleY(1);
                 opacity: 1;
-                transform: scale(1) translateY(0);
             }
         }
 
-        @keyframes podiumSlideUp {
+        @keyframes podiumContentFade {
             0% {
                 opacity: 0;
-                transform: translateY(100%);
-            }
-            60% {
-                transform: translateY(-5%);
+                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes podiumAvatarFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            60% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
             }
         }
 
@@ -3888,6 +3896,117 @@
             updateOfficialPointsRanking();
         }
 
+        // 플레이어의 공식경기 순위 계산 함수
+        function getPlayerOfficialRank(playerName) {
+            // 공식경기만 필터링
+            const allOfficialMatches = matches.filter(match => {
+                const title = match.title || '';
+                return title.includes('공식') || title.includes('월례대회');
+            });
+
+            // 포인트 계산 헬퍼 함수
+            const calculatePoints = (matchList) => {
+                const playerGamePoints = {};
+
+                matchList.forEach(match => {
+                    const scoreA = parseInt(match.scoreA) || 0;
+                    const scoreB = parseInt(match.scoreB) || 0;
+
+                    // 팀 A 플레이어들
+                    const teamAPlayers = [];
+                    const teamA1 = match.teamA1 || match.teamA || '';
+                    if (teamA1.includes('/')) {
+                        teamA1.split('/').forEach(name => {
+                            const trimmed = name.trim();
+                            if (trimmed) teamAPlayers.push(trimmed);
+                        });
+                    } else if (teamA1.trim()) {
+                        teamAPlayers.push(teamA1.trim());
+                    }
+
+                    // 팀 B 플레이어들
+                    const teamBPlayers = [];
+                    const teamB1 = match.teamB1 || match.teamB || '';
+                    if (teamB1.includes('/')) {
+                        teamB1.split('/').forEach(name => {
+                            const trimmed = name.trim();
+                            if (trimmed) teamBPlayers.push(trimmed);
+                        });
+                    } else if (teamB1.trim()) {
+                        teamBPlayers.push(teamB1.trim());
+                    }
+
+                    // 팀 A 플레이어들에게 scoreA 점수 부여
+                    teamAPlayers.forEach(player => {
+                        if (!playerGamePoints[player]) {
+                            playerGamePoints[player] = { points: 0 };
+                        }
+                        playerGamePoints[player].points += scoreA;
+                    });
+
+                    // 팀 B 플레이어들에게 scoreB 점수 부여
+                    teamBPlayers.forEach(player => {
+                        if (!playerGamePoints[player]) {
+                            playerGamePoints[player] = { points: 0 };
+                        }
+                        playerGamePoints[player].points += scoreB;
+                    });
+                });
+
+                return playerGamePoints;
+            };
+
+            // 순위 계산 헬퍼 함수
+            const getRankInfo = (playerGamePoints, targetPlayer) => {
+                const sortedPlayers = Object.entries(playerGamePoints)
+                    .map(([name, stats]) => ({ name, ...stats }))
+                    .sort((a, b) => b.points - a.points);
+
+                if (sortedPlayers.length === 0) {
+                    return { rank: null, totalPlayers: 0, points: 0 };
+                }
+
+                const uniquePoints = [...new Set(sortedPlayers.map(p => p.points))].sort((a, b) => b - a);
+                const playerData = sortedPlayers.find(p => p.name === targetPlayer);
+
+                if (!playerData) {
+                    return { rank: null, totalPlayers: sortedPlayers.length, points: 0 };
+                }
+
+                return {
+                    rank: uniquePoints.indexOf(playerData.points) + 1,
+                    totalPlayers: sortedPlayers.length,
+                    points: playerData.points
+                };
+            };
+
+            // 전체 순위 계산
+            const allPoints = calculatePoints(allOfficialMatches);
+            const overallRank = getRankInfo(allPoints, playerName);
+
+            // 이달 순위 계산
+            const now = new Date();
+            const thisMonth = now.getMonth();
+            const thisYear = now.getFullYear();
+            const thisMonthMatches = allOfficialMatches.filter(match => {
+                const matchDate = new Date(match.date || match.timestamp);
+                return matchDate.getMonth() === thisMonth && matchDate.getFullYear() === thisYear;
+            });
+            const monthPoints = calculatePoints(thisMonthMatches);
+            const monthlyRank = getRankInfo(monthPoints, playerName);
+
+            return {
+                // 이달 순위
+                rank: monthlyRank.rank,
+                totalPlayers: monthlyRank.totalPlayers,
+                points: monthlyRank.points,
+                // 전체 순위
+                overallRank: overallRank.rank,
+                overallTotalPlayers: overallRank.totalPlayers,
+                overallPoints: overallRank.points
+            };
+        }
+
         // 공식게임 포인트 랭킹 업데이트
         function updateOfficialPointsRanking() {
             const container = document.getElementById('officialPointsContainer');
@@ -4136,11 +4255,8 @@
                                 flex-direction: column;
                                 align-items: center;
                                 flex: 1;
-                                opacity: 0;
-                                animation: podiumPop 0.6s ease-out forwards;
-                                animation-delay: ${animDelay}s;
                             ">
-                                <div style="${gridStyle} margin-bottom: 8px; width: 100%;">
+                                <div style="${gridStyle} margin-bottom: 8px; width: 100%; opacity: 0; animation: podiumAvatarFade 0.5s ease-out forwards; animation-delay: ${animDelay + 0.4}s;">
                                     ${namesHtml}
                                 </div>
                                 <div style="
@@ -4152,16 +4268,19 @@
                                     display: flex;
                                     flex-direction: column;
                                     align-items: center;
-                                    justify-content: center;
+                                    justify-content: flex-end;
                                     box-shadow: 0 -4px 20px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
                                     padding: 8px 0;
-                                    animation: podiumSlideUp 0.5s ease-out forwards;
-                                    animation-delay: ${animDelay + 0.2}s;
-                                    opacity: 0;
+                                    transform-origin: bottom;
+                                    transform: scaleY(0);
+                                    animation: podiumGrow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+                                    animation-delay: ${animDelay}s;
                                 ">
-                                    <div style="font-size: ${rank === 1 ? '20px' : '16px'}; font-weight: 900; color: ${textColor}; text-shadow: ${rank === 3 ? '0 1px 2px rgba(0,0,0,0.3)' : 'none'};">${rankEmoji} ${rank}위</div>
-                                    <div style="font-size: ${rank === 1 ? '18px' : '14px'}; font-weight: 800; margin-top: 3px; color: ${textColor};">
-                                        <span style="color: ${rank === 1 ? '#7C4A00' : rank === 2 ? '#2d3748' : '#FFF8DC'}; text-shadow: ${rank === 3 ? '0 1px 2px rgba(0,0,0,0.4)' : 'none'};">${points}P</span>${playerCountText}
+                                    <div style="opacity: 0; animation: podiumContentFade 0.4s ease-out forwards; animation-delay: ${animDelay + 0.5}s;">
+                                        <div style="font-size: ${rank === 1 ? '20px' : '16px'}; font-weight: 900; color: ${textColor}; text-shadow: ${rank === 3 ? '0 1px 2px rgba(0,0,0,0.3)' : 'none'}; text-align: center;">${rankEmoji} ${rank}위</div>
+                                        <div style="font-size: ${rank === 1 ? '18px' : '14px'}; font-weight: 800; margin-top: 3px; color: ${textColor}; text-align: center;">
+                                            <span style="color: ${rank === 1 ? '#7C4A00' : rank === 2 ? '#2d3748' : '#FFF8DC'}; text-shadow: ${rank === 3 ? '0 1px 2px rgba(0,0,0,0.4)' : 'none'};">${points}P</span>${playerCountText}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -4227,7 +4346,7 @@
                 const winRate = player.games > 0 ? ((player.wins / player.games) * 100).toFixed(0) : 0;
 
                 html += `
-                    <div class="ranking-item" style="background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+                    <div class="ranking-item" onclick="showPlayerStatsModal('${player.name}')" style="background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f9fafb'; this.style.borderColor='#d1d5db';" onmouseout="this.style.background='#fff'; this.style.borderColor='#e5e7eb';">
                         <div style="min-width: 28px; text-align: center; font-size: 13px; font-weight: 700; color: #6b7280;">
                             ${player.rank}위
                         </div>
@@ -6352,7 +6471,8 @@
             document.body.style.overflow = 'hidden';
             
             const playerStats = calculateAdvancedPlayerStats(playerName);
-            
+            const officialRankInfo = getPlayerOfficialRank(playerName);
+
             const modalHtml = `
                 <div id="playerStatsModal" class="modal" style="
                     display: block;
@@ -6536,6 +6656,32 @@
                                         <div>• 승률: <strong style="color: #059669;">${((playerStats.officialWins / playerStats.officialMatches) * 100).toFixed(0)}%</strong></div>
                                         <div>• 누적 포인트: <strong style="color: #b45309;">${playerStats.officialPoints}P</strong></div>
                                     </div>
+                                    ${(officialRankInfo.overallRank || officialRankInfo.rank) ? `
+                                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #d97706;">
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px;">
+                                            ${officialRankInfo.overallRank ? `
+                                            <div style="display: flex; align-items: center; gap: 4px;">
+                                                <span>• 전체 순위:</span>
+                                                <strong style="color: #92400e; font-size: 14px;">
+                                                    ${officialRankInfo.overallRank === 1 ? '🥇' : officialRankInfo.overallRank === 2 ? '🥈' : officialRankInfo.overallRank === 3 ? '🥉' : ''}
+                                                    ${officialRankInfo.overallRank}위
+                                                </strong>
+                                                <span style="font-size: 10px; color: #a16207;">/${officialRankInfo.overallTotalPlayers}명</span>
+                                            </div>
+                                            ` : '<div></div>'}
+                                            ${officialRankInfo.rank ? `
+                                            <div style="display: flex; align-items: center; gap: 4px;">
+                                                <span>• 이달 순위:</span>
+                                                <strong style="color: #92400e; font-size: 14px;">
+                                                    ${officialRankInfo.rank === 1 ? '🥇' : officialRankInfo.rank === 2 ? '🥈' : officialRankInfo.rank === 3 ? '🥉' : ''}
+                                                    ${officialRankInfo.rank}위
+                                                </strong>
+                                                <span style="font-size: 10px; color: #a16207;">/${officialRankInfo.totalPlayers}명</span>
+                                            </div>
+                                            ` : '<div></div>'}
+                                        </div>
+                                    </div>
+                                    ` : ''}
                                 </div>
                                 ` : `
                                 <div style="font-size: 13px; color: #9ca3af; text-align: center; padding: 8px 0;">
