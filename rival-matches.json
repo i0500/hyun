@@ -4,6 +4,17 @@
       "title": "친선 경기",
       "teamA": "양승일 / 박성민",
       "teamB": "전찬경 / 채영수",
+      "scoreA": 6,
+      "scoreB": 2,
+      "matchType": "남복",
+      "timestamp": 1769309422587,
+      "date": "2026-01-25T02:50:22.587Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "양승일 / 박성민",
+      "teamB": "전찬경 / 채영수",
       "scoreA": 3,
       "scoreB": 6,
       "matchType": "남복",
@@ -1670,7 +1681,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T02:22:30.169Z",
+  "lastUpdated": "2026-01-25T02:50:22.628Z",
   "version": "1.0",
-  "totalMatches": 162
+  "totalMatches": 163
 }
