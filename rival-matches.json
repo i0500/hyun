@@ -40,8 +40,8 @@
       "scoreA": 6,
       "scoreB": 4,
       "matchType": "혼복",
-      "timestamp": 1769313487669,
-      "date": "2026-01-25T03:58:07.669Z",
+      "timestamp": 1769227080000,
+      "date": "2026-01-24T03:58:00.000Z",
       "pointValue": null
     },
     {
@@ -1725,7 +1725,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-25T03:59:38.982Z",
+  "lastUpdated": "2026-01-25T03:59:48.113Z",
   "version": "1.0",
   "totalMatches": 167
 }
