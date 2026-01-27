@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "이재호 / 채영수",
+      "teamB": "강경미 / 게스트",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "혼복",
+      "timestamp": 1769490492250,
+      "date": "2026-01-27T05:08:12.250Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "이영호 / 게스트",
       "teamB": "이재호 / 채영수",
       "scoreA": 6,
@@ -1882,7 +1893,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-27T02:35:20.179Z",
+  "lastUpdated": "2026-01-27T05:08:12.303Z",
   "version": "1.0",
-  "totalMatches": 181
+  "totalMatches": 182
 }
