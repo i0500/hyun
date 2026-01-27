@@ -4,11 +4,11 @@
       "title": "친선 경기",
       "teamA": "김주환 / 전찬수",
       "teamB": "우수문 / 게스트",
-      "scoreA": 0,
+      "scoreA": 6,
       "scoreB": 2,
       "matchType": "남복",
-      "timestamp": 1769477244078,
-      "date": "2026-01-27T01:27:24.078Z",
+      "timestamp": 1769477220000,
+      "date": "2026-01-27T01:27:00.000Z",
       "pointValue": null
     },
     {
@@ -1838,7 +1838,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-27T01:27:24.118Z",
+  "lastUpdated": "2026-01-27T01:27:36.354Z",
   "version": "1.0",
   "totalMatches": 177
 }
