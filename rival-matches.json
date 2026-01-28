@@ -6,9 +6,9 @@
       "teamB": "이재호 / 김경희",
       "scoreA": 5,
       "scoreB": 5,
-      "matchType": "여복",
-      "timestamp": 1769567477378,
-      "date": "2026-01-28T02:31:17.378Z",
+      "matchType": "혼복",
+      "timestamp": 1769567460000,
+      "date": "2026-01-28T02:31:00.000Z",
       "pointValue": null
     },
     {
@@ -1981,7 +1981,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-01-28T02:31:17.421Z",
+  "lastUpdated": "2026-01-28T02:31:24.852Z",
   "version": "1.0",
   "totalMatches": 190
 }
