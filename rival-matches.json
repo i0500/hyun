@@ -7,8 +7,8 @@
       "scoreA": 1,
       "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1769910551777,
-      "date": "2026-02-01T01:49:11.777Z",
+      "timestamp": 1769908500000,
+      "date": "2026-02-01T01:15:00.000Z",
       "pointValue": null
     },
     {
@@ -2190,7 +2190,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-01T01:49:11.812Z",
+  "lastUpdated": "2026-02-01T01:49:30.647Z",
   "version": "1.0",
   "totalMatches": 209
 }
