@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "조영식 / 우수문",
+      "teamB": "김성은 / 김성준",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "남복",
+      "timestamp": 1769991679334,
+      "date": "2026-02-02T00:21:19.334Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "조영식 / 게스트",
       "teamB": "우수문 / 게스트",
       "scoreA": 3,
@@ -2223,7 +2234,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-02T00:19:42.875Z",
+  "lastUpdated": "2026-02-02T00:21:19.360Z",
   "version": "1.0",
-  "totalMatches": 212
+  "totalMatches": 213
 }
