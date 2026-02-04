@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "김성준 / 채영수",
+      "teamB": "이재호 / 전찬수",
+      "scoreA": 3,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1770169689985,
+      "date": "2026-02-04T01:48:09.985Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "김성준 / 김주환",
       "teamB": "양대승 / 게스트",
       "scoreA": 6,
@@ -2377,7 +2388,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-04T00:47:09.037Z",
+  "lastUpdated": "2026-02-04T01:48:10.020Z",
   "version": "1.0",
-  "totalMatches": 226
+  "totalMatches": 227
 }
