@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "우수문 / 차장환",
+      "teamB": "김원국 / 김주환",
+      "scoreA": 6,
+      "scoreB": 5,
+      "matchType": "남복",
+      "timestamp": 1770244980604,
+      "date": "2026-02-04T22:43:00.604Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "우수문 / 게스트",
       "teamB": "김원국 / 차장환",
       "scoreA": 6,
@@ -2443,7 +2454,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-04T22:42:25.153Z",
+  "lastUpdated": "2026-02-04T22:43:00.650Z",
   "version": "1.0",
-  "totalMatches": 232
+  "totalMatches": 233
 }
