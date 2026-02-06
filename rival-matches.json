@@ -3,6 +3,17 @@
     {
       "title": "친선 경기",
       "teamA": "우수문 / 김경희",
+      "teamB": "이영호 / 김석근",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "혼복",
+      "timestamp": 1770348330138,
+      "date": "2026-02-06T03:25:30.138Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 김경희",
       "teamB": "이윤정 / 이영호",
       "scoreA": 6,
       "scoreB": 3,
@@ -2575,7 +2586,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-06T01:53:13.031Z",
+  "lastUpdated": "2026-02-06T03:25:30.205Z",
   "version": "1.0",
-  "totalMatches": 244
+  "totalMatches": 245
 }
