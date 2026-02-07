@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "조영식 / 김경희",
+      "teamB": "이봉교 / 채영수",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "혼복",
+      "timestamp": 1770441228597,
+      "date": "2026-02-07T05:13:48.597Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "김주환 / 우수문",
       "teamB": "김영선 / 송민곤",
       "scoreA": 0,
@@ -2630,7 +2641,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-06T23:53:01.329Z",
+  "lastUpdated": "2026-02-07T05:13:48.635Z",
   "version": "1.0",
-  "totalMatches": 249
+  "totalMatches": 250
 }
