@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "전찬수 / 신삼용",
+      "teamB": "박성민 / 성기수",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1771119641438,
+      "date": "2026-02-15T01:40:41.438Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "박성민 / 조영식",
       "teamB": "양승일 / 김경희",
       "scoreA": 5,
@@ -2729,7 +2740,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-15T00:44:10.069Z",
+  "lastUpdated": "2026-02-15T01:40:41.486Z",
   "version": "1.0",
-  "totalMatches": 258
+  "totalMatches": 259
 }
