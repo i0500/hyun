@@ -6,9 +6,9 @@
       "teamB": "조영식 / 김주환",
       "scoreA": 6,
       "scoreB": 4,
-      "matchType": "남복",
-      "timestamp": 1771201165602,
-      "date": "2026-02-16T00:19:25.602Z",
+      "matchType": "혼복",
+      "timestamp": 1771201140000,
+      "date": "2026-02-16T00:19:00.000Z",
       "pointValue": null
     },
     {
@@ -2784,7 +2784,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-16T00:19:25.634Z",
+  "lastUpdated": "2026-02-16T00:20:21.598Z",
   "version": "1.0",
   "totalMatches": 263
 }
