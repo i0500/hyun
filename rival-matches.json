@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "김경희 / 김영선",
+      "teamB": "신삼용 / 이봉교",
+      "scoreA": 6,
+      "scoreB": 0,
+      "matchType": "남복",
+      "timestamp": 1771206691435,
+      "date": "2026-02-16T01:51:31.435Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "양승일 / 이봉교",
       "teamB": "김경희 / 김영선",
       "scoreA": 5,
@@ -2806,7 +2817,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-16T01:21:57.242Z",
+  "lastUpdated": "2026-02-16T01:51:31.491Z",
   "version": "1.0",
-  "totalMatches": 265
+  "totalMatches": 266
 }
