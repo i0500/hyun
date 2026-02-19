@@ -5,10 +5,10 @@
       "teamA": "우수문 / 게스트",
       "teamB": "신명식 / 김경태",
       "scoreA": 4,
-      "scoreB": 4,
+      "scoreB": 6,
       "matchType": "남복",
-      "timestamp": 1771463768749,
-      "date": "2026-02-19T01:16:08.749Z",
+      "timestamp": 1771463760000,
+      "date": "2026-02-19T01:16:00.000Z",
       "pointValue": null
     },
     {
@@ -2916,7 +2916,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-19T01:16:08.793Z",
+  "lastUpdated": "2026-02-19T01:16:17.725Z",
   "version": "1.0",
   "totalMatches": 275
 }
