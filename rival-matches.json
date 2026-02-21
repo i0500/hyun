@@ -6,9 +6,9 @@
       "teamB": "양승일 / 김경희",
       "scoreA": 6,
       "scoreB": 4,
-      "matchType": "남복",
-      "timestamp": 1771634015754,
-      "date": "2026-02-21T00:33:35.754Z",
+      "matchType": "혼복",
+      "timestamp": 1771633980000,
+      "date": "2026-02-21T00:33:00.000Z",
       "pointValue": null
     },
     {
@@ -2960,7 +2960,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-21T00:33:35.804Z",
+  "lastUpdated": "2026-02-21T01:03:06.218Z",
   "version": "1.0",
   "totalMatches": 279
 }
