@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "전찬수 / 우수문",
+      "teamB": "양승일 / 전찬경",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1771638977361,
+      "date": "2026-02-21T01:56:17.361Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "우수문 / 정혜림",
       "teamB": "김경희 / 임자현",
       "scoreA": 4,
@@ -13,17 +24,6 @@
     },
     {
       "title": "친선 경기",
-      "teamA": "우수문 / 임자현",
-      "teamB": "양승일 / 김경희",
-      "scoreA": 6,
-      "scoreB": 4,
-      "matchType": "혼복",
-      "timestamp": 1771633980000,
-      "date": "2026-02-21T00:33:00.000Z",
-      "pointValue": null
-    },
-    {
-      "title": "친선 경기",
       "teamA": "우수문 / 김탄",
       "teamB": "박태민 / 게스트",
       "scoreA": 6,
@@ -31,6 +31,17 @@
       "matchType": "남복",
       "timestamp": 1771633987575,
       "date": "2026-02-21T00:33:07.575Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 임자현",
+      "teamB": "양승일 / 김경희",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "혼복",
+      "timestamp": 1771633980000,
+      "date": "2026-02-21T00:33:00.000Z",
       "pointValue": null
     },
     {
@@ -2971,7 +2982,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-21T01:03:38.695Z",
+  "lastUpdated": "2026-02-21T01:56:17.426Z",
   "version": "1.0",
-  "totalMatches": 280
+  "totalMatches": 281
 }
