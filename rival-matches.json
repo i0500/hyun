@@ -4,6 +4,17 @@
       "title": "친선 경기",
       "teamA": "전찬수 / 김경희",
       "teamB": "채영수 / 임자현",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1771726697750,
+      "date": "2026-02-22T02:18:17.750Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "전찬수 / 김경희",
+      "teamB": "채영수 / 임자현",
       "scoreA": 6,
       "scoreB": 4,
       "matchType": "남복",
@@ -3059,7 +3070,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-22T02:17:33.406Z",
+  "lastUpdated": "2026-02-22T02:18:19.946Z",
   "version": "1.0",
-  "totalMatches": 288
+  "totalMatches": 289
 }
