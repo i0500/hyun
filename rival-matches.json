@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "박대우 / 우수문",
+      "teamB": "양승일 / 채영수",
+      "scoreA": 6,
+      "scoreB": 3,
+      "matchType": "남복",
+      "timestamp": 1771725232454,
+      "date": "2026-02-22T01:53:52.454Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "전찬수 / 우수문",
       "teamB": "박대우 / 양승일",
       "scoreA": 6,
@@ -3037,7 +3048,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-22T01:53:23.346Z",
+  "lastUpdated": "2026-02-22T01:53:52.497Z",
   "version": "1.0",
-  "totalMatches": 286
+  "totalMatches": 287
 }
