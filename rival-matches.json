@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "우수문 / 여게스트",
+      "teamB": "게스트 / 게스트",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "혼복",
+      "timestamp": 1771973190431,
+      "date": "2026-02-24T22:46:30.431Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "우수문 / 정혜희",
       "teamB": "채영수 / 게스트",
       "scoreA": 5,
@@ -3125,7 +3136,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-24T04:25:39.174Z",
+  "lastUpdated": "2026-02-24T22:46:30.492Z",
   "version": "1.0",
-  "totalMatches": 294
+  "totalMatches": 295
 }
