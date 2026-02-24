@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "우수문 / 김진영",
+      "teamB": "김주환 / 박성민",
+      "scoreA": 3,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1771896361962,
+      "date": "2026-02-24T01:26:01.962Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "전찬수 / 김경희",
       "teamB": "채영수 / 임자현",
       "scoreA": 6,
@@ -3070,7 +3081,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-22T02:18:29.232Z",
+  "lastUpdated": "2026-02-24T01:26:02.027Z",
   "version": "1.0",
-  "totalMatches": 289
+  "totalMatches": 290
 }
