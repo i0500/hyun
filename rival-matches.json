@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "우수문 / 정혜희",
+      "teamB": "채영수 / 게스트",
+      "scoreA": 5,
+      "scoreB": 5,
+      "matchType": "혼복",
+      "timestamp": 1771907139103,
+      "date": "2026-02-24T04:25:39.103Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "김주환 / 우수문",
       "teamB": "박성민 / 이만",
       "scoreA": 6,
@@ -3114,7 +3125,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-24T01:27:14.238Z",
+  "lastUpdated": "2026-02-24T04:25:39.174Z",
   "version": "1.0",
-  "totalMatches": 293
+  "totalMatches": 294
 }
