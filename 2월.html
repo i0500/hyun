@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>현클럽 · 1월 리포트</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+    
+    <style id="inline-styles">
+/* 인라인 CSS (file:// 프로토콜 지원) */
+:root{--bg-primary:#fff;--bg-secondary:#fafafa;--bg-tertiary:#f5f5f5;--bg-elevated:#fff;--text-primary:#111;--text-secondary:#404040;--text-tertiary:#6b6b6b;--border-primary:#e5e5e5;--border-secondary:#f0f0f0;--accent:#0066ff;--accent-soft:rgba(0,102,255,.1);--success:#00c853;--success-soft:rgba(0,200,83,.1);--danger:#ff3b30;--danger-soft:rgba(255,59,48,.1);--space-xs:4px;--space-sm:8px;--space-md:12px;--space-lg:16px;--space-xl:24px;--space-2xl:32px;--space-3xl:48px;--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:20px;--radius-full:9999px;--shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow-md:0 2px 8px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12)}*,::after,::before{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;-webkit-font-smoothing:antialiased}body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:.9375rem;line-height:1.6;color:var(--text-primary);background:var(--bg-secondary);font-weight:400}.app{min-height:100vh;max-width:540px;margin:0 auto;background:var(--bg-primary)}@media(min-width:768px){.app{max-width:100%}}@media(min-width:1024px){.app{max-width:1200px;margin:var(--space-xl) auto;border-radius:var(--radius-xl);border:1px solid var(--border-primary);box-shadow:var(--shadow-lg)}}.header{padding:var(--space-lg) var(--space-xl);border-bottom:1px solid var(--border-primary);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(255,255,255,.8)}.header-inner{display:flex;align-items:center;justify-content:space-between}.header-title{font-size:1.125rem;font-weight:600}.header-badge{display:inline-flex;padding:var(--space-xs) var(--space-sm);background:var(--bg-tertiary);border-radius:var(--radius-full);font-size:.75rem;font-weight:500;color:var(--text-secondary);margin-left:var(--space-sm)}.header-actions{display:flex;gap:var(--space-sm)}.btn-ghost{width:36px;height:36px;border:none;background:0 0;border-radius:var(--radius-md);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}.btn-ghost svg{width:18px;height:18px}.month-select{height:36px;padding:0 var(--space-md);border:1px solid var(--border-primary);border-radius:var(--radius-md);background:var(--bg-primary);font-size:.875rem;font-weight:500}.nav{display:flex;padding:0 var(--space-lg);border-bottom:1px solid var(--border-primary);background:var(--bg-primary);position:sticky;top:56px;z-index:90}.nav-item{padding:var(--space-md) var(--space-lg);border:none;background:0 0;font-size:.8125rem;font-weight:500;color:var(--text-tertiary);cursor:pointer;position:relative}.nav-item.active{color:var(--text-primary)}.nav-item.active::after{content:'';position:absolute;bottom:-1px;left:var(--space-lg);right:var(--space-lg);height:2px;background:var(--text-primary)}.main{padding:var(--space-xl)}@media(min-width:768px){.main{padding:var(--space-2xl)}}.section{margin-bottom:var(--space-3xl);padding-bottom:var(--space-2xl);border-bottom:1px solid var(--border-primary)}.section:last-of-type{border-bottom:none}.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-lg)}.section-title-wrap{display:flex;align-items:baseline;gap:var(--space-sm)}.section-num{font-size:1.5rem;font-weight:200;color:var(--text-tertiary);font-feature-settings:'tnum';line-height:1}.section-title{font-size:1.125rem;font-weight:700;color:var(--text-primary)}.month-badge{font-size:.6875rem;font-weight:500;color:var(--text-secondary);background:var(--bg-tertiary);padding:3px 8px;border-radius:var(--radius-sm);margin-left:4px}.section-action{font-size:.75rem;color:var(--text-tertiary);font-weight:500}.capacity-badge{font-size:.75rem;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);color:rgba(255,255,255,.8);padding:6px 12px;border-radius:var(--radius-full)}.capacity-badge strong{font-weight:700;color:#fff}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-sm)}@media(min-width:768px){.metrics{grid-template-columns:repeat(4,1fr)}}.metric{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-md) var(--space-lg);display:flex;align-items:center;justify-content:space-between;min-height:64px}.metric-label{font-size:.8125rem;font-weight:500;color:var(--text-secondary)}.metric-value{font-size:1.5rem;font-weight:700;font-feature-settings:'tnum';color:var(--text-primary)}.metric-unit{font-size:.875rem;color:var(--text-tertiary);margin-left:2px}.rate-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-top:var(--space-lg)}.rate-card{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-md)}.rate-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-sm)}.rate-label{font-size:.8125rem;font-weight:500;color:var(--text-secondary)}.rate-value{font-size:1.125rem;font-weight:700;color:var(--text-primary)}.rate-bar{height:8px;background:var(--bg-tertiary);border-radius:var(--radius-full);display:flex;overflow:hidden;margin-bottom:var(--space-sm)}.rate-bar-segment{height:100%}.rate-bar-segment.active{background:linear-gradient(90deg,#3b82f6,#60a5fa)}.rate-bar-segment.inactive{background:linear-gradient(90deg,#6b7280,#9ca3af)}.rate-bar-segment.paid{background:linear-gradient(90deg,#059669,#34d399)}.rate-bar-segment.unpaid{background:linear-gradient(90deg,#9ca3af,#d1d5db)}.rate-legend{display:flex;gap:var(--space-md);flex-wrap:wrap}.rate-legend-item{display:flex;align-items:center;gap:4px;font-size:.75rem;color:var(--text-tertiary)}.rate-legend-item .dot{width:6px;height:6px;border-radius:var(--radius-full)}.rate-legend-item .dot.active{background:#3b82f6}.rate-legend-item .dot.inactive{background:#6b7280}.rate-legend-item .dot.paid{background:#059669}.rate-legend-item .dot.unpaid{background:#9ca3af}.age-section{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-lg);margin-top:var(--space-md)}.age-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-sm)}.age-section-title{font-size:.875rem;font-weight:600;color:var(--text-primary);margin:0;line-height:1.4}.avg-age-badge{display:inline-flex;align-items:center;gap:2px;font-size:.6875rem;color:var(--text-tertiary);background:var(--bg-tertiary);padding:3px 8px;border-radius:var(--radius-full)}.avg-age-badge strong{font-weight:700;color:var(--text-primary);font-size:.75rem}.age-legend{display:flex;align-items:center;gap:var(--space-sm)}.legend-male{color:#3b82f6;font-size:.75rem;font-weight:600}.legend-female{color:#ec4899;font-size:.75rem;font-weight:600}.age-pyramid{display:flex;flex-direction:column;gap:6px}.pyramid-row{display:grid;grid-template-columns:28px 1fr 44px 1fr 28px;gap:4px;align-items:center}.pyramid-label{text-align:center;font-size:.75rem;font-weight:600;color:var(--text-secondary)}.pyramid-count{font-size:.75rem;font-weight:600}.pyramid-count.male{text-align:right;color:#3b82f6}.pyramid-count.female{text-align:left;color:#ec4899}.pyramid-bar-left,.pyramid-bar-right{height:10px;background:var(--bg-tertiary);border-radius:var(--radius-full);overflow:hidden}@media(min-width:768px){.pyramid-bar-left,.pyramid-bar-right{height:20px}}.pyramid-bar-left{display:flex;justify-content:flex-end}.pyramid-bar-right{display:flex;justify-content:flex-start}.pyramid-fill{height:100%}.pyramid-fill.male{background:linear-gradient(90deg,#60a5fa,#3b82f6);border-radius:var(--radius-full)}.pyramid-fill.female{background:linear-gradient(90deg,#ec4899,#f472b6);border-radius:var(--radius-full)}.activity-grid{display:grid;grid-template-columns:1fr;gap:var(--space-md)}@media(min-width:768px){.activity-grid{grid-template-columns:repeat(3,1fr)}}.activity-card{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);overflow:hidden}.activity-card-header{display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-md) var(--space-lg);background:var(--bg-secondary);border-bottom:1px solid var(--border-secondary)}.activity-card-title{font-size:.875rem;font-weight:600;color:var(--text-primary)}.activity-card-body{padding:var(--space-md) var(--space-lg);min-height:80px}.activity-card-body .activity-event{padding:var(--space-sm) 0;border-bottom:1px solid var(--border-secondary)}.activity-card-body .activity-event:last-child{border-bottom:none}.activity-event-header{display:flex;align-items:baseline;gap:var(--space-sm);flex-wrap:wrap}.activity-event-date{font-size:.75rem;font-weight:600;color:var(--text-tertiary);min-width:36px}.activity-event-name{font-size:.875rem;font-weight:500;color:var(--text-primary)}.activity-event-meta{font-size:.75rem;color:var(--text-tertiary)}.activity-event-note{font-size:.8125rem;color:var(--text-secondary);margin-top:4px;line-height:1.4}.schedule-list{display:flex;flex-direction:column;gap:var(--space-sm)}.schedule-item{display:flex;gap:var(--space-md);padding:var(--space-md);background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg)}.schedule-date{min-width:50px;text-align:center;white-space:nowrap}.schedule-date.undetermined{display:flex;align-items:center;justify-content:center}.schedule-date.undetermined .schedule-day{font-size:.75rem;color:var(--text-tertiary)}.schedule-date.undetermined .schedule-weekday{display:none}.schedule-day{font-size:1.25rem;font-weight:600;line-height:1}.schedule-weekday{font-size:.75rem;color:var(--text-tertiary);margin-top:4px}.schedule-line{width:2px;background:var(--border-primary);border-radius:var(--radius-full)}.schedule-line.external{background:#fcd34d}.schedule-info{flex:1}.schedule-title{font-size:.875rem;font-weight:500}.schedule-location{font-size:.75rem;color:var(--text-tertiary);margin-top:2px}.finance-hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);border-radius:var(--radius-xl);padding:var(--space-xl);color:#fff;margin-bottom:var(--space-lg)}.finance-hero.year{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%)}.finance-hero-header{display:flex;justify-content:space-between;align-items:center}.finance-hero-label{font-size:.875rem;opacity:.9;letter-spacing:.02em}.finance-hero-balance{display:flex;align-items:baseline;gap:4px}.finance-hero-value{font-size:2rem;font-weight:700;letter-spacing:-.02em;font-feature-settings:'tnum'}.finance-hero-unit{font-size:.875rem;font-weight:400;opacity:.8}.finance-hero-row{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-md);margin-top:var(--space-xl);padding-top:var(--space-lg);border-top:1px solid rgba(255,255,255,.15)}.finance-hero-stat{display:flex;align-items:center;justify-content:center;gap:var(--space-sm)}.finance-hero-stat-label{font-size:.75rem;opacity:.8;display:flex;align-items:center;gap:4px}.stat-icon-circle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%}.stat-icon-circle svg{width:12px;height:12px}.stat-icon-circle.income{background:rgba(74,222,128,.2);color:#4ade80}.stat-icon-circle.expense{background:rgba(248,113,113,.2);color:#f87171}.finance-hero-stat-value{font-size:1rem;font-weight:600;font-feature-settings:'tnum';white-space:nowrap}.finance-hero-stat-value.income{color:#4ade80}.finance-hero-stat-value.expense{color:#f87171}.fin-year-card{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-lg);margin-bottom:var(--space-lg)}.fin-year-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-md)}.fin-year-title{font-size:.8125rem;font-weight:600;color:var(--text-secondary)}.fin-year-balance{display:flex;align-items:baseline;gap:var(--space-xs)}.fin-year-balance-label{font-size:.75rem;color:var(--text-tertiary)}.fin-year-balance-value{font-size:1.125rem;font-weight:700;color:var(--text-primary);font-feature-settings:'tnum'}.fin-year-balance-unit{font-size:.75rem;color:var(--text-tertiary)}.fin-year-bar{height:6px;background:var(--bg-tertiary);border-radius:var(--radius-full);display:flex;overflow:hidden;margin-bottom:var(--space-md)}.fin-year-bar-income{background:#86efac}.fin-year-bar-expense{background:#fca5a5}.fin-year-stats{display:flex;justify-content:space-between}.fin-year-stat{display:flex;align-items:center;gap:var(--space-xs)}.fin-year-dot{width:8px;height:8px;border-radius:var(--radius-full)}.fin-year-dot.income{background:#86efac}.fin-year-dot.expense{background:#fca5a5}.fin-year-label{font-size:.75rem;color:var(--text-tertiary)}.fin-year-value{font-size:.875rem;font-weight:600;color:var(--text-primary);font-feature-settings:'tnum'}.fin-year-unit{font-size:.75rem;color:var(--text-tertiary)}.fin-tx-section{margin-top:var(--space-lg)}.fin-tx-header{font-size:.9375rem;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-sm)}.fin-tx-section .tx-list{}.activity-empty,.schedule-empty,.tx-empty{padding:var(--space-xl) var(--space-lg);text-align:center;color:var(--text-tertiary);font-size:.875rem}.tx-list{display:flex;flex-direction:column;gap:var(--space-md)}.tx-block{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);overflow:hidden}.tx-header{display:flex;justify-content:space-between;align-items:center;padding:var(--space-md) var(--space-lg);background:var(--bg-tertiary);font-size:.875rem;font-weight:600;color:var(--text-primary);border-bottom:1px solid var(--border-primary)}.tx-header.income{background:rgba(74,222,128,.1);color:#16a34a}.tx-header.expense{background:rgba(248,113,113,.1);color:#dc2626}.tx-header-total{font-weight:700;font-feature-settings:'tnum'}.tx-item{padding:var(--space-md) var(--space-md) var(--space-md) var(--space-lg);border-bottom:1px solid var(--border-secondary)}.tx-item:last-child{border-bottom:none}.tx-info{width:100%}.tx-row{display:flex;align-items:baseline;gap:var(--space-xs)}.tx-title{font-size:.875rem;font-weight:500;color:var(--text-secondary)}.tx-detail{font-size:.75rem;color:var(--text-tertiary);margin-top:4px;line-height:1.4}.tx-amount{font-size:.875rem;font-weight:600;font-feature-settings:'tnum';flex-shrink:0;white-space:nowrap;margin-left:auto}.tx-amount.income{color:#22c55e}.tx-amount.expense{color:#f87171}.tx-group-first{border-top:1px solid var(--border-primary)}.tx-category{font-size:.8125rem;font-weight:600;color:var(--text-primary);margin-bottom:6px}.tx-date{font-size:.75rem;color:var(--text-tertiary);min-width:45px}.tx-memo{font-size:.8125rem;color:var(--text-secondary);margin-left:var(--space-sm)}.receipt-btn{display:inline-block;background:#60a5fa;color:#fff;font-size:.6875rem;padding:2px 6px;border-radius:var(--radius-sm);text-decoration:none;flex-shrink:0;white-space:nowrap}.receipt-btn:hover{background:#3b82f6}.receipt-btn-sm{display:inline-block;background:#9ca3af;color:#fff;font-size:.625rem;padding:1px 4px;border-radius:3px;text-decoration:none;margin-left:var(--space-xs);flex-shrink:0}.receipt-btn-sm:hover{background:#6b7280}.tx-memo-short{flex:1;min-width:0}.receipt-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9999}.receipt-modal-content{position:relative;max-width:90vw;max-height:90vh}.receipt-modal-content img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:var(--radius-md)}.receipt-close{position:absolute;top:-40px;right:0;background:transparent;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1}.receipt-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-md);padding:var(--space-2xl);color:#fff}.receipt-spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.receipt-loading p{font-size:.875rem;opacity:.8}.receipt-error{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-sm);padding:var(--space-2xl);color:#fff;text-align:center}.receipt-error p{font-size:.9375rem;margin:0}.receipt-error-hint{font-size:.8125rem;opacity:.6}.approval{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-md);margin-bottom:var(--space-md)}.approval-title{font-size:.8125rem;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:var(--space-md);text-align:center}.approval-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}.approval-box{text-align:center;padding:var(--space-sm)}.approval-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-sm)}.approval-checkbox{display:flex;align-items:center;gap:var(--space-xs);cursor:pointer;font-size:.75rem;color:var(--text-secondary)}.approval-checkbox input[type=checkbox]{width:14px;height:14px}.approval-role{font-size:.75rem;font-weight:600;color:var(--text-secondary)}.approval-line{min-height:80px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-primary);border-radius:var(--radius-md);margin-bottom:var(--space-xs)}.approval-stamp-canvas{display:block}.approval-date{font-size:.6875rem;color:var(--text-tertiary);height:16px}.footer{padding:var(--space-lg);border-top:1px solid var(--border-primary);text-align:center}.footer-text{font-size:.8125rem;color:var(--text-secondary);margin-bottom:var(--space-sm)}.footer-note{font-size:.75rem;color:var(--text-tertiary)}.member-stats-row{display:flex;flex-direction:column;gap:var(--space-md);margin-top:var(--space-lg)}.rate-column{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)}@media(min-width:768px){.member-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}.rate-column{display:flex;flex-direction:column;gap:var(--space-md)}.rate-column .rate-card{flex:1}.age-section{margin-top:0}}.finance-hero-row-wrapper{display:flex;flex-direction:column;gap:var(--space-lg)}@media(min-width:768px){.finance-hero-row-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}.finance-hero-row-wrapper .finance-hero{margin-bottom:0}.tx-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}.tx-list .tx-block{height:fit-content}.approval{max-width:600px;margin:0 auto}}.tx-memo-text{display:inline}.tx-expand-btn{display:inline-block;font-size:.6875rem;color:var(--accent);cursor:pointer;margin-left:2px;white-space:nowrap}.tx-expand-btn:hover{text-decoration:underline}.finance-hero-subsection{margin-top:var(--space-md)}.finance-hero-subsection .subsection-divider{height:1px;background:rgba(255,255,255,.15);margin-bottom:var(--space-md)}.finance-hero-subsection .subsection-row{display:flex;align-items:center;gap:var(--space-sm);font-size:.75rem}.finance-hero-subsection .subsection-label{opacity:.7}.finance-hero-subsection .subsection-items{display:flex;align-items:center;gap:var(--space-xs)}.finance-hero-subsection .subsection-item{opacity:.85}.finance-hero-subsection .subsection-item strong{font-weight:600;color:#fff}.finance-hero-subsection .subsection-sep{opacity:.4}.finance-hero-subsection .subsection-note{font-size:.6875rem;opacity:.5;margin-left:auto}.bank-compare{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-lg);margin-bottom:var(--space-lg)}.bank-compare-title{font-size:.875rem;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-md)}.bank-compare-row{display:flex;align-items:center;justify-content:center;gap:var(--space-md);flex-wrap:wrap}.bank-compare-item{text-align:center;min-width:70px}.bank-compare-label{display:block;font-size:.75rem;color:var(--text-tertiary);margin-bottom:2px}.bank-compare-value{font-size:1.25rem;font-weight:700;color:var(--text-primary);font-feature-settings:'tnum'}.bank-compare-unit{font-size:.75rem;color:var(--text-tertiary);margin-left:2px}.bank-compare-op{font-size:1rem;color:var(--text-tertiary);font-weight:300}.bank-compare-item.diff .bank-compare-value{color:var(--accent)}.bank-compare-item.diff.warning .bank-compare-value{color:var(--danger)}.bank-compare-reason{margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid var(--border-secondary);font-size:.8125rem;text-align:center}.bank-compare-reason .reason-label{color:var(--text-tertiary);margin-right:var(--space-xs)}.bank-compare-reason .reason-text{color:var(--text-secondary)}.section-divider{height:1px;background:var(--border-primary);margin:var(--space-lg) 0}.report-date-input{border:none;background:transparent;font-size:inherit;font-family:inherit;color:var(--text-primary);font-weight:500;padding:2px 4px;border-bottom:1px dashed var(--border-primary);cursor:pointer}.report-date-input:hover{border-bottom-color:var(--accent)}.report-date-input:focus{outline:none;border-bottom-color:var(--accent);border-bottom-style:solid}
+    </style>
+    
+<style>
+/* 인라인 CSS (file:// 프로토콜 지원) */
+:root{--bg-primary:#fff;--bg-secondary:#fafafa;--bg-tertiary:#f5f5f5;--bg-elevated:#fff;--text-primary:#111;--text-secondary:#404040;--text-tertiary:#6b6b6b;--border-primary:#e5e5e5;--border-secondary:#f0f0f0;--accent:#0066ff;--accent-soft:rgba(0,102,255,.1);--success:#00c853;--success-soft:rgba(0,200,83,.1);--danger:#ff3b30;--danger-soft:rgba(255,59,48,.1);--space-xs:4px;--space-sm:8px;--space-md:12px;--space-lg:16px;--space-xl:24px;--space-2xl:32px;--space-3xl:48px;--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:20px;--radius-full:9999px;--shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow-md:0 2px 8px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12)}*,::after,::before{margin:0;padding:0;box-sizing:border-box}html{font-size:16px;-webkit-font-smoothing:antialiased}body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:.9375rem;line-height:1.6;color:var(--text-primary);background:var(--bg-secondary);font-weight:400}.app{min-height:100vh;max-width:540px;margin:0 auto;background:var(--bg-primary)}@media(min-width:768px){.app{max-width:100%}}@media(min-width:1024px){.app{max-width:1200px;margin:var(--space-xl) auto;border-radius:var(--radius-xl);border:1px solid var(--border-primary);box-shadow:var(--shadow-lg)}}.header{padding:var(--space-lg) var(--space-xl);border-bottom:1px solid var(--border-primary);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);background:rgba(255,255,255,.8)}.header-inner{display:flex;align-items:center;justify-content:space-between}.header-title{font-size:1.125rem;font-weight:600}.header-badge{display:inline-flex;padding:var(--space-xs) var(--space-sm);background:var(--bg-tertiary);border-radius:var(--radius-full);font-size:.75rem;font-weight:500;color:var(--text-secondary);margin-left:var(--space-sm)}.header-actions{display:flex;gap:var(--space-sm)}.btn-ghost{width:36px;height:36px;border:none;background:0 0;border-radius:var(--radius-md);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}.btn-ghost svg{width:18px;height:18px}.month-select{height:36px;padding:0 var(--space-md);border:1px solid var(--border-primary);border-radius:var(--radius-md);background:var(--bg-primary);font-size:.875rem;font-weight:500}.nav{display:flex;padding:0 var(--space-lg);border-bottom:1px solid var(--border-primary);background:var(--bg-primary);position:sticky;top:56px;z-index:90}.nav-item{padding:var(--space-md) var(--space-lg);border:none;background:0 0;font-size:.8125rem;font-weight:500;color:var(--text-tertiary);cursor:pointer;position:relative}.nav-item.active{color:var(--text-primary)}.nav-item.active::after{content:'';position:absolute;bottom:-1px;left:var(--space-lg);right:var(--space-lg);height:2px;background:var(--text-primary)}.main{padding:var(--space-xl)}@media(min-width:768px){.main{padding:var(--space-2xl)}}.section{margin-bottom:var(--space-3xl);padding-bottom:var(--space-2xl);border-bottom:1px solid var(--border-primary)}.section:last-of-type{border-bottom:none}.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-lg)}.section-title-wrap{display:flex;align-items:baseline;gap:var(--space-sm)}.section-num{font-size:1.5rem;font-weight:200;color:var(--text-tertiary);font-feature-settings:'tnum';line-height:1}.section-title{font-size:1.125rem;font-weight:700;color:var(--text-primary)}.month-badge{font-size:.6875rem;font-weight:500;color:var(--text-secondary);background:var(--bg-tertiary);padding:3px 8px;border-radius:var(--radius-sm);margin-left:4px}.section-action{font-size:.75rem;color:var(--text-tertiary);font-weight:500}.capacity-badge{font-size:.75rem;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);color:rgba(255,255,255,.8);padding:6px 12px;border-radius:var(--radius-full)}.capacity-badge strong{font-weight:700;color:#fff}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-sm)}@media(min-width:768px){.metrics{grid-template-columns:repeat(4,1fr)}}.metric{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-md) var(--space-lg);display:flex;align-items:center;justify-content:space-between;min-height:64px}.metric-label{font-size:.8125rem;font-weight:500;color:var(--text-secondary)}.metric-value{font-size:1.5rem;font-weight:700;font-feature-settings:'tnum';color:var(--text-primary)}.metric-unit{font-size:.875rem;color:var(--text-tertiary);margin-left:2px}.rate-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-top:var(--space-lg)}.rate-card{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-md)}.rate-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-sm)}.rate-label{font-size:.8125rem;font-weight:500;color:var(--text-secondary)}.rate-value{font-size:1.125rem;font-weight:700;color:var(--text-primary)}.rate-bar{height:8px;background:var(--bg-tertiary);border-radius:var(--radius-full);display:flex;overflow:hidden;margin-bottom:var(--space-sm)}.rate-bar-segment{height:100%}.rate-bar-segment.active{background:linear-gradient(90deg,#3b82f6,#60a5fa)}.rate-bar-segment.inactive{background:linear-gradient(90deg,#6b7280,#9ca3af)}.rate-bar-segment.paid{background:linear-gradient(90deg,#059669,#34d399)}.rate-bar-segment.unpaid{background:linear-gradient(90deg,#9ca3af,#d1d5db)}.rate-legend{display:flex;gap:var(--space-md);flex-wrap:wrap}.rate-legend-item{display:flex;align-items:center;gap:4px;font-size:.75rem;color:var(--text-tertiary)}.rate-legend-item .dot{width:6px;height:6px;border-radius:var(--radius-full)}.rate-legend-item .dot.active{background:#3b82f6}.rate-legend-item .dot.inactive{background:#6b7280}.rate-legend-item .dot.paid{background:#059669}.rate-legend-item .dot.unpaid{background:#9ca3af}.age-section{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-lg);margin-top:var(--space-md)}.age-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-sm)}.age-section-title{font-size:.875rem;font-weight:600;color:var(--text-primary);margin:0;line-height:1.4}.avg-age-badge{display:inline-flex;align-items:center;gap:2px;font-size:.6875rem;color:var(--text-tertiary);background:var(--bg-tertiary);padding:3px 8px;border-radius:var(--radius-full)}.avg-age-badge strong{font-weight:700;color:var(--text-primary);font-size:.75rem}.age-legend{display:flex;align-items:center;gap:var(--space-sm)}.legend-male{color:#3b82f6;font-size:.75rem;font-weight:600}.legend-female{color:#ec4899;font-size:.75rem;font-weight:600}.age-pyramid{display:flex;flex-direction:column;gap:6px}.pyramid-row{display:grid;grid-template-columns:28px 1fr 44px 1fr 28px;gap:4px;align-items:center}.pyramid-label{text-align:center;font-size:.75rem;font-weight:600;color:var(--text-secondary)}.pyramid-count{font-size:.75rem;font-weight:600}.pyramid-count.male{text-align:right;color:#3b82f6}.pyramid-count.female{text-align:left;color:#ec4899}.pyramid-bar-left,.pyramid-bar-right{height:10px;background:var(--bg-tertiary);border-radius:var(--radius-full);overflow:hidden}@media(min-width:768px){.pyramid-bar-left,.pyramid-bar-right{height:20px}}.pyramid-bar-left{display:flex;justify-content:flex-end}.pyramid-bar-right{display:flex;justify-content:flex-start}.pyramid-fill{height:100%}.pyramid-fill.male{background:linear-gradient(90deg,#60a5fa,#3b82f6);border-radius:var(--radius-full)}.pyramid-fill.female{background:linear-gradient(90deg,#ec4899,#f472b6);border-radius:var(--radius-full)}.activity-grid{display:grid;grid-template-columns:1fr;gap:var(--space-md)}@media(min-width:768px){.activity-grid{grid-template-columns:repeat(3,1fr)}}.activity-card{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);overflow:hidden}.activity-card-header{display:flex;align-items:center;gap:var(--space-sm);padding:var(--space-md) var(--space-lg);background:var(--bg-secondary);border-bottom:1px solid var(--border-secondary)}.activity-card-title{font-size:.875rem;font-weight:600;color:var(--text-primary)}.activity-card-body{padding:var(--space-md) var(--space-lg);min-height:80px}.activity-card-body .activity-event{padding:var(--space-sm) 0;border-bottom:1px solid var(--border-secondary)}.activity-card-body .activity-event:last-child{border-bottom:none}.activity-event-header{display:flex;align-items:baseline;gap:var(--space-sm);flex-wrap:wrap}.activity-event-date{font-size:.75rem;font-weight:600;color:var(--text-tertiary);min-width:36px}.activity-event-name{font-size:.875rem;font-weight:500;color:var(--text-primary)}.activity-event-meta{font-size:.75rem;color:var(--text-tertiary)}.activity-event-note{font-size:.8125rem;color:var(--text-secondary);margin-top:4px;line-height:1.4}.schedule-list{display:flex;flex-direction:column;gap:var(--space-sm)}.schedule-item{display:flex;gap:var(--space-md);padding:var(--space-md);background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg)}.schedule-date{min-width:50px;text-align:center;white-space:nowrap}.schedule-date.undetermined{display:flex;align-items:center;justify-content:center}.schedule-date.undetermined .schedule-day{font-size:.75rem;color:var(--text-tertiary)}.schedule-date.undetermined .schedule-weekday{display:none}.schedule-day{font-size:1.25rem;font-weight:600;line-height:1}.schedule-weekday{font-size:.75rem;color:var(--text-tertiary);margin-top:4px}.schedule-line{width:2px;background:var(--border-primary);border-radius:var(--radius-full)}.schedule-line.external{background:#fcd34d}.schedule-info{flex:1}.schedule-title{font-size:.875rem;font-weight:500}.schedule-location{font-size:.75rem;color:var(--text-tertiary);margin-top:2px}.finance-hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);border-radius:var(--radius-xl);padding:var(--space-xl);color:#fff;margin-bottom:var(--space-lg)}.finance-hero.year{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%)}.finance-hero-header{display:flex;justify-content:space-between;align-items:center}.finance-hero-label{font-size:.875rem;opacity:.9;letter-spacing:.02em}.finance-hero-balance{display:flex;align-items:baseline;gap:4px}.finance-hero-value{font-size:2rem;font-weight:700;letter-spacing:-.02em;font-feature-settings:'tnum'}.finance-hero-unit{font-size:.875rem;font-weight:400;opacity:.8}.finance-hero-row{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-md);margin-top:var(--space-xl);padding-top:var(--space-lg);border-top:1px solid rgba(255,255,255,.15)}.finance-hero-stat{display:flex;align-items:center;justify-content:center;gap:var(--space-sm)}.finance-hero-stat-label{font-size:.75rem;opacity:.8;display:flex;align-items:center;gap:4px}.stat-icon-circle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%}.stat-icon-circle svg{width:12px;height:12px}.stat-icon-circle.income{background:rgba(74,222,128,.2);color:#4ade80}.stat-icon-circle.expense{background:rgba(248,113,113,.2);color:#f87171}.finance-hero-stat-value{font-size:1rem;font-weight:600;font-feature-settings:'tnum';white-space:nowrap}.finance-hero-stat-value.income{color:#4ade80}.finance-hero-stat-value.expense{color:#f87171}.fin-year-card{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-lg);margin-bottom:var(--space-lg)}.fin-year-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-md)}.fin-year-title{font-size:.8125rem;font-weight:600;color:var(--text-secondary)}.fin-year-balance{display:flex;align-items:baseline;gap:var(--space-xs)}.fin-year-balance-label{font-size:.75rem;color:var(--text-tertiary)}.fin-year-balance-value{font-size:1.125rem;font-weight:700;color:var(--text-primary);font-feature-settings:'tnum'}.fin-year-balance-unit{font-size:.75rem;color:var(--text-tertiary)}.fin-year-bar{height:6px;background:var(--bg-tertiary);border-radius:var(--radius-full);display:flex;overflow:hidden;margin-bottom:var(--space-md)}.fin-year-bar-income{background:#86efac}.fin-year-bar-expense{background:#fca5a5}.fin-year-stats{display:flex;justify-content:space-between}.fin-year-stat{display:flex;align-items:center;gap:var(--space-xs)}.fin-year-dot{width:8px;height:8px;border-radius:var(--radius-full)}.fin-year-dot.income{background:#86efac}.fin-year-dot.expense{background:#fca5a5}.fin-year-label{font-size:.75rem;color:var(--text-tertiary)}.fin-year-value{font-size:.875rem;font-weight:600;color:var(--text-primary);font-feature-settings:'tnum'}.fin-year-unit{font-size:.75rem;color:var(--text-tertiary)}.fin-tx-section{margin-top:var(--space-lg)}.fin-tx-header{font-size:.9375rem;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-sm)}.fin-tx-section .tx-list{}.activity-empty,.schedule-empty,.tx-empty{padding:var(--space-xl) var(--space-lg);text-align:center;color:var(--text-tertiary);font-size:.875rem}.tx-list{display:flex;flex-direction:column;gap:var(--space-md)}.tx-block{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);overflow:hidden}.tx-header{display:flex;justify-content:space-between;align-items:center;padding:var(--space-md) var(--space-lg);background:var(--bg-tertiary);font-size:.875rem;font-weight:600;color:var(--text-primary);border-bottom:1px solid var(--border-primary)}.tx-header.income{background:rgba(74,222,128,.1);color:#16a34a}.tx-header.expense{background:rgba(248,113,113,.1);color:#dc2626}.tx-header-total{font-weight:700;font-feature-settings:'tnum'}.tx-item{padding:var(--space-md) var(--space-md) var(--space-md) var(--space-lg);border-bottom:1px solid var(--border-secondary)}.tx-item:last-child{border-bottom:none}.tx-info{width:100%}.tx-row{display:flex;align-items:baseline;gap:var(--space-xs)}.tx-title{font-size:.875rem;font-weight:500;color:var(--text-secondary)}.tx-detail{font-size:.75rem;color:var(--text-tertiary);margin-top:4px;line-height:1.4}.tx-amount{font-size:.875rem;font-weight:600;font-feature-settings:'tnum';flex-shrink:0;white-space:nowrap;margin-left:auto}.tx-amount.income{color:#22c55e}.tx-amount.expense{color:#f87171}.tx-group-first{border-top:1px solid var(--border-primary)}.tx-category{font-size:.8125rem;font-weight:600;color:var(--text-primary);margin-bottom:6px}.tx-date{font-size:.75rem;color:var(--text-tertiary);min-width:45px}.tx-memo{font-size:.8125rem;color:var(--text-secondary);margin-left:var(--space-sm)}.receipt-btn{display:inline-block;background:#60a5fa;color:#fff;font-size:.6875rem;padding:2px 6px;border-radius:var(--radius-sm);text-decoration:none;flex-shrink:0;white-space:nowrap}.receipt-btn:hover{background:#3b82f6}.receipt-btn-sm{display:inline-block;background:#9ca3af;color:#fff;font-size:.625rem;padding:1px 4px;border-radius:3px;text-decoration:none;margin-left:var(--space-xs);flex-shrink:0}.receipt-btn-sm:hover{background:#6b7280}.tx-memo-short{flex:1;min-width:0}.receipt-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:9999}.receipt-modal-content{position:relative;max-width:90vw;max-height:90vh}.receipt-modal-content img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:var(--radius-md)}.receipt-close{position:absolute;top:-40px;right:0;background:transparent;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1}.receipt-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-md);padding:var(--space-2xl);color:#fff}.receipt-spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.receipt-loading p{font-size:.875rem;opacity:.8}.receipt-error{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-sm);padding:var(--space-2xl);color:#fff;text-align:center}.receipt-error p{font-size:.9375rem;margin:0}.receipt-error-hint{font-size:.8125rem;opacity:.6}.approval{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-md);margin-bottom:var(--space-md)}.approval-title{font-size:.8125rem;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;margin-bottom:var(--space-md);text-align:center}.approval-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}.approval-box{text-align:center;padding:var(--space-sm)}.approval-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-sm)}.approval-checkbox{display:flex;align-items:center;gap:var(--space-xs);cursor:pointer;font-size:.75rem;color:var(--text-secondary)}.approval-checkbox input[type=checkbox]{width:14px;height:14px}.approval-role{font-size:.75rem;font-weight:600;color:var(--text-secondary)}.approval-line{min-height:80px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border-primary);border-radius:var(--radius-md);margin-bottom:var(--space-xs)}.approval-stamp-canvas{display:block}.approval-date{font-size:.6875rem;color:var(--text-tertiary);height:16px}.footer{padding:var(--space-lg);border-top:1px solid var(--border-primary);text-align:center}.footer-text{font-size:.8125rem;color:var(--text-secondary);margin-bottom:var(--space-sm)}.footer-note{font-size:.75rem;color:var(--text-tertiary)}.member-stats-row{display:flex;flex-direction:column;gap:var(--space-md);margin-top:var(--space-lg)}.rate-column{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)}@media(min-width:768px){.member-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}.rate-column{display:flex;flex-direction:column;gap:var(--space-md)}.rate-column .rate-card{flex:1}.age-section{margin-top:0}}.finance-hero-row-wrapper{display:flex;flex-direction:column;gap:var(--space-lg)}@media(min-width:768px){.finance-hero-row-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}.finance-hero-row-wrapper .finance-hero{margin-bottom:0}.tx-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}.tx-list .tx-block{height:fit-content}.approval{max-width:600px;margin:0 auto}}.tx-memo-text{display:inline}.tx-expand-btn{display:inline-block;font-size:.6875rem;color:var(--accent);cursor:pointer;margin-left:2px;white-space:nowrap}.tx-expand-btn:hover{text-decoration:underline}.finance-hero-subsection{margin-top:var(--space-md)}.finance-hero-subsection .subsection-divider{height:1px;background:rgba(255,255,255,.15);margin-bottom:var(--space-md)}.finance-hero-subsection .subsection-row{display:flex;align-items:center;gap:var(--space-sm);font-size:.75rem}.finance-hero-subsection .subsection-label{opacity:.7}.finance-hero-subsection .subsection-items{display:flex;align-items:center;gap:var(--space-xs)}.finance-hero-subsection .subsection-item{opacity:.85}.finance-hero-subsection .subsection-item strong{font-weight:600;color:#fff}.finance-hero-subsection .subsection-sep{opacity:.4}.finance-hero-subsection .subsection-note{font-size:.6875rem;opacity:.5;margin-left:auto}.bank-compare{background:var(--bg-elevated);border:1px solid var(--border-primary);border-radius:var(--radius-lg);padding:var(--space-lg);margin-bottom:var(--space-lg)}.bank-compare-title{font-size:.875rem;font-weight:600;color:var(--text-primary);margin-bottom:var(--space-md)}.bank-compare-row{display:flex;align-items:center;justify-content:center;gap:var(--space-md);flex-wrap:wrap}.bank-compare-item{text-align:center;min-width:70px}.bank-compare-label{display:block;font-size:.75rem;color:var(--text-tertiary);margin-bottom:2px}.bank-compare-value{font-size:1.25rem;font-weight:700;color:var(--text-primary);font-feature-settings:'tnum'}.bank-compare-unit{font-size:.75rem;color:var(--text-tertiary);margin-left:2px}.bank-compare-op{font-size:1rem;color:var(--text-tertiary);font-weight:300}.bank-compare-item.diff .bank-compare-value{color:var(--accent)}.bank-compare-item.diff.warning .bank-compare-value{color:var(--danger)}.bank-compare-reason{margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid var(--border-secondary);font-size:.8125rem;text-align:center}.bank-compare-reason .reason-label{color:var(--text-tertiary);margin-right:var(--space-xs)}.bank-compare-reason .reason-text{color:var(--text-secondary)}.section-divider{height:1px;background:var(--border-primary);margin:var(--space-lg) 0}.report-date-input{border:none;background:transparent;font-size:inherit;font-family:inherit;color:var(--text-primary);font-weight:500;padding:2px 4px;border-bottom:1px dashed var(--border-primary);cursor:pointer}.report-date-input:hover{border-bottom-color:var(--accent)}.report-date-input:focus{outline:none;border-bottom-color:var(--accent);border-bottom-style:solid}
+    
+                        /* 외부보고서용 추가 CSS */
+                        .btn-ghost[aria-label="업로드"],
+                        .btn-ghost[aria-label="내보내기"],
+                        #v2-monthSelect,
+                        .header-actions { display: none !important; }
+                        .hide-on-capture { display: none !important; }
+                        .approval-line { border: none; min-height: 60px; }
+
+                        /* 헤더+네비 통합 */
+                        .header {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                        }
+                        .header-inner {
+                            flex: none;
+                        }
+                        .nav {
+                            position: static !important;
+                            border-bottom: none;
+                            padding: 0;
+                            margin-left: auto;
+                            background: transparent;
+                        }
+                        .nav-item {
+                            padding: 8px 12px;
+                        }
+                        .nav-item.active::after {
+                            bottom: 0;
+                            left: 12px;
+                            right: 12px;
+                        }
+                        @media print {
+                            .header, .nav { position: relative !important; }
+                        }
+                    </style></head>
+<body>
+    
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-inner">
+                <div style="display: flex; align-items: center;">
+                    <h1 class="header-title">현클럽</h1>
+                    <span class="header-badge" id="v2-reportMonth">2026년 2월</span>
+                </div>
+                <div class="header-actions">
+                    
+                    
+                    
+                </div>
+            </div>
+        <nav class="nav">
+            <button class="nav-item active" data-section="members">회원</button>
+            <button class="nav-item" data-section="activities">활동</button>
+            <button class="nav-item" data-section="schedule">일정</button>
+            <button class="nav-item" data-section="finance">회계</button>
+        </nav></header>
+
+        <!-- Navigation -->
+        
+
+        <!-- Main -->
+        <main class="main">
+
+            <!-- Members Section -->
+            <section id="members" class="section">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <span class="section-num">01</span>
+                        <h2 class="section-title">회원 현황</h2>
+                    </div>
+                    <span class="capacity-badge">정원 <strong>50</strong>명</span>
+                </div>
+
+                <div class="metrics">
+                    <div class="metric">
+                        <span class="metric-label">정회원</span>
+                        <span class="metric-value"><span id="v2-memberCount">48</span><span class="metric-unit">명</span></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">게스트</span>
+                        <span class="metric-value"><span id="v2-guestCount">1</span><span class="metric-unit">명</span></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">활동 회원</span>
+                        <span class="metric-value"><span id="v2-activeCount">48</span><span class="metric-unit">명</span></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">휴면/탈퇴</span>
+                        <span class="metric-value"><span id="v2-inactiveCount">1</span><span class="metric-unit">명</span></span>
+                    </div>
+                </div>
+
+                <!-- 충원율/납부율 + 연령대 (PC: 2:1 레이아웃) -->
+                <div class="member-stats-row">
+                    <div class="rate-column">
+                        <div class="rate-card">
+                            <div class="rate-header">
+                                <span class="rate-label">충원율</span>
+                                <span class="rate-value" id="v2-capacityRate">96%</span>
+                            </div>
+                            <div class="rate-bar">
+                                <div class="rate-bar-segment active" id="v2-capacityActive" style="width: 96%;"></div>
+                                <div class="rate-bar-segment inactive" id="v2-capacityInactive" style="width: 2%;"></div>
+                                <div class="rate-bar-segment empty" id="v2-capacityEmpty" style="width: 2%;"></div>
+                            </div>
+                            <div class="rate-legend">
+                                <span class="rate-legend-item"><span class="dot active"></span>활동 <span id="v2-activeNum">48</span></span>
+                                <span class="rate-legend-item" id="v2-inactiveLegend"><span class="dot inactive"></span>휴면/탈퇴 <span id="v2-inactiveNum">1</span></span>
+                                <span class="rate-legend-item"><span class="dot empty"></span>여유 <span id="v2-emptyNum">1</span></span>
+                            </div>
+                        </div>
+                        <div class="rate-card">
+                            <div class="rate-header">
+                                <span class="rate-label">납부율</span>
+                                <span class="rate-value" id="v2-paymentRate">100%</span>
+                            </div>
+                            <div class="rate-bar">
+                                <div class="rate-bar-segment paid" id="v2-paymentPaid" style="width: 100%;"></div>
+                                <div class="rate-bar-segment unpaid" id="v2-paymentUnpaid" style="width: 0%;"></div>
+                            </div>
+                            <div class="rate-legend">
+                                <span class="rate-legend-item"><span class="dot paid"></span>납부 <span id="v2-paidNum">47</span></span>
+                                <span class="rate-legend-item"><span class="dot unpaid"></span>미납 <span id="v2-unpaidNum">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 연령대 분포 -->
+                    <div class="age-section">
+                    <div class="age-header">
+                        <h3 class="age-section-title">연령별 구성 비중</h3>
+                        <div class="age-legend">
+                            <span class="legend-male">남성</span>
+                            <span class="legend-female">여성</span>
+                            <span class="avg-age-badge" id="v2-ageRange">평균 <strong>55</strong>세</span>
+                        </div>
+                    </div>
+                    <div class="age-pyramid" id="v2-agePyramid">
+                    <div class="pyramid-row">
+                        <span class="pyramid-count male">4%</span>
+                        <div class="pyramid-bar-left"><div class="pyramid-fill male" style="width: 11.76470588235294%;"></div></div>
+                        <span class="pyramid-label">70대+</span>
+                        <div class="pyramid-bar-right"><div class="pyramid-fill female" style="width: 0%;"></div></div>
+                        <span class="pyramid-count female">-</span>
+                    </div>
+                
+                    <div class="pyramid-row">
+                        <span class="pyramid-count male">17%</span>
+                        <div class="pyramid-bar-left"><div class="pyramid-fill male" style="width: 47.05882352941176%;"></div></div>
+                        <span class="pyramid-label">60대</span>
+                        <div class="pyramid-bar-right"><div class="pyramid-fill female" style="width: 17.64705882352941%;"></div></div>
+                        <span class="pyramid-count female">6%</span>
+                    </div>
+                
+                    <div class="pyramid-row">
+                        <span class="pyramid-count male">36%</span>
+                        <div class="pyramid-bar-left"><div class="pyramid-fill male" style="width: 100%;"></div></div>
+                        <span class="pyramid-label">50대</span>
+                        <div class="pyramid-bar-right"><div class="pyramid-fill female" style="width: 35.29411764705882%;"></div></div>
+                        <span class="pyramid-count female">13%</span>
+                    </div>
+                
+                    <div class="pyramid-row">
+                        <span class="pyramid-count male">11%</span>
+                        <div class="pyramid-bar-left"><div class="pyramid-fill male" style="width: 29.411764705882348%;"></div></div>
+                        <span class="pyramid-label">40대</span>
+                        <div class="pyramid-bar-right"><div class="pyramid-fill female" style="width: 11.76470588235294%;"></div></div>
+                        <span class="pyramid-count female">4%</span>
+                    </div>
+                
+                    <div class="pyramid-row">
+                        <span class="pyramid-count male">9%</span>
+                        <div class="pyramid-bar-left"><div class="pyramid-fill male" style="width: 23.52941176470588%;"></div></div>
+                        <span class="pyramid-label">30대</span>
+                        <div class="pyramid-bar-right"><div class="pyramid-fill female" style="width: 0%;"></div></div>
+                        <span class="pyramid-count female">-</span>
+                    </div>
+                </div>
+                </div>
+                </div><!-- /.member-stats-row -->
+            </section>
+
+            <!-- Activities Section -->
+            <section id="activities" class="section">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <span class="section-num">02</span>
+                        <h2 class="section-title">이달의 활동</h2>
+                    </div>
+                </div>
+
+                <div class="activity-grid">
+                    <div class="activity-card">
+                        <div class="activity-card-header">
+                            <span class="activity-card-icon">🏠</span>
+                            <span class="activity-card-title">내부 활동</span>
+                        </div>
+                        <div class="activity-card-body" id="v2-internalEvents">
+                    <div class="activity-event">
+                        <div class="activity-event-header">
+                            <span class="activity-event-date">02/05</span>
+                            <span class="activity-event-name">김경태 회장님 연합회장 취임</span>
+                            <span class="activity-event-meta"> · 취임식 일정은 별도 공지 예정</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                    </div>
+                    <div class="activity-card" style="display: none;">
+                        <div class="activity-card-header">
+                            <span class="activity-card-icon">🌐</span>
+                            <span class="activity-card-title">외부 활동</span>
+                        </div>
+                        <div class="activity-card-body" id="v2-externalEvents"><div class="activity-empty">이번 달 활동 없음</div></div>
+                    </div>
+                    <div class="activity-card" style="display: none;">
+                        <div class="activity-card-header">
+                            <span class="activity-card-icon">👤</span>
+                            <span class="activity-card-title">개인 활동</span>
+                        </div>
+                        <div class="activity-card-body" id="v2-personalEvents"><div class="activity-empty">이번 달 활동 없음</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Schedule Section -->
+            <section id="schedule" class="section">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <span class="section-num">03</span>
+                        <h2 class="section-title">다음달 일정</h2>
+                        <span class="month-badge" id="v2-nextMonth">3월</span>
+                    </div>
+                </div>
+
+                <div class="schedule-list" id="v2-scheduleList">
+                    <div class="schedule-item">
+                        <div class="schedule-date">
+                            <div class="schedule-day">21</div>
+                            <div class="schedule-weekday">토</div>
+                        </div>
+                        <div class="schedule-line"></div>
+                        <div class="schedule-info">
+                            <div class="schedule-title">1분기 월례대회</div>
+                            <div class="schedule-location">수변공원 테니스장</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finance Section (Revolut Style) -->
+            <section id="finance" class="section">
+                <div class="section-header">
+                    <div class="section-title-wrap">
+                        <span class="section-num">04</span>
+                        <h2 class="section-title">회계 현황</h2>
+                    </div>
+                </div>
+
+                <!-- 이번달/연도누적 Hero Cards (PC: 좌우 배치) -->
+                <div class="finance-hero-row-wrapper">
+                    <!-- 이번달 Hero Card (Revolut Style) -->
+                    <div class="finance-hero">
+                        <div class="finance-hero-header">
+                            <div class="finance-hero-label">이번달 잔액</div>
+                            <div class="finance-hero-balance">
+                                <span class="finance-hero-value" id="v2-monthBalance">29</span><span class="finance-hero-unit">만원</span>
+                            </div>
+                        </div>
+                        <div class="finance-hero-row">
+                            <div class="finance-hero-stat">
+                                <div class="finance-hero-stat-label">
+                                    <span class="stat-icon-circle income">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M12 19V5M5 12l7-7 7 7"></path>
+                                        </svg>
+                                    </span>
+                                    수입
+                                </div>
+                                <div class="finance-hero-stat-value income"><span id="v2-monthIncome">145</span> 만원</div>
+                            </div>
+                            <div class="finance-hero-stat">
+                                <div class="finance-hero-stat-label">
+                                    <span class="stat-icon-circle expense">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M12 5v14M5 12l7 7 7-7"></path>
+                                        </svg>
+                                    </span>
+                                    지출
+                                </div>
+                                <div class="finance-hero-stat-value expense"><span id="v2-monthExpense">115</span> 만원</div>
+                            </div>
+                        </div>
+                        <!-- 업추비 서브섹션 -->
+                        <div class="finance-hero-subsection" id="v2-businessExpenseSection">
+                            <div class="subsection-divider"></div>
+                            <div class="subsection-row">
+                                <span class="subsection-label">업추비</span>
+                                <span class="subsection-items">
+                                    <span class="subsection-item">예산 <strong id="v2-beBudget">20</strong>만</span>
+                                    <span class="subsection-sep">/</span>
+                                    <span class="subsection-item">사용 <strong id="v2-beUsed">20</strong>만</span>
+                                    <span class="subsection-sep">/</span>
+                                    <span class="subsection-item">잔여 <strong id="v2-beRemain">0</strong>만</span>
+                                </span>
+                            </div>
+                            <div class="subsection-note">※ 사용액은 지출에 포함</div>
+                        </div>
+                    </div>
+
+                    <!-- 연도 누적 Hero Card -->
+                    <div class="finance-hero year">
+                        <div class="finance-hero-header">
+                            <div class="finance-hero-label">연도 누적 잔액</div>
+                            <div class="finance-hero-balance">
+                                <span class="finance-hero-value" id="v2-yearBalance">1,224</span><span class="finance-hero-unit">만원</span>
+                            </div>
+                        </div>
+                        <div class="finance-hero-row">
+                            <div class="finance-hero-stat">
+                                <div class="finance-hero-stat-label">
+                                    <span class="stat-icon-circle income">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M12 19V5M5 12l7-7 7 7"></path>
+                                        </svg>
+                                    </span>
+                                    수입
+                                </div>
+                                <div class="finance-hero-stat-value income"><span id="v2-yearIncome">1,466</span> 만원</div>
+                            </div>
+                            <div class="finance-hero-stat">
+                                <div class="finance-hero-stat-label">
+                                    <span class="stat-icon-circle expense">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M12 5v14M5 12l7 7 7-7"></path>
+                                        </svg>
+                                    </span>
+                                    지출
+                                </div>
+                                <div class="finance-hero-stat-value expense"><span id="v2-yearExpense">242</span> 만원</div>
+                            </div>
+                        </div>
+                        <!-- 이월잔고 서브섹션 -->
+                        <div class="finance-hero-subsection" id="v2-carryOverSection" style="display: block;">
+                            <div class="subsection-divider"></div>
+                            <div class="subsection-row" style="flex-wrap: wrap;">
+                                <span class="subsection-label">이월잔고</span>
+                                <span class="subsection-items">
+                                    <strong id="v2-carryOver">992</strong>만원
+                                </span>
+                            </div>
+                            <div class="subsection-note" style="margin-top: 4px; opacity: 0.5;">※ 누적 수입에 포함</div>
+                        </div>
+                    </div>
+                </div><!-- /.finance-hero-row-wrapper -->
+
+                <!-- 통장 대조 -->
+                <div class="section-divider"></div>
+                <div class="bank-compare">
+                    <div class="bank-compare-title">통장 잔액 대조</div>
+                    <div class="bank-compare-row">
+                        <div class="bank-compare-item">
+                            <span class="bank-compare-label">통장</span>
+                            <span class="bank-compare-value" id="v2-bankBalance">1,224</span>
+                            <span class="bank-compare-unit">만원</span>
+                        </div>
+                        <span class="bank-compare-op">−</span>
+                        <div class="bank-compare-item">
+                            <span class="bank-compare-label">장부</span>
+                            <span class="bank-compare-value" id="v2-bookBalance">1,224</span>
+                            <span class="bank-compare-unit">만원</span>
+                        </div>
+                        <span class="bank-compare-op">=</span>
+                        <div class="bank-compare-item diff">
+                            <span class="bank-compare-label">차액</span>
+                            <span class="bank-compare-value" id="v2-balanceDiff">0</span>
+                            <span class="bank-compare-unit">만원</span>
+                        </div>
+                    </div>
+                    <div class="bank-compare-reason" id="v2-diffReasonSection" style="display: none;">
+                        <span class="reason-label">차액 사유:</span>
+                        <span class="reason-text" id="v2-diffReason"></span>
+                    </div>
+                </div>
+
+                <!-- 거래 내역 -->
+                <div class="fin-tx-section">
+                    <div class="fin-tx-header">세부 내역</div>
+                    <div class="tx-list" id="v2-txList"><div class="tx-block"><div class="tx-header income"><span>수입</span><span class="tx-header-total">+1,450,000원</span></div>
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">회비</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/15</span>
+                                    <span class="tx-memo"><span class="tx-memo-text" id="memo-1-short">납부대상: 29명(사전납부 18명은 ...</span><span class="tx-memo-text" id="memo-1-full" style="display:none;">납부대상: 29명(사전납부 18명은 이월잔고 포함 제외)</span><span class="tx-expand-btn" onclick="toggleMemo('memo-1')">더보기</span></span>
+                                    
+                                    <span class="tx-amount income">+1,150,000원</span>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">월게스트</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/01</span>
+                                    <span class="tx-memo"><span class="tx-memo-text" id="memo-2-short">납부대상: 1명 (전월 납부 1명은 ...</span><span class="tx-memo-text" id="memo-2-full" style="display:none;">납부대상: 1명 (전월 납부 1명은 이월잔고 포함으로 납부대상 제외)</span><span class="tx-expand-btn" onclick="toggleMemo('memo-2')">더보기</span></span>
+                                    
+                                    <span class="tx-amount income">+50,000원</span>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">일게스트</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/03</span>
+                                    <span class="tx-memo">일일게스트 참가비용 (1명)</span>
+                                    
+                                    <span class="tx-amount income">+5,000원</span>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item">
+                                
+                                <div class="tx-row">
+                                    <span class="tx-date">02/26</span>
+                                    <span class="tx-memo">일일게스트 참가비용 (1명)</span>
+                                    
+                                    <span class="tx-amount income">+5,000원</span>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">입회비</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/25</span>
+                                    <span class="tx-memo">신규 회원 가입비</span>
+                                    
+                                    <span class="tx-amount income">+200,000원</span>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">회비선납</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/28</span>
+                                    <span class="tx-memo">26년3월 회비 선납 (1명)</span>
+                                    
+                                    <span class="tx-amount income">+40,000원</span>
+                                </div>
+                            </div>
+                        </div><div class="tx-block"><div class="tx-header expense"><span>지출</span><span class="tx-header-total">-1,159,440원</span></div>
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">코트비</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/19</span>
+                                    <span class="tx-memo tx-memo-short"><span class="tx-memo-text" id="memo-3-short">26년 3월 코트비 결제 (746,4...</span><span class="tx-memo-text" id="memo-3-full" style="display:none;">26년 3월 코트비 결제 (746,460+영배분 111,210+한타배분 55,770)</span><span class="tx-expand-btn" onclick="toggleMemo('memo-3')">더보기</span></span>
+                                    <span class="tx-amount expense">-913,440원</span>
+                                    
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">업추비</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/02</span>
+                                    <span class="tx-memo tx-memo-short"><span class="tx-memo-text" id="memo-4-short">코트 제설작업 참석인원 추어탕 식당 ...</span><span class="tx-memo-text" id="memo-4-full" style="display:none;">코트 제설작업 참석인원 추어탕 식당 식사제공 (5명)</span><span class="tx-expand-btn" onclick="toggleMemo('memo-4')">더보기</span></span>
+                                    <span class="tx-amount expense">-93,000원</span>
+                                    <a href="javascript:void(0)" class="receipt-btn-sm" onclick="showReceipt('https://drive.google.com/file/d/1SfJPM_Cm5cqMxY77NegpoXt5dYhThL5s/view?usp=drive_link')">영수증</a>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item">
+                                
+                                <div class="tx-row">
+                                    <span class="tx-date">02/18</span>
+                                    <span class="tx-memo tx-memo-short"><span class="tx-memo-text" id="memo-5-short">설연휴 임원진(3명) &amp; 운동 참석회...</span><span class="tx-memo-text" id="memo-5-full" style="display:none;">설연휴 임원진(3명) &amp; 운동 참석회원(4명) 식사. 식비128천원. 107천원 업추비 사용 (21천원 부회장님 결제)</span><span class="tx-expand-btn" onclick="toggleMemo('memo-5')">더보기</span></span>
+                                    <span class="tx-amount expense">-107,000원</span>
+                                    <a href="javascript:void(0)" class="receipt-btn-sm" onclick="showReceipt('https://drive.google.com/file/d/1fyZtOWtkEH3xUY6_q1hoO3jV6HX5oJzE/view?usp=drive_link')">영수증</a>
+                                </div>
+                            </div>
+                        
+                            <div class="tx-item tx-group-first">
+                                <div class="tx-category">기타</div>
+                                <div class="tx-row">
+                                    <span class="tx-date">02/14</span>
+                                    <span class="tx-memo tx-memo-short">김경태 연합회장님 플래카드 제작</span>
+                                    <span class="tx-amount expense">-46,000원</span>
+                                    <a href="javascript:void(0)" class="receipt-btn-sm" onclick="showReceipt('https://drive.google.com/file/d/1aMiihmPcYDpT83YlRYfghCeWv6Ic2VsD/view?usp=drive_link')">영수증</a>
+                                </div>
+                            </div>
+                        </div></div>
+                </div>
+            </section>
+
+            <!-- Approval Section -->
+            <section class="section">
+                <div class="approval">
+                    <h3 class="approval-title">검토 및 승인</h3>
+                    <div class="approval-grid">
+                        <div class="approval-box">
+                            <div class="approval-header hide-on-capture">
+                                <div class="approval-role">회장</div>
+                                <label class="approval-checkbox">
+                                    <input type="checkbox" id="v2-presidentCheck">
+                                    <span>승인</span>
+                                </label>
+                            </div>
+                            <div class="approval-line">
+                                <canvas class="approval-stamp-canvas" id="v2-presidentStamp" width="120" height="120" style="display: none;"></canvas>
+                            </div>
+                            <div class="approval-date" id="v2-presidentDate"></div>
+                        </div>
+                        <div class="approval-box">
+                            <div class="approval-header hide-on-capture">
+                                <div class="approval-role">부회장</div>
+                                <label class="approval-checkbox">
+                                    <input type="checkbox" id="v2-vicePresidentCheck">
+                                    <span>승인</span>
+                                </label>
+                            </div>
+                            <div class="approval-line">
+                                <canvas class="approval-stamp-canvas" id="v2-vicePresidentStamp" width="120" height="120" style="display: none;"></canvas>
+                            </div>
+                            <div class="approval-date" id="v2-vicePresidentDate"></div>
+                        </div>
+                        <div class="approval-box">
+                            <div class="approval-header hide-on-capture">
+                                <div class="approval-role">감사</div>
+                                <label class="approval-checkbox">
+                                    <input type="checkbox" id="v2-auditorCheck">
+                                    <span>승인</span>
+                                </label>
+                            </div>
+                            <div class="approval-line">
+                                <canvas class="approval-stamp-canvas" id="v2-auditorStamp" width="120" height="120" style="display: none;"></canvas>
+                            </div>
+                            <div class="approval-date" id="v2-auditorDate"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">이 보고서는 <span style="font-weight: 500;">2026년 2월 28일</span>에 작성되었습니다.</p>
+            <p class="footer-note">본 문서는 테니스 현클럽 회원들의 활동 현황 및 재무 상태를 정리한 월간 보고서입니다.</p>
+        </footer>
+    </div>
+
+    <!-- 영수증 모달 -->
+    <div id="receiptModal" class="receipt-modal" style="display:none;">
+        <button class="receipt-close-btn" onclick="closeReceiptModal()" style="position:fixed;top:20px;right:20px;z-index:10001;background:rgba(0,0,0,0.6);border:none;border-radius:50%;width:44px;height:44px;font-size:28px;cursor:pointer;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.3);">×</button>
+        <div class="receipt-modal-content">
+            <div id="receiptLoading" class="receipt-loading">
+                <div class="receipt-spinner"></div>
+                <p>영수증 로딩 중...</p>
+            </div>
+            <div id="receiptError" class="receipt-error" style="display:none;">
+                <p>이미지를 불러올 수 없습니다</p>
+                <p class="receipt-error-hint">Google Drive 파일이 공개 설정인지 확인해주세요</p>
+            </div>
+            <img id="receiptImage" src="" alt="영수증" style="display:none;">
+        </div>
+    </div>
+
+    
+
+
+<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const navItems = document.querySelectorAll('.nav-item');
+                        const sections = ['members', 'activities', 'schedule', 'finance'];
+
+                        // 현재 스크롤 위치에 맞는 섹션 감지 함수
+                        function updateActiveNav() {
+                            const header = document.querySelector('.header');
+                            const offset = (header?.offsetHeight || 0) + 100;
+
+                            let current = sections[0];
+                            for (const id of sections) {
+                                const section = document.getElementById(id);
+                                if (section && section.offsetTop <= window.scrollY + offset) {
+                                    current = id;
+                                }
+                            }
+
+                            navItems.forEach(item => {
+                                item.classList.toggle('active', item.getAttribute('data-section') === current);
+                            });
+                        }
+
+                        // 초기 로드 시 활성 상태 설정
+                        updateActiveNav();
+
+                        // 클릭 이벤트
+                        navItems.forEach(item => {
+                            item.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                const sectionId = this.getAttribute('data-section');
+                                const section = document.getElementById(sectionId);
+                                if (section) {
+                                    const header = document.querySelector('.header');
+                                    const offset = header?.offsetHeight || 0;
+                                    const rect = section.getBoundingClientRect();
+                                    const scrollTop = window.pageYOffset;
+                                    const targetTop = rect.top + scrollTop - offset - 16;
+                                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+                                    navItems.forEach(n => n.classList.remove('active'));
+                                    this.classList.add('active');
+                                }
+                            });
+                        });
+
+                        // 스크롤 이벤트
+                        let scrollTimeout;
+                        window.addEventListener('scroll', function() {
+                            clearTimeout(scrollTimeout);
+                            scrollTimeout = setTimeout(updateActiveNav, 50);
+                        });
+                    });
+                </script><script>
+                    // Google Drive 파일 ID 추출
+                    function extractFileId(text) {
+                        if (!text) return null;
+                        const patterns = [
+                            /https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/,
+                            /https:\/\/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/,
+                            /https:\/\/docs\.google\.com\/.*\/d\/([a-zA-Z0-9_-]+)/,
+                            /https:\/\/drive\.google\.com\/.*[?&]id=([a-zA-Z0-9_-]+)/
+                        ];
+                        for (const pattern of patterns) {
+                            const match = text.match(pattern);
+                            if (match) return match[1];
+                        }
+                        return null;
+                    }
+
+                    // 영수증 모달 표시
+                    function showReceipt(noteText) {
+                        const fileId = extractFileId(noteText);
+                        if (!fileId) {
+                            alert('영수증 링크를 찾을 수 없습니다.');
+                            return;
+                        }
+
+                        const modal = document.getElementById('receiptModal');
+                        const img = document.getElementById('receiptImage');
+                        const loading = document.getElementById('receiptLoading');
+                        const error = document.getElementById('receiptError');
+                        if (!modal || !img) return;
+
+                        if (loading) loading.style.display = 'flex';
+                        if (error) error.style.display = 'none';
+                        img.style.display = 'none';
+                        img.src = '';
+
+                        const imageUrls = [
+                            'https://lh3.googleusercontent.com/d/' + fileId + '=w1000',
+                            'https://drive.google.com/thumbnail?id=' + fileId + '&sz=w1000',
+                            'https://drive.google.com/uc?export=view&id=' + fileId,
+                            'https://drive.google.com/uc?id=' + fileId
+                        ];
+
+                        let urlIndex = 0;
+
+                        function tryNextUrl() {
+                            if (urlIndex >= imageUrls.length) {
+                                if (loading) loading.style.display = 'none';
+                                if (error) error.style.display = 'flex';
+                                return;
+                            }
+
+                            const testImg = new Image();
+                            testImg.onload = function() {
+                                if (loading) loading.style.display = 'none';
+                                if (error) error.style.display = 'none';
+                                img.src = imageUrls[urlIndex];
+                                img.style.display = 'block';
+                            };
+                            testImg.onerror = function() {
+                                urlIndex++;
+                                setTimeout(tryNextUrl, 50);
+                            };
+                            testImg.src = imageUrls[urlIndex];
+                        }
+
+                        modal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                        tryNextUrl();
+                    }
+
+                    // 영수증 모달 닫기
+                    function closeReceiptModal() {
+                        const modal = document.getElementById('receiptModal');
+                        const img = document.getElementById('receiptImage');
+                        const loading = document.getElementById('receiptLoading');
+                        const error = document.getElementById('receiptError');
+                        if (modal) {
+                            modal.style.display = 'none';
+                            document.body.style.overflow = '';
+                            if (img) { img.src = ''; img.style.display = 'none'; }
+                            if (loading) loading.style.display = 'flex';
+                            if (error) error.style.display = 'none';
+                        }
+                    }
+
+                    // 메모 펼침/접기 토글
+                    function toggleMemo(memoId) {
+                        const shortEl = document.getElementById(memoId + '-short');
+                        const fullEl = document.getElementById(memoId + '-full');
+                        const btn = shortEl.parentElement.querySelector('.tx-expand-btn');
+
+                        if (fullEl.style.display === 'none') {
+                            shortEl.style.display = 'none';
+                            fullEl.style.display = 'inline';
+                            btn.textContent = '접기';
+                        } else {
+                            shortEl.style.display = 'inline';
+                            fullEl.style.display = 'none';
+                            btn.textContent = '더보기';
+                        }
+                    }
+
+                    // 모달 외부 클릭 시 닫기
+                    document.addEventListener('click', function(e) {
+                        const modal = document.getElementById('receiptModal');
+                        if (e.target === modal) {
+                            closeReceiptModal();
+                        }
+                    });
+                </script></body></html>
