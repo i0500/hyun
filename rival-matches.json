@@ -3,6 +3,17 @@
     {
       "title": "친선 경기",
       "teamA": "우수문 / 원종호",
+      "teamB": "이영기 / 이대호",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "남복",
+      "timestamp": 1772240860397,
+      "date": "2026-02-28T01:07:40.397Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 원종호",
       "teamB": "이영기 / 김영선",
       "scoreA": 6,
       "scoreB": 3,
@@ -3202,7 +3213,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-28T01:06:51.158Z",
+  "lastUpdated": "2026-02-28T01:07:40.433Z",
   "version": "1.0",
-  "totalMatches": 301
+  "totalMatches": 302
 }
