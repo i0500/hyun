@@ -4,6 +4,17 @@
       "title": "친선 경기",
       "teamA": "우수문 / 게스트",
       "teamB": "게스트 / 게스트",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1772408567865,
+      "date": "2026-03-01T23:42:47.865Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 게스트",
+      "teamB": "게스트 / 게스트",
       "scoreA": 4,
       "scoreB": 6,
       "matchType": "남복",
@@ -3301,7 +3312,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-03-01T23:42:27.833Z",
+  "lastUpdated": "2026-03-01T23:42:49.448Z",
   "version": "1.0",
-  "totalMatches": 310
+  "totalMatches": 311
 }
