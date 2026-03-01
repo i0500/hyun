@@ -2,6 +2,17 @@
   "matches": [
     {
       "title": "친선 경기",
+      "teamA": "양승일 / 박진관",
+      "teamB": "송민곤 / 김경희",
+      "scoreA": 4,
+      "scoreB": 6,
+      "matchType": "혼복",
+      "timestamp": 1772325021550,
+      "date": "2026-03-01T00:30:21.550Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
       "teamA": "박진관 / 게스트",
       "teamB": "게스트 / 게스트",
       "scoreA": 5,
@@ -3279,7 +3290,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-02-28T23:35:50.752Z",
+  "lastUpdated": "2026-03-01T00:30:21.577Z",
   "version": "1.0",
-  "totalMatches": 308
+  "totalMatches": 309
 }
