@@ -4,11 +4,11 @@
       "title": "친선 경기",
       "teamA": "우수문 / 게스트",
       "teamB": "김진영 / 게스트",
-      "scoreA": 0,
+      "scoreA": 6,
       "scoreB": 4,
       "matchType": "남복",
-      "timestamp": 1773447237658,
-      "date": "2026-03-14T00:13:57.658Z",
+      "timestamp": 1773447180000,
+      "date": "2026-03-14T00:13:00.000Z",
       "pointValue": null
     },
     {
@@ -3356,7 +3356,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-03-14T00:13:57.691Z",
+  "lastUpdated": "2026-03-14T00:14:10.693Z",
   "version": "1.0",
   "totalMatches": 315
 }
