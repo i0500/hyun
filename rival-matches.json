@@ -26,11 +26,11 @@
       "title": "친선 경기",
       "teamA": "김성은 / 김경희",
       "teamB": "우수문 / 정혜희",
-      "scoreA": 2,
-      "scoreB": 6,
+      "scoreA": 6,
+      "scoreB": 2,
       "matchType": "혼복",
-      "timestamp": 1773453081182,
-      "date": "2026-03-14T01:51:21.182Z",
+      "timestamp": 1773453060000,
+      "date": "2026-03-14T01:51:00.000Z",
       "pointValue": null
     },
     {
@@ -3444,7 +3444,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-03-14T02:16:49.214Z",
+  "lastUpdated": "2026-03-14T04:11:27.160Z",
   "version": "1.0",
   "totalMatches": 323
 }
