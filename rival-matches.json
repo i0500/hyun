@@ -17,9 +17,9 @@
       "teamB": "신삼룡 / 황의선",
       "scoreA": 4,
       "scoreB": 6,
-      "matchType": "남복",
-      "timestamp": 1773453044028,
-      "date": "2026-03-14T01:50:44.028Z",
+      "matchType": "혼복",
+      "timestamp": 1773453000000,
+      "date": "2026-03-14T01:50:00.000Z",
       "pointValue": null
     },
     {
@@ -3422,7 +3422,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-03-14T01:51:21.214Z",
+  "lastUpdated": "2026-03-14T01:51:29.326Z",
   "version": "1.0",
   "totalMatches": 321
 }
