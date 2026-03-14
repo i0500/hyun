@@ -5,21 +5,21 @@
       "teamA": "우수문 / 황의선",
       "teamB": "김성은 / 박성민",
       "scoreA": 6,
-      "scoreB": 3,
+      "scoreB": 4,
       "matchType": "남복",
-      "timestamp": 1773447291268,
-      "date": "2026-03-14T00:14:51.268Z",
+      "timestamp": 1773448935593,
+      "date": "2026-03-14T00:42:15.593Z",
       "pointValue": null
     },
     {
       "title": "친선 경기",
-      "teamA": "우수문 / 게스트",
-      "teamB": "김진영 / 게스트",
+      "teamA": "우수문 / 황의선",
+      "teamB": "김성은 / 박성민",
       "scoreA": 6,
-      "scoreB": 4,
+      "scoreB": 3,
       "matchType": "남복",
-      "timestamp": 1773447180000,
-      "date": "2026-03-14T00:13:00.000Z",
+      "timestamp": 1773447291268,
+      "date": "2026-03-14T00:14:51.268Z",
       "pointValue": null
     },
     {
@@ -31,6 +31,17 @@
       "matchType": "남복",
       "timestamp": 1773447217673,
       "date": "2026-03-14T00:13:37.673Z",
+      "pointValue": null
+    },
+    {
+      "title": "친선 경기",
+      "teamA": "우수문 / 게스트",
+      "teamB": "김진영 / 게스트",
+      "scoreA": 6,
+      "scoreB": 4,
+      "matchType": "남복",
+      "timestamp": 1773447180000,
+      "date": "2026-03-14T00:13:00.000Z",
       "pointValue": null
     },
     {
@@ -3367,7 +3378,7 @@
       "timestamp": 1767086262187
     }
   ],
-  "lastUpdated": "2026-03-14T00:14:51.298Z",
+  "lastUpdated": "2026-03-14T00:42:15.624Z",
   "version": "1.0",
-  "totalMatches": 316
+  "totalMatches": 317
 }
